@@ -108,7 +108,10 @@ export function RouteMap({ depot, centers, distanceMode, routes, assignments, ti
               <input
                 type="checkbox"
                 checked={tiles}
-                onChange={(event) => setTiles(event.target.checked)}
+                onChange={(event) => {
+                  setTileError(false);
+                  setTiles(event.target.checked);
+                }}
                 style={{ width: "1.1rem", height: "1.1rem", accentColor: "var(--accent)" }}
               />
               Mapa base (OpenStreetMap)
@@ -136,6 +139,7 @@ export function RouteMap({ depot, centers, distanceMode, routes, assignments, ti
               <TileLayer
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                 maxZoom={18}
+                referrerPolicy="strict-origin-when-cross-origin"
                 attribution='&copy; colaboradores de <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 eventHandlers={{
                   tileerror: () => {
@@ -233,10 +237,21 @@ export function RouteMap({ depot, centers, distanceMode, routes, assignments, ti
       </div>
 
       {tileError && open && (
-        <p className="small muted map-tile-status" role="status">
-          El mapa base no está disponible en esta red. Se mantienen las rutas y los centros; puedes
-          consultar el detalle en las hojas de ruta y la tabla.
-        </p>
+        <div className="row small map-tile-status" role="status">
+          <span className="grow">
+            No se pudo cargar el mapa base. Los centros y las rutas siguen disponibles.
+          </span>
+          <button
+            type="button"
+            className="btn small"
+            onClick={() => {
+              setTileError(false);
+              setTiles(true);
+            }}
+          >
+            Reintentar mapa base
+          </button>
+        </div>
       )}
 
       <ul className="legend" aria-label="Leyenda del mapa">
