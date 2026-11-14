@@ -1,0 +1,110 @@
+{
+  "scenario_id": null,
+  "label": "Fixture sintético pequeño (6 centros)",
+  "data_origin": "synthetic",
+  "distance_mode": "haversine_demo",
+  "distance_source": null,
+  "depot": {
+    "id": "DEPOT",
+    "name": "Depósito ficticio",
+    "lat": -13.07,
+    "lon": -76.39
+  },
+  "inventory_lots": 40,
+  "vehicles": [
+    {
+      "id": "V01",
+      "capacity_lots": 25
+    },
+    {
+      "id": "V02",
+      "capacity_lots": 25
+    }
+  ],
+  "centers": [
+    {
+      "id": "C01",
+      "name": "Centro ficticio 01",
+      "district": "Zona ilustrativa Sur",
+      "address": null,
+      "lat": -113.07,
+      "lon": -76.31681,
+      "demand_lots": 10,
+      "priority_weight": 1,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C02",
+      "name": "Centro ficticio 02",
+      "district": "Zona ilustrativa Centro",
+      "address": null,
+      "lat": -13.08096,
+      "lon": 276.39,
+      "demand_lots": 11,
+      "priority_weight": 3,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C03",
+      "name": "Centro ficticio 03",
+      "district": "Zona ilustrativa Sur",
+      "address": null,
+      "lat": -13.10049,
+      "lon": -76.31514,
+      "demand_lots": 7,
+      "priority_weight": 3,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C04",
+      "name": "Centro ficticio 04",
+      "district": "Zona ilustrativa Norte",
+      "address": null,
+      "lat": -13.01882,
+      "lon": -76.31734,
+      "demand_lots": 9,
+      "priority_weight": 2,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C05",
+      "name": "Centro ficticio 05",
+      "district": "Zona ilustrativa Centro",
+      "address": null,
+      "lat": -13.06333,
+      "lon": -76.29263,
+      "demand_lots": 13,
+      "priority_weight": 1,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C06",
+      "name": "Centro ficticio 06",
+      "district": "Zona ilustrativa Sur",
+      "address": null,
+      "lat": -13.08943,
+      "lon": -76.37058,
+      "demand_lots": 10,
+      "priority_weight": 2,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    }
+  ],
+  "distances": [],
+  "data_license": "Datos sintéticos generados por NutriRuta AG; sin restricciones de uso.",
+  "notes": "Coordenadas, demandas y prioridades son de prueba; no representan centros reales ni estadísticas de Cañete.",
+  "priority_criterion": "Prioridades simuladas al azar con fines de demostración.",
+  "demand_rule": null,
+  "fixture_seed": 2026
+}

@@ -1,0 +1,23 @@
+# Secretos y configuración local
+.env
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+*.db
+.venv/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/coverage/
+
+# Editor / sistema
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+~$*.docx

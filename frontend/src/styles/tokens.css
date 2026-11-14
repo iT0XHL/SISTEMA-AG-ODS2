@@ -1,0 +1,154 @@
+/* NutriRuta AG — sistema de diseño.
+   Concepto: «mesa de despacho». Barra lateral oscura con el recorrido de la demo, hojas de
+   trabajo claras y sobrias, y todo lo que es dato (IDs, genes, lotes, km) en monoespaciada.
+   Dos familias: IBM Plex Sans (texto) e IBM Plex Mono (datos). */
+
+:root {
+  color-scheme: light;
+
+  /* superficies y tinta (neutros con un leve sesgo verde-azulado) */
+  --bg: #f1f3f0;
+  --surface: #fbfcfa;
+  --surface-2: #e9ece7;
+  --surface-3: #dde2dc;
+  --ink: #14211d;
+  --ink-2: #44524d;
+  --ink-3: #65726c;
+  --line: #d6dcd5;
+  --line-strong: #b4beb6;
+
+  /* acento de interfaz (misma familia que la serie 1 de los gráficos: «AG») */
+  --accent: #1c5cab;
+  --accent-hover: #174c8e;
+  --accent-ink: #ffffff;
+  --accent-soft: #e0eaf8;
+  --focus: #1c5cab;
+
+  /* marca ODS 2 (solo para la insignia) */
+  --ods: #dda63a;
+  --ods-ink: #2a1e00;
+
+  /* navegación */
+  --nav-bg: #14211d;
+  --nav-ink: #eef1ee;
+  --nav-ink-2: #a9b5af;
+  --nav-line: #2b3a35;
+  --nav-active: #223530;
+
+  /* estado: siempre acompañado de icono y texto */
+  --good: #0ca30c;
+  --good-ink: #00580a;
+  --good-soft: #e2f3e0;
+  --warn: #fab219;
+  --warn-ink: #5c3d00;
+  --warn-soft: #fdf0cf;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+  --critical-ink: #8f1d1d;
+  --critical-soft: #fbe4e1;
+
+  /* series categóricas (orden fijo, validado para daltonismo) */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #6250d6;
+  --series-8: #e34948;
+  --baseline: #898781;
+  --grid: #e1e3dd;
+  --axis: #c1c7c0;
+
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --radius: 6px;
+  --radius-sm: 4px;
+  --shadow: 0 1px 2px rgb(20 33 29 / 6%), 0 6px 20px rgb(20 33 29 / 5%);
+  --nav-width: 252px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0e1412;
+    --surface: #171e1b;
+    --surface-2: #1f2925;
+    --surface-3: #2a3631;
+    --ink: #eef1ee;
+    --ink-2: #c3cbc6;
+    --ink-3: #8f9a95;
+    --line: #2a3530;
+    --line-strong: #44524c;
+    --accent: #6da7ec;
+    --accent-hover: #86b6ef;
+    --accent-ink: #0b1626;
+    --accent-soft: #1b2c44;
+    --focus: #86b6ef;
+    --nav-bg: #0a0f0d;
+    --nav-ink: #eef1ee;
+    --nav-ink-2: #97a39e;
+    --nav-line: #1f2925;
+    --nav-active: #1a2622;
+    --good-ink: #5fd35f;
+    --good-soft: #12301a;
+    --warn-ink: #fbc54d;
+    --warn-soft: #382a08;
+    --critical-ink: #f08c8c;
+    --critical-soft: #3a1717;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+    --baseline: #898781;
+    --grid: #26302c;
+    --axis: #3a4741;
+    --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 6px 20px rgb(0 0 0 / 25%);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e1412;
+  --surface: #171e1b;
+  --surface-2: #1f2925;
+  --surface-3: #2a3631;
+  --ink: #eef1ee;
+  --ink-2: #c3cbc6;
+  --ink-3: #8f9a95;
+  --line: #2a3530;
+  --line-strong: #44524c;
+  --accent: #6da7ec;
+  --accent-hover: #86b6ef;
+  --accent-ink: #0b1626;
+  --accent-soft: #1b2c44;
+  --focus: #86b6ef;
+  --nav-bg: #0a0f0d;
+  --nav-ink: #eef1ee;
+  --nav-ink-2: #97a39e;
+  --nav-line: #1f2925;
+  --nav-active: #1a2622;
+  --good-ink: #5fd35f;
+  --good-soft: #12301a;
+  --warn-ink: #fbc54d;
+  --warn-soft: #382a08;
+  --critical-ink: #f08c8c;
+  --critical-soft: #3a1717;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+  --baseline: #898781;
+  --grid: #26302c;
+  --axis: #3a4741;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 6px 20px rgb(0 0 0 / 25%);
+}

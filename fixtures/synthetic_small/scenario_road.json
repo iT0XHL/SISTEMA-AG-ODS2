@@ -1,0 +1,321 @@
+{
+  "scenario_id": "synthetic-small-6-road",
+  "label": "Fixture sintético pequeño con matriz vial ficticia",
+  "data_origin": "synthetic",
+  "distance_mode": "road_matrix",
+  "distance_source": "road_csv_ficticio",
+  "depot": {
+    "id": "DEPOT",
+    "name": "Depósito ficticio",
+    "lat": -13.07,
+    "lon": -76.39
+  },
+  "inventory_lots": 40,
+  "vehicles": [
+    {
+      "id": "V01",
+      "capacity_lots": 25
+    },
+    {
+      "id": "V02",
+      "capacity_lots": 25
+    }
+  ],
+  "centers": [
+    {
+      "id": "C01",
+      "name": "Centro ficticio 01",
+      "district": "Zona ilustrativa Sur",
+      "address": null,
+      "lat": -13.10032,
+      "lon": -76.31681,
+      "demand_lots": 10,
+      "priority_weight": 1,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C02",
+      "name": "Centro ficticio 02",
+      "district": "Zona ilustrativa Centro",
+      "address": null,
+      "lat": -13.08096,
+      "lon": -76.29723,
+      "demand_lots": 11,
+      "priority_weight": 3,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C03",
+      "name": "Centro ficticio 03",
+      "district": "Zona ilustrativa Sur",
+      "address": null,
+      "lat": -13.10049,
+      "lon": -76.31514,
+      "demand_lots": 7,
+      "priority_weight": 3,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C04",
+      "name": "Centro ficticio 04",
+      "district": "Zona ilustrativa Norte",
+      "address": null,
+      "lat": -13.01882,
+      "lon": -76.31734,
+      "demand_lots": 9,
+      "priority_weight": 2,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C05",
+      "name": "Centro ficticio 05",
+      "district": "Zona ilustrativa Centro",
+      "address": null,
+      "lat": -13.06333,
+      "lon": -76.29263,
+      "demand_lots": 13,
+      "priority_weight": 1,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    },
+    {
+      "id": "C06",
+      "name": "Centro ficticio 06",
+      "district": "Zona ilustrativa Sur",
+      "address": null,
+      "lat": -13.08943,
+      "lon": -76.37058,
+      "demand_lots": 10,
+      "priority_weight": 2,
+      "source": "synthetic",
+      "demand_origin": "synthetic",
+      "users_aggregate": null
+    }
+  ],
+  "distances": [
+    {
+      "from_id": "DEPOT",
+      "to_id": "C01",
+      "km": 11.646
+    },
+    {
+      "from_id": "DEPOT",
+      "to_id": "C02",
+      "km": 13.685
+    },
+    {
+      "from_id": "DEPOT",
+      "to_id": "C03",
+      "km": 11.882
+    },
+    {
+      "from_id": "DEPOT",
+      "to_id": "C04",
+      "km": 13.132
+    },
+    {
+      "from_id": "DEPOT",
+      "to_id": "C05",
+      "km": 14.294
+    },
+    {
+      "from_id": "DEPOT",
+      "to_id": "C06",
+      "km": 4.077
+    },
+    {
+      "from_id": "C01",
+      "to_id": "DEPOT",
+      "km": 11.198
+    },
+    {
+      "from_id": "C01",
+      "to_id": "C02",
+      "km": 4.085
+    },
+    {
+      "from_id": "C01",
+      "to_id": "C03",
+      "km": 0.246
+    },
+    {
+      "from_id": "C01",
+      "to_id": "C04",
+      "km": 12.253
+    },
+    {
+      "from_id": "C01",
+      "to_id": "C05",
+      "km": 6.592
+    },
+    {
+      "from_id": "C01",
+      "to_id": "C06",
+      "km": 8.042
+    },
+    {
+      "from_id": "C02",
+      "to_id": "DEPOT",
+      "km": 13.158
+    },
+    {
+      "from_id": "C02",
+      "to_id": "C01",
+      "km": 3.928
+    },
+    {
+      "from_id": "C02",
+      "to_id": "C03",
+      "km": 3.937
+    },
+    {
+      "from_id": "C02",
+      "to_id": "C04",
+      "km": 9.795
+    },
+    {
+      "from_id": "C02",
+      "to_id": "C05",
+      "km": 2.735
+    },
+    {
+      "from_id": "C02",
+      "to_id": "C06",
+      "km": 10.816
+    },
+    {
+      "from_id": "C03",
+      "to_id": "DEPOT",
+      "km": 11.425
+    },
+    {
+      "from_id": "C03",
+      "to_id": "C01",
+      "km": 0.236
+    },
+    {
+      "from_id": "C03",
+      "to_id": "C02",
+      "km": 3.785
+    },
+    {
+      "from_id": "C03",
+      "to_id": "C04",
+      "km": 12.282
+    },
+    {
+      "from_id": "C03",
+      "to_id": "C05",
+      "km": 6.486
+    },
+    {
+      "from_id": "C03",
+      "to_id": "C06",
+      "km": 8.286
+    },
+    {
+      "from_id": "C04",
+      "to_id": "DEPOT",
+      "km": 12.627
+    },
+    {
+      "from_id": "C04",
+      "to_id": "C01",
+      "km": 11.781
+    },
+    {
+      "from_id": "C04",
+      "to_id": "C02",
+      "km": 9.418
+    },
+    {
+      "from_id": "C04",
+      "to_id": "C03",
+      "km": 11.81
+    },
+    {
+      "from_id": "C04",
+      "to_id": "C05",
+      "km": 7.607
+    },
+    {
+      "from_id": "C04",
+      "to_id": "C06",
+      "km": 13.171
+    },
+    {
+      "from_id": "C05",
+      "to_id": "DEPOT",
+      "km": 13.745
+    },
+    {
+      "from_id": "C05",
+      "to_id": "C01",
+      "km": 6.339
+    },
+    {
+      "from_id": "C05",
+      "to_id": "C02",
+      "km": 2.63
+    },
+    {
+      "from_id": "C05",
+      "to_id": "C03",
+      "km": 6.237
+    },
+    {
+      "from_id": "C05",
+      "to_id": "C04",
+      "km": 7.315
+    },
+    {
+      "from_id": "C05",
+      "to_id": "C06",
+      "km": 12.07
+    },
+    {
+      "from_id": "C06",
+      "to_id": "DEPOT",
+      "km": 3.92
+    },
+    {
+      "from_id": "C06",
+      "to_id": "C01",
+      "km": 7.732
+    },
+    {
+      "from_id": "C06",
+      "to_id": "C02",
+      "km": 10.4
+    },
+    {
+      "from_id": "C06",
+      "to_id": "C03",
+      "km": 7.968
+    },
+    {
+      "from_id": "C06",
+      "to_id": "C04",
+      "km": 12.664
+    },
+    {
+      "from_id": "C06",
+      "to_id": "C05",
+      "km": 11.606
+    }
+  ],
+  "data_license": "Datos sintéticos generados por NutriRuta AG; sin restricciones de uso.",
+  "notes": "Coordenadas, demandas y prioridades son de prueba; no representan centros reales ni estadísticas de Cañete.",
+  "priority_criterion": "Prioridades simuladas al azar con fines de demostración.",
+  "demand_rule": null,
+  "fixture_seed": 2026
+}

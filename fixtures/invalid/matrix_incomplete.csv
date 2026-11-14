@@ -1,0 +1,3 @@
+from_id,to_id,km
+DEPOT,C01,2.5
+C01,DEPOT,2.5

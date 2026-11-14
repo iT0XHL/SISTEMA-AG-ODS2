@@ -1,0 +1,31 @@
+{
+  "scenario_id": null,
+  "label": "Fixture sintético pequeño (6 centros)",
+  "data_origin": "synthetic",
+  "distance_mode": "haversine_demo",
+  "distance_source": null,
+  "depot": {
+    "id": "DEPOT",
+    "name": "Depósito ficticio",
+    "lat": -13.07,
+    "lon": -76.39
+  },
+  "inventory_lots": 40,
+  "vehicles": [
+    {
+      "id": "V01",
+      "capacity_lots": 25
+    },
+    {
+      "id": "V02",
+      "capacity_lots": 25
+    }
+  ],
+  "centers": [],
+  "distances": [],
+  "data_license": "Datos sintéticos generados por NutriRuta AG; sin restricciones de uso.",
+  "notes": "Coordenadas, demandas y prioridades son de prueba; no representan centros reales ni estadísticas de Cañete.",
+  "priority_criterion": "Prioridades simuladas al azar con fines de demostración.",
+  "demand_rule": null,
+  "fixture_seed": 2026
+}

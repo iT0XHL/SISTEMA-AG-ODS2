@@ -1,0 +1,5144 @@
+{
+  "export": {
+    "kind": "four_runs",
+    "exported_at_utc": "2026-11-14T01:22:22.160585+00:00",
+    "declaration": "Herramienta académica de simulación orientada a apoyar el diseño de entregas; los resultados no equivalen a efectos medidos sobre inseguridad alimentaria."
+  },
+  "experiment": {
+    "experiment_id": "862fd4bb-7e2d-4c5c-9889-d4dfe0bf0f29",
+    "scenario_id": "demo-cañete-001",
+    "scenario_label": "Escenario sintético para evaluación (18 centros)",
+    "scenario_hash": "4d139880bd4e6e2cabc286c0e37ff6a2cf964c2f1d0a37d14aca5933f3ebb1f4",
+    "data_origin": "synthetic",
+    "seeds": [
+      11,
+      22,
+      33,
+      44
+    ],
+    "parameters": {
+      "population_size": 100,
+      "max_generations": 200,
+      "tournament_k": 3,
+      "crossover_prob": 0.9,
+      "perm_mutation_prob": 0.15,
+      "qty_mutation_prob": 0.08,
+      "qty_mutation_max_step": 3,
+      "elite": 2,
+      "stagnation_generations": 35,
+      "improvement_tolerance": 1e-06,
+      "init_random_frac": 0.7,
+      "init_priority_frac": 0.2,
+      "init_heuristic_frac": 0.1,
+      "w_u": 0.75,
+      "w_r": 0.2,
+      "w_h": 0.05
+    },
+    "code_version": "1.0.0",
+    "created_at": "2026-11-14T01:22:18.346422+00:00",
+    "status": "completed",
+    "runs": [
+      {
+        "corrida": 1,
+        "seed": 11,
+        "run_id": "3fb83402-21ed-4ddc-9d95-0310d11728e4",
+        "status": "completed",
+        "progress_generation": 99,
+        "stop_reason": "stagnation",
+        "started_at": "2026-11-14T01:22:18.561513+00:00",
+        "ended_at": "2026-11-14T01:22:19.277787+00:00",
+        "error": null,
+        "metrics": {
+          "J": 0.26277575325399155,
+          "fitness": 0.7919062410116315,
+          "U": 0.14242424242424243,
+          "R": 0.7797878571790486,
+          "H": 0.0,
+          "lots_delivered": 135,
+          "lots_demanded": 181,
+          "weighted_coverage": 0.8575757575757575,
+          "total_km": 62.606862,
+          "vehicles_used": 3,
+          "cpu_seconds": 0.6346496889999997,
+          "generations_run": 99,
+          "centers_served": 14,
+          "high_priority_unserved": 0,
+          "distance_mode": "haversine_demo",
+          "distance_mode_label": "km en línea recta (Haversine); no aptos para planificación de reparto"
+        },
+        "feasible": true
+      },
+      {
+        "corrida": 2,
+        "seed": 22,
+        "run_id": "2612a2f3-aff9-419a-a593-d676233409d7",
+        "status": "completed",
+        "progress_generation": 123,
+        "stop_reason": "stagnation",
+        "started_at": "2026-11-14T01:22:19.285475+00:00",
+        "ended_at": "2026-11-14T01:22:20.164829+00:00",
+        "error": null,
+        "metrics": {
+          "J": 0.2627515896134329,
+          "fitness": 0.7919213946950016,
+          "U": 0.15757575757575756,
+          "R": 0.7228488571580739,
+          "H": 0.0,
+          "lots_delivered": 130,
+          "lots_demanded": 181,
+          "weighted_coverage": 0.8424242424242424,
+          "total_km": 58.035398,
+          "vehicles_used": 3,
+          "cpu_seconds": 0.7831520880000005,
+          "generations_run": 123,
+          "centers_served": 13,
+          "high_priority_unserved": 0,
+          "distance_mode": "haversine_demo",
+          "distance_mode_label": "km en línea recta (Haversine); no aptos para planificación de reparto"
+        },
+        "feasible": true
+      },
+      {
+        "corrida": 3,
+        "seed": 33,
+        "run_id": "5500ee44-7f13-4661-a01b-3bd55314e4aa",
+        "status": "completed",
+        "progress_generation": 112,
+        "stop_reason": "stagnation",
+        "started_at": "2026-11-14T01:22:20.171531+00:00",
+        "ended_at": "2026-11-14T01:22:20.970360+00:00",
+        "error": null,
+        "metrics": {
+          "J": 0.2634405080804365,
+          "fitness": 0.791489582298825,
+          "U": 0.14242424242424243,
+          "R": 0.7831116313112735,
+          "H": 0.0,
+          "lots_delivered": 135,
+          "lots_demanded": 181,
+          "weighted_coverage": 0.8575757575757575,
+          "total_km": 62.873718,
+          "vehicles_used": 3,
+          "cpu_seconds": 0.7099428439999995,
+          "generations_run": 112,
+          "centers_served": 14,
+          "high_priority_unserved": 0,
+          "distance_mode": "haversine_demo",
+          "distance_mode_label": "km en línea recta (Haversine); no aptos para planificación de reparto"
+        },
+        "feasible": true
+      },
+      {
+        "corrida": 4,
+        "seed": 44,
+        "run_id": "c3f2e70c-ee08-4f57-9d4b-b899c39ff4ad",
+        "status": "completed",
+        "progress_generation": 89,
+        "stop_reason": "stagnation",
+        "started_at": "2026-11-14T01:22:20.977407+00:00",
+        "ended_at": "2026-11-14T01:22:21.633544+00:00",
+        "error": null,
+        "metrics": {
+          "J": 0.2660341638456862,
+          "fitness": 0.7898681003697524,
+          "U": 0.14545454545454545,
+          "R": 0.7847162737738855,
+          "H": 0.0,
+          "lots_delivered": 135,
+          "lots_demanded": 181,
+          "weighted_coverage": 0.8545454545454545,
+          "total_km": 63.00255,
+          "vehicles_used": 3,
+          "cpu_seconds": 0.583855046,
+          "generations_run": 89,
+          "centers_served": 14,
+          "high_priority_unserved": 0,
+          "distance_mode": "haversine_demo",
+          "distance_mode_label": "km en línea recta (Haversine); no aptos para planificación de reparto"
+        },
+        "feasible": true
+      }
+    ],
+    "baseline": {
+      "method": "Heurística determinista: prioridad descendente (desempate por ID), asignación hasta capacidad e inventario y orden de cada ruta por vecino más cercano.",
+      "d_ref_km": 80.28704400000001,
+      "d_ref_is_convention": false,
+      "metrics": {
+        "J": 0.30454545454545456,
+        "fitness": 0.7665505226480835,
+        "U": 0.1393939393939394,
+        "R": 1.0,
+        "H": 0.0,
+        "lots_delivered": 135,
+        "lots_demanded": 181,
+        "lots_pending": 46,
+        "inventory_lots": 135,
+        "inventory_remaining": 0,
+        "weighted_demand_total": 330,
+        "weighted_demand_delivered": 284,
+        "weighted_coverage": 0.8606060606060606,
+        "centers_total": 18,
+        "centers_with_demand": 18,
+        "centers_served": 13,
+        "centers_fully_served": 12,
+        "centers_served_pct": 0.7222222222222222,
+        "high_priority_total": 4,
+        "high_priority_unserved": 0,
+        "vehicles_used": 3,
+        "vehicles_total": 3,
+        "total_km": 80.28704400000001,
+        "d_ref_km": 80.28704400000001,
+        "distance_mode": "haversine_demo",
+        "distance_mode_label": "km en línea recta (Haversine); no aptos para planificación de reparto",
+        "vehicle_loads": {
+          "V01": 46,
+          "V02": 43,
+          "V03": 46
+        }
+      },
+      "feasible": true
+    },
+    "summary": {
+      "J": {
+        "mean": 0.2637505036983868,
+        "std": 0.0015555458559060843
+      },
+      "fitness": {
+        "mean": 0.7912963295938027,
+        "std": 0.0009729480360849121
+      },
+      "U": {
+        "mean": 0.14696969696969697,
+        "std": 0.007213564069235196
+      },
+      "R": {
+        "mean": 0.7676161548555704,
+        "std": 0.029915353573025612
+      },
+      "H": {
+        "mean": 0.0,
+        "std": 0.0
+      },
+      "weighted_coverage": {
+        "mean": 0.853030303030303,
+        "std": 0.0072135640692351935
+      },
+      "total_km": {
+        "mean": 61.629632,
+        "std": 2.401815308593064
+      },
+      "lots_delivered": {
+        "mean": 133.75,
+        "std": 2.5
+      },
+      "cpu_seconds": {
+        "mean": 0.6778999167499999,
+        "std": 0.08721580257116879
+      },
+      "generations_run": {
+        "mean": 105.75,
+        "std": 14.863265679744362
+      },
+      "std_note": "Desviación estándar muestral (n − 1) sobre las cuatro corridas.",
+      "runs_better_than_baseline": 4,
+      "all_feasible": true
+    }
+  },
+  "scenario": {
+    "scenario_id": "demo-cañete-001",
+    "label": "Escenario sintético para evaluación (18 centros)",
+    "data_origin": "synthetic",
+    "distance_mode": "haversine_demo",
+    "distance_source": "haversine",
+    "depot": {
+      "id": "DEPOT",
+      "name": "Depósito ficticio",
+      "lat": -13.07,
+      "lon": -76.39
+    },
+    "inventory_lots": 135,
+    "vehicles": [
+      {
+        "id": "V01",
+        "capacity_lots": 50
+      },
+      {
+        "id": "V02",
+        "capacity_lots": 50
+      },
+      {
+        "id": "V03",
+        "capacity_lots": 50
+      }
+    ],
+    "centers": [
+      {
+        "id": "C01",
+        "name": "Centro ficticio 01",
+        "district": "Zona ilustrativa Sur",
+        "address": null,
+        "lat": -13.10032,
+        "lon": -76.31681,
+        "demand_lots": 10,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C02",
+        "name": "Centro ficticio 02",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.08096,
+        "lon": -76.29723,
+        "demand_lots": 11,
+        "priority_weight": 3,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C03",
+        "name": "Centro ficticio 03",
+        "district": "Zona ilustrativa Sur",
+        "address": null,
+        "lat": -13.10049,
+        "lon": -76.31514,
+        "demand_lots": 7,
+        "priority_weight": 3,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C04",
+        "name": "Centro ficticio 04",
+        "district": "Zona ilustrativa Norte",
+        "address": null,
+        "lat": -13.01882,
+        "lon": -76.31734,
+        "demand_lots": 9,
+        "priority_weight": 2,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C05",
+        "name": "Centro ficticio 05",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.06333,
+        "lon": -76.29263,
+        "demand_lots": 13,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C06",
+        "name": "Centro ficticio 06",
+        "district": "Zona ilustrativa Sur",
+        "address": null,
+        "lat": -13.08943,
+        "lon": -76.37058,
+        "demand_lots": 10,
+        "priority_weight": 2,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C07",
+        "name": "Centro ficticio 07",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.0726,
+        "lon": -76.31379,
+        "demand_lots": 15,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C08",
+        "name": "Centro ficticio 08",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.07983,
+        "lon": -76.3746,
+        "demand_lots": 6,
+        "priority_weight": 2,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C09",
+        "name": "Centro ficticio 09",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.07212,
+        "lon": -76.361,
+        "demand_lots": 16,
+        "priority_weight": 3,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C10",
+        "name": "Centro ficticio 10",
+        "district": "Zona ilustrativa Norte",
+        "address": null,
+        "lat": -13.03228,
+        "lon": -76.32113,
+        "demand_lots": 8,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C11",
+        "name": "Centro ficticio 11",
+        "district": "Zona ilustrativa Norte",
+        "address": null,
+        "lat": -13.01585,
+        "lon": -76.32676,
+        "demand_lots": 12,
+        "priority_weight": 3,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C12",
+        "name": "Centro ficticio 12",
+        "district": "Zona ilustrativa Sur",
+        "address": null,
+        "lat": -13.08487,
+        "lon": -76.30952,
+        "demand_lots": 10,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C13",
+        "name": "Centro ficticio 13",
+        "district": "Zona ilustrativa Sur",
+        "address": null,
+        "lat": -13.09123,
+        "lon": -76.30889,
+        "demand_lots": 10,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C14",
+        "name": "Centro ficticio 14",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.0562,
+        "lon": -76.37544,
+        "demand_lots": 8,
+        "priority_weight": 2,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C15",
+        "name": "Centro ficticio 15",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.05967,
+        "lon": -76.3192,
+        "demand_lots": 6,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C16",
+        "name": "Centro ficticio 16",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.06557,
+        "lon": -76.3389,
+        "demand_lots": 10,
+        "priority_weight": 2,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C17",
+        "name": "Centro ficticio 17",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.05651,
+        "lon": -76.34588,
+        "demand_lots": 14,
+        "priority_weight": 2,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      },
+      {
+        "id": "C18",
+        "name": "Centro ficticio 18",
+        "district": "Zona ilustrativa Centro",
+        "address": null,
+        "lat": -13.06287,
+        "lon": -76.35755,
+        "demand_lots": 6,
+        "priority_weight": 1,
+        "source": "synthetic",
+        "demand_origin": "synthetic",
+        "users_aggregate": null
+      }
+    ],
+    "distances": [],
+    "data_license": "Datos sintéticos generados por NutriRuta AG; sin restricciones de uso.",
+    "notes": "Coordenadas, demandas y prioridades son de prueba; no representan centros reales ni estadísticas de Cañete.",
+    "priority_criterion": "Prioridades simuladas al azar con fines de demostración.",
+    "demand_rule": null,
+    "fixture_seed": 2026
+  },
+  "histories_by_seed": {
+    "11": [
+      {
+        "number": 0,
+        "best_fitness": 0.7590623309420329,
+        "mean_fitness": 0.636003803430345,
+        "best_J": 0.31741486731261165,
+        "diversity": 1.0
+      },
+      {
+        "number": 1,
+        "best_fitness": 0.7590623309420329,
+        "mean_fitness": 0.6745143566549736,
+        "best_J": 0.31741486731261165,
+        "diversity": 0.97
+      },
+      {
+        "number": 2,
+        "best_fitness": 0.7590623309420329,
+        "mean_fitness": 0.7026116566043679,
+        "best_J": 0.31741486731261165,
+        "diversity": 0.95
+      },
+      {
+        "number": 3,
+        "best_fitness": 0.7590623309420329,
+        "mean_fitness": 0.7177626450692394,
+        "best_J": 0.31741486731261165,
+        "diversity": 0.94
+      },
+      {
+        "number": 4,
+        "best_fitness": 0.7590623309420329,
+        "mean_fitness": 0.7273908983823856,
+        "best_J": 0.31741486731261165,
+        "diversity": 0.99
+      },
+      {
+        "number": 5,
+        "best_fitness": 0.7631495620493434,
+        "mean_fitness": 0.7318179265075188,
+        "best_J": 0.31035913499658463,
+        "diversity": 0.95
+      },
+      {
+        "number": 6,
+        "best_fitness": 0.7631495620493434,
+        "mean_fitness": 0.7328487994107075,
+        "best_J": 0.31035913499658463,
+        "diversity": 0.92
+      },
+      {
+        "number": 7,
+        "best_fitness": 0.7642590426654401,
+        "mean_fitness": 0.7357873017229467,
+        "best_J": 0.30845687675789424,
+        "diversity": 0.91
+      },
+      {
+        "number": 8,
+        "best_fitness": 0.7672902458584533,
+        "mean_fitness": 0.7386633067011346,
+        "best_J": 0.3032877785135771,
+        "diversity": 0.92
+      },
+      {
+        "number": 9,
+        "best_fitness": 0.7711918623605648,
+        "mean_fitness": 0.7414789051015643,
+        "best_J": 0.29669418053643537,
+        "diversity": 0.9
+      },
+      {
+        "number": 10,
+        "best_fitness": 0.7721593818297433,
+        "mean_fitness": 0.7426313024781621,
+        "best_J": 0.29506941640773093,
+        "diversity": 0.88
+      },
+      {
+        "number": 11,
+        "best_fitness": 0.7721593818297433,
+        "mean_fitness": 0.7445648300025014,
+        "best_J": 0.29506941640773093,
+        "diversity": 0.89
+      },
+      {
+        "number": 12,
+        "best_fitness": 0.7721593818297433,
+        "mean_fitness": 0.7470978086871858,
+        "best_J": 0.29506941640773093,
+        "diversity": 0.82
+      },
+      {
+        "number": 13,
+        "best_fitness": 0.7770088069781667,
+        "mean_fitness": 0.7478335608215696,
+        "best_J": 0.2869866995318357,
+        "diversity": 0.83
+      },
+      {
+        "number": 14,
+        "best_fitness": 0.7770088069781667,
+        "mean_fitness": 0.7464219844626441,
+        "best_J": 0.2869866995318357,
+        "diversity": 0.9
+      },
+      {
+        "number": 15,
+        "best_fitness": 0.7776205631210363,
+        "mean_fitness": 0.7487735980780411,
+        "best_J": 0.28597422370934694,
+        "diversity": 0.93
+      },
+      {
+        "number": 16,
+        "best_fitness": 0.7783913489714837,
+        "mean_fitness": 0.7511639539584252,
+        "best_J": 0.28470081446991397,
+        "diversity": 0.88
+      },
+      {
+        "number": 17,
+        "best_fitness": 0.7783913489714837,
+        "mean_fitness": 0.7479437424082498,
+        "best_J": 0.28470081446991397,
+        "diversity": 0.94
+      },
+      {
+        "number": 18,
+        "best_fitness": 0.7783913489714837,
+        "mean_fitness": 0.7503519450725858,
+        "best_J": 0.28470081446991397,
+        "diversity": 0.87
+      },
+      {
+        "number": 19,
+        "best_fitness": 0.778997300210262,
+        "mean_fitness": 0.7498762202825243,
+        "best_J": 0.2837014964366197,
+        "diversity": 0.94
+      },
+      {
+        "number": 20,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.7497624117368608,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.88
+      },
+      {
+        "number": 21,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.7504244010710941,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.89
+      },
+      {
+        "number": 22,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.748308426901002,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.95
+      },
+      {
+        "number": 23,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.7465310545297443,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.93
+      },
+      {
+        "number": 24,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.7448158140843907,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.89
+      },
+      {
+        "number": 25,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.7453434926189999,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.93
+      },
+      {
+        "number": 26,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.7448209738021419,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.91
+      },
+      {
+        "number": 27,
+        "best_fitness": 0.7803789208295057,
+        "mean_fitness": 0.7450315483340885,
+        "best_J": 0.2814287691638924,
+        "diversity": 0.92
+      },
+      {
+        "number": 28,
+        "best_fitness": 0.781024152083004,
+        "mean_fitness": 0.7422901506171665,
+        "best_J": 0.2803701362281611,
+        "diversity": 0.98
+      },
+      {
+        "number": 29,
+        "best_fitness": 0.781024152083004,
+        "mean_fitness": 0.7416843520765733,
+        "best_J": 0.2803701362281611,
+        "diversity": 0.96
+      },
+      {
+        "number": 30,
+        "best_fitness": 0.781024152083004,
+        "mean_fitness": 0.7421065990518595,
+        "best_J": 0.2803701362281611,
+        "diversity": 0.94
+      },
+      {
+        "number": 31,
+        "best_fitness": 0.781024152083004,
+        "mean_fitness": 0.743146457641004,
+        "best_J": 0.2803701362281611,
+        "diversity": 0.91
+      },
+      {
+        "number": 32,
+        "best_fitness": 0.781024152083004,
+        "mean_fitness": 0.740493464399399,
+        "best_J": 0.2803701362281611,
+        "diversity": 0.96
+      },
+      {
+        "number": 33,
+        "best_fitness": 0.781024152083004,
+        "mean_fitness": 0.7445420448688906,
+        "best_J": 0.2803701362281611,
+        "diversity": 0.92
+      },
+      {
+        "number": 34,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7466471034737683,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.91
+      },
+      {
+        "number": 35,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7454289764031814,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.88
+      },
+      {
+        "number": 36,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7477593939051169,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.84
+      },
+      {
+        "number": 37,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7496377288303276,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.74
+      },
+      {
+        "number": 38,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7508547925861149,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.73
+      },
+      {
+        "number": 39,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7558093536797991,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.63
+      },
+      {
+        "number": 40,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7586391711753799,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.52
+      },
+      {
+        "number": 41,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7609728518473574,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.44
+      },
+      {
+        "number": 42,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7642717498105928,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.37
+      },
+      {
+        "number": 43,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7689619850027514,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.28
+      },
+      {
+        "number": 44,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.768476385061057,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.18
+      },
+      {
+        "number": 45,
+        "best_fitness": 0.7835036948828202,
+        "mean_fitness": 0.7708434329738715,
+        "best_J": 0.2763181673949331,
+        "diversity": 0.23
+      },
+      {
+        "number": 46,
+        "best_fitness": 0.7852705188087328,
+        "mean_fitness": 0.7724346686754656,
+        "best_J": 0.27344650798429965,
+        "diversity": 0.27
+      },
+      {
+        "number": 47,
+        "best_fitness": 0.7852705188087328,
+        "mean_fitness": 0.7729412389016391,
+        "best_J": 0.27344650798429965,
+        "diversity": 0.25
+      },
+      {
+        "number": 48,
+        "best_fitness": 0.7852705188087328,
+        "mean_fitness": 0.7728924047462461,
+        "best_J": 0.27344650798429965,
+        "diversity": 0.25
+      },
+      {
+        "number": 49,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7724101599719865,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.24
+      },
+      {
+        "number": 50,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7706692927532803,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.31
+      },
+      {
+        "number": 51,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7724068336326634,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.28
+      },
+      {
+        "number": 52,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.770745766810009,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.42
+      },
+      {
+        "number": 53,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7662572275157499,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.47
+      },
+      {
+        "number": 54,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7686966160160361,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.52
+      },
+      {
+        "number": 55,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7701850525623114,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.44
+      },
+      {
+        "number": 56,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7711582543316152,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.53
+      },
+      {
+        "number": 57,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7692228086800332,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.51
+      },
+      {
+        "number": 58,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7684666965542738,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.74
+      },
+      {
+        "number": 59,
+        "best_fitness": 0.7870991079878237,
+        "mean_fitness": 0.7661262824613374,
+        "best_J": 0.2704880361971772,
+        "diversity": 0.78
+      },
+      {
+        "number": 60,
+        "best_fitness": 0.7872975861720378,
+        "mean_fitness": 0.7672058759125848,
+        "best_J": 0.2701677454165128,
+        "diversity": 0.75
+      },
+      {
+        "number": 61,
+        "best_fitness": 0.7872975861720378,
+        "mean_fitness": 0.7697902024196843,
+        "best_J": 0.2701677454165128,
+        "diversity": 0.82
+      },
+      {
+        "number": 62,
+        "best_fitness": 0.7872975861720378,
+        "mean_fitness": 0.7695727070183844,
+        "best_J": 0.2701677454165128,
+        "diversity": 0.86
+      },
+      {
+        "number": 63,
+        "best_fitness": 0.7899101125516168,
+        "mean_fitness": 0.7684761624463691,
+        "best_J": 0.2659668285163963,
+        "diversity": 0.87
+      },
+      {
+        "number": 64,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7679451476811451,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.87
+      },
+      {
+        "number": 65,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7658164414239199,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.91
+      },
+      {
+        "number": 66,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7641371419686243,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.92
+      },
+      {
+        "number": 67,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7648449160026164,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.88
+      },
+      {
+        "number": 68,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7626146335496256,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.9
+      },
+      {
+        "number": 69,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7611330100180759,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.94
+      },
+      {
+        "number": 70,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7592038120515205,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.95
+      },
+      {
+        "number": 71,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7617035200161321,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.94
+      },
+      {
+        "number": 72,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7610872664296747,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.81
+      },
+      {
+        "number": 73,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7622714677448456,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.84
+      },
+      {
+        "number": 74,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7628188377773084,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.84
+      },
+      {
+        "number": 75,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7628914058346856,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.88
+      },
+      {
+        "number": 76,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7617231836800005,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.92
+      },
+      {
+        "number": 77,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7616028379639128,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.94
+      },
+      {
+        "number": 78,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7585541044636088,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.88
+      },
+      {
+        "number": 79,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7578227214847485,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.87
+      },
+      {
+        "number": 80,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.758445518587706,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.88
+      },
+      {
+        "number": 81,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7596420177724151,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.84
+      },
+      {
+        "number": 82,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7626110138297048,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.8
+      },
+      {
+        "number": 83,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7661983045316005,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.7
+      },
+      {
+        "number": 84,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7684855061544356,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.69
+      },
+      {
+        "number": 85,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7679678767207999,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.7
+      },
+      {
+        "number": 86,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7700556486097253,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.63
+      },
+      {
+        "number": 87,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7717260936427415,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.51
+      },
+      {
+        "number": 88,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7678585727062157,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.6
+      },
+      {
+        "number": 89,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7689550667652434,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.59
+      },
+      {
+        "number": 90,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7696169108375157,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.56
+      },
+      {
+        "number": 91,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7691573933994361,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.57
+      },
+      {
+        "number": 92,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7693145396153631,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.54
+      },
+      {
+        "number": 93,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7695191943932613,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.58
+      },
+      {
+        "number": 94,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7691825532033123,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.55
+      },
+      {
+        "number": 95,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7695568462860365,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.6
+      },
+      {
+        "number": 96,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7715646132409957,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.56
+      },
+      {
+        "number": 97,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7745468353702634,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.56
+      },
+      {
+        "number": 98,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7722698042684875,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.56
+      },
+      {
+        "number": 99,
+        "best_fitness": 0.7919062410116315,
+        "mean_fitness": 0.7732544527304169,
+        "best_J": 0.26277575325399155,
+        "diversity": 0.53
+      }
+    ],
+    "22": [
+      {
+        "number": 0,
+        "best_fitness": 0.7450159831227143,
+        "mean_fitness": 0.6315150410574573,
+        "best_J": 0.3422530826902895,
+        "diversity": 1.0
+      },
+      {
+        "number": 1,
+        "best_fitness": 0.7450159831227143,
+        "mean_fitness": 0.6758173140667716,
+        "best_J": 0.3422530826902895,
+        "diversity": 0.95
+      },
+      {
+        "number": 2,
+        "best_fitness": 0.7470445755256724,
+        "mean_fitness": 0.6997226884072225,
+        "best_J": 0.33860820727642726,
+        "diversity": 0.91
+      },
+      {
+        "number": 3,
+        "best_fitness": 0.7562076702670247,
+        "mean_fitness": 0.7185642417941822,
+        "best_J": 0.3223880678794089,
+        "diversity": 0.94
+      },
+      {
+        "number": 4,
+        "best_fitness": 0.7619490004256907,
+        "mean_fitness": 0.7286524712291608,
+        "best_J": 0.31242379666003034,
+        "diversity": 0.91
+      },
+      {
+        "number": 5,
+        "best_fitness": 0.7619490004256907,
+        "mean_fitness": 0.7339049864099684,
+        "best_J": 0.31242379666003034,
+        "diversity": 0.89
+      },
+      {
+        "number": 6,
+        "best_fitness": 0.7619490004256907,
+        "mean_fitness": 0.7374498881286355,
+        "best_J": 0.31242379666003034,
+        "diversity": 0.94
+      },
+      {
+        "number": 7,
+        "best_fitness": 0.7642028886004145,
+        "mean_fitness": 0.7383903194070094,
+        "best_J": 0.3085530229170316,
+        "diversity": 0.91
+      },
+      {
+        "number": 8,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.739267048146981,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.95
+      },
+      {
+        "number": 9,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7402770627577283,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.94
+      },
+      {
+        "number": 10,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7404083494920455,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.93
+      },
+      {
+        "number": 11,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7383756263863986,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.94
+      },
+      {
+        "number": 12,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7402583378623501,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.96
+      },
+      {
+        "number": 13,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7401480947771242,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.93
+      },
+      {
+        "number": 14,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7397482969479013,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.93
+      },
+      {
+        "number": 15,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7367437019623679,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.96
+      },
+      {
+        "number": 16,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7405715131421452,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.89
+      },
+      {
+        "number": 17,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7419473478221158,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.94
+      },
+      {
+        "number": 18,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7441514000360253,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.91
+      },
+      {
+        "number": 19,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7442148047715902,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.99
+      },
+      {
+        "number": 20,
+        "best_fitness": 0.7810193348109415,
+        "mean_fitness": 0.7447725297298509,
+        "best_J": 0.2803780334606778,
+        "diversity": 0.95
+      },
+      {
+        "number": 21,
+        "best_fitness": 0.7818983954973364,
+        "mean_fitness": 0.7468769980522519,
+        "best_J": 0.2789385497637928,
+        "diversity": 0.95
+      },
+      {
+        "number": 22,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7476576358361129,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.95
+      },
+      {
+        "number": 23,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7477299528869631,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.88
+      },
+      {
+        "number": 24,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.745560541700724,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.91
+      },
+      {
+        "number": 25,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7470002646772153,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.95
+      },
+      {
+        "number": 26,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7465065099551244,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.93
+      },
+      {
+        "number": 27,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7467869379524621,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.94
+      },
+      {
+        "number": 28,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7454518940065826,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.95
+      },
+      {
+        "number": 29,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.74572084607148,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.91
+      },
+      {
+        "number": 30,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7464355082458926,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.93
+      },
+      {
+        "number": 31,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7500994305986162,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.91
+      },
+      {
+        "number": 32,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7512890515890271,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.87
+      },
+      {
+        "number": 33,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7503659065203427,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.88
+      },
+      {
+        "number": 34,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7501675698321,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.88
+      },
+      {
+        "number": 35,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7513767441499659,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.91
+      },
+      {
+        "number": 36,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7487430143567037,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.96
+      },
+      {
+        "number": 37,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7474122803278095,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.94
+      },
+      {
+        "number": 38,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7489741952886639,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.93
+      },
+      {
+        "number": 39,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.75025088280878,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.9
+      },
+      {
+        "number": 40,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7480649205701885,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.94
+      },
+      {
+        "number": 41,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7459198316155518,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.92
+      },
+      {
+        "number": 42,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7458976038120578,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.96
+      },
+      {
+        "number": 43,
+        "best_fitness": 0.7820612569570967,
+        "mean_fitness": 0.7482577632311993,
+        "best_J": 0.27867221538486103,
+        "diversity": 0.89
+      },
+      {
+        "number": 44,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7486224386972674,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.91
+      },
+      {
+        "number": 45,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7464389099043186,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.96
+      },
+      {
+        "number": 46,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7462447579088431,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.98
+      },
+      {
+        "number": 47,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7448043711117427,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.95
+      },
+      {
+        "number": 48,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7428542257977027,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.95
+      },
+      {
+        "number": 49,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7452425753111558,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.94
+      },
+      {
+        "number": 50,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7458351719527692,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.94
+      },
+      {
+        "number": 51,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.744703425532454,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.92
+      },
+      {
+        "number": 52,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7407507276592217,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.95
+      },
+      {
+        "number": 53,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7425256371534147,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.97
+      },
+      {
+        "number": 54,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7453396279574416,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.94
+      },
+      {
+        "number": 55,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7450951643408683,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.97
+      },
+      {
+        "number": 56,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7479562289364386,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.97
+      },
+      {
+        "number": 57,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7456102756178646,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.93
+      },
+      {
+        "number": 58,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7461516254398685,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.94
+      },
+      {
+        "number": 59,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7432041133825602,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.95
+      },
+      {
+        "number": 60,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7431358563850352,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.96
+      },
+      {
+        "number": 61,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7447257148733171,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.97
+      },
+      {
+        "number": 62,
+        "best_fitness": 0.7827574872891815,
+        "mean_fitness": 0.7422691232043303,
+        "best_J": 0.27753488946259103,
+        "diversity": 0.94
+      },
+      {
+        "number": 63,
+        "best_fitness": 0.7834074372135424,
+        "mean_fitness": 0.742363936536219,
+        "best_J": 0.2764749892557101,
+        "diversity": 0.96
+      },
+      {
+        "number": 64,
+        "best_fitness": 0.7862070757149286,
+        "mean_fitness": 0.741735236335024,
+        "best_J": 0.2719295347102556,
+        "diversity": 0.96
+      },
+      {
+        "number": 65,
+        "best_fitness": 0.7862070757149286,
+        "mean_fitness": 0.7414316142515142,
+        "best_J": 0.2719295347102556,
+        "diversity": 0.92
+      },
+      {
+        "number": 66,
+        "best_fitness": 0.7862070757149286,
+        "mean_fitness": 0.7417462330282987,
+        "best_J": 0.2719295347102556,
+        "diversity": 0.98
+      },
+      {
+        "number": 67,
+        "best_fitness": 0.7862070757149286,
+        "mean_fitness": 0.7453028565666915,
+        "best_J": 0.2719295347102556,
+        "diversity": 0.93
+      },
+      {
+        "number": 68,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7435085888714091,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.94
+      },
+      {
+        "number": 69,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7434258974283323,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.94
+      },
+      {
+        "number": 70,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7425994964755328,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.94
+      },
+      {
+        "number": 71,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7407352307607197,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.95
+      },
+      {
+        "number": 72,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7439795481435548,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.91
+      },
+      {
+        "number": 73,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7419548997822699,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.96
+      },
+      {
+        "number": 74,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7412023118393836,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.96
+      },
+      {
+        "number": 75,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.742081121056259,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.94
+      },
+      {
+        "number": 76,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7435363048585971,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.92
+      },
+      {
+        "number": 77,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7466312448385695,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.94
+      },
+      {
+        "number": 78,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7423320119080918,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.93
+      },
+      {
+        "number": 79,
+        "best_fitness": 0.786878743428126,
+        "mean_fitness": 0.7430461766750398,
+        "best_J": 0.2708438350277288,
+        "diversity": 0.9
+      },
+      {
+        "number": 80,
+        "best_fitness": 0.7897032922202321,
+        "mean_fitness": 0.7399258458199843,
+        "best_J": 0.2662983804822742,
+        "diversity": 0.93
+      },
+      {
+        "number": 81,
+        "best_fitness": 0.7897032922202321,
+        "mean_fitness": 0.7404677330987774,
+        "best_J": 0.2662983804822742,
+        "diversity": 0.92
+      },
+      {
+        "number": 82,
+        "best_fitness": 0.7903707908253538,
+        "mean_fitness": 0.7379541269463474,
+        "best_J": 0.2652289426785857,
+        "diversity": 0.96
+      },
+      {
+        "number": 83,
+        "best_fitness": 0.7903707908253538,
+        "mean_fitness": 0.7391447363349117,
+        "best_J": 0.2652289426785857,
+        "diversity": 0.95
+      },
+      {
+        "number": 84,
+        "best_fitness": 0.7903707908253538,
+        "mean_fitness": 0.7379440934182145,
+        "best_J": 0.2652289426785857,
+        "diversity": 0.93
+      },
+      {
+        "number": 85,
+        "best_fitness": 0.7903707908253538,
+        "mean_fitness": 0.7387288959657475,
+        "best_J": 0.2652289426785857,
+        "diversity": 0.91
+      },
+      {
+        "number": 86,
+        "best_fitness": 0.7903707908253538,
+        "mean_fitness": 0.7382742192183326,
+        "best_J": 0.2652289426785857,
+        "diversity": 0.89
+      },
+      {
+        "number": 87,
+        "best_fitness": 0.7904986383672734,
+        "mean_fitness": 0.739172042380362,
+        "best_J": 0.26502431688616024,
+        "diversity": 0.92
+      },
+      {
+        "number": 88,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7423370307663625,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.9
+      },
+      {
+        "number": 89,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7427765595500792,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.95
+      },
+      {
+        "number": 90,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7421140071056729,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.96
+      },
+      {
+        "number": 91,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7466898512784436,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.97
+      },
+      {
+        "number": 92,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7451423642436654,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.97
+      },
+      {
+        "number": 93,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7424752382510902,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.91
+      },
+      {
+        "number": 94,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.745008579238827,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.93
+      },
+      {
+        "number": 95,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7468795266570758,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.87
+      },
+      {
+        "number": 96,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7460480217273084,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.95
+      },
+      {
+        "number": 97,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7446417134592903,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.92
+      },
+      {
+        "number": 98,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7457252215227009,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.96
+      },
+      {
+        "number": 99,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7465485700281088,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.95
+      },
+      {
+        "number": 100,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7450417490129964,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.88
+      },
+      {
+        "number": 101,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7462613813149817,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.93
+      },
+      {
+        "number": 102,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7467376997255925,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.91
+      },
+      {
+        "number": 103,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7471313288046052,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.92
+      },
+      {
+        "number": 104,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7487945092700704,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.93
+      },
+      {
+        "number": 105,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7491658139881296,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.92
+      },
+      {
+        "number": 106,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7448919766464844,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.97
+      },
+      {
+        "number": 107,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7458913721783981,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.94
+      },
+      {
+        "number": 108,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7471277440981094,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.92
+      },
+      {
+        "number": 109,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7444137346432708,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.96
+      },
+      {
+        "number": 110,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7421449970978952,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.93
+      },
+      {
+        "number": 111,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7452205654763374,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.89
+      },
+      {
+        "number": 112,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7455551317872522,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.99
+      },
+      {
+        "number": 113,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7482985713071193,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.92
+      },
+      {
+        "number": 114,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7470563794299866,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.88
+      },
+      {
+        "number": 115,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.744964069642712,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.88
+      },
+      {
+        "number": 116,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7477735666999886,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.93
+      },
+      {
+        "number": 117,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.745971639810351,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.91
+      },
+      {
+        "number": 118,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7479132135801956,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.92
+      },
+      {
+        "number": 119,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7473809301479877,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.94
+      },
+      {
+        "number": 120,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7495140944415413,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.84
+      },
+      {
+        "number": 121,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7472831285368019,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.94
+      },
+      {
+        "number": 122,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7482522063138434,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.95
+      },
+      {
+        "number": 123,
+        "best_fitness": 0.7919213946950016,
+        "mean_fitness": 0.7467943740675382,
+        "best_J": 0.2627515896134329,
+        "diversity": 0.92
+      }
+    ],
+    "33": [
+      {
+        "number": 0,
+        "best_fitness": 0.752570554738419,
+        "mean_fitness": 0.6339528230139171,
+        "best_J": 0.3287790675620883,
+        "diversity": 1.0
+      },
+      {
+        "number": 1,
+        "best_fitness": 0.752570554738419,
+        "mean_fitness": 0.6825733454818023,
+        "best_J": 0.3287790675620883,
+        "diversity": 0.98
+      },
+      {
+        "number": 2,
+        "best_fitness": 0.7585836279060074,
+        "mean_fitness": 0.7117876609127619,
+        "best_J": 0.31824621994597735,
+        "diversity": 0.95
+      },
+      {
+        "number": 3,
+        "best_fitness": 0.7696168533321008,
+        "mean_fitness": 0.7272786183269474,
+        "best_J": 0.29934784519133395,
+        "diversity": 0.97
+      },
+      {
+        "number": 4,
+        "best_fitness": 0.7696168533321008,
+        "mean_fitness": 0.7357899163681378,
+        "best_J": 0.29934784519133395,
+        "diversity": 0.97
+      },
+      {
+        "number": 5,
+        "best_fitness": 0.7700077014538532,
+        "mean_fitness": 0.742778998770529,
+        "best_J": 0.29868830936612434,
+        "diversity": 0.96
+      },
+      {
+        "number": 6,
+        "best_fitness": 0.7738752489199817,
+        "mean_fitness": 0.7421023000394041,
+        "best_J": 0.2921979368064779,
+        "diversity": 0.96
+      },
+      {
+        "number": 7,
+        "best_fitness": 0.7738752489199817,
+        "mean_fitness": 0.7422397991770956,
+        "best_J": 0.2921979368064779,
+        "diversity": 0.91
+      },
+      {
+        "number": 8,
+        "best_fitness": 0.7738752489199817,
+        "mean_fitness": 0.7411747934491598,
+        "best_J": 0.2921979368064779,
+        "diversity": 0.9
+      },
+      {
+        "number": 9,
+        "best_fitness": 0.7738752489199817,
+        "mean_fitness": 0.7421103989086408,
+        "best_J": 0.2921979368064779,
+        "diversity": 0.95
+      },
+      {
+        "number": 10,
+        "best_fitness": 0.7777442514219818,
+        "mean_fitness": 0.7433439106322058,
+        "best_J": 0.2857697092220984,
+        "diversity": 0.97
+      },
+      {
+        "number": 11,
+        "best_fitness": 0.7777442514219818,
+        "mean_fitness": 0.7447706028555485,
+        "best_J": 0.2857697092220984,
+        "diversity": 0.91
+      },
+      {
+        "number": 12,
+        "best_fitness": 0.7777442514219818,
+        "mean_fitness": 0.7472598379123806,
+        "best_J": 0.2857697092220984,
+        "diversity": 0.95
+      },
+      {
+        "number": 13,
+        "best_fitness": 0.7777442514219818,
+        "mean_fitness": 0.7481015926181955,
+        "best_J": 0.2857697092220984,
+        "diversity": 0.93
+      },
+      {
+        "number": 14,
+        "best_fitness": 0.7777442514219818,
+        "mean_fitness": 0.7508821436908626,
+        "best_J": 0.2857697092220984,
+        "diversity": 0.9
+      },
+      {
+        "number": 15,
+        "best_fitness": 0.7777442514219818,
+        "mean_fitness": 0.7452842132688253,
+        "best_J": 0.2857697092220984,
+        "diversity": 0.9
+      },
+      {
+        "number": 16,
+        "best_fitness": 0.7779165761270038,
+        "mean_fitness": 0.7485811909734607,
+        "best_J": 0.28548488448295817,
+        "diversity": 0.94
+      },
+      {
+        "number": 17,
+        "best_fitness": 0.7779165761270038,
+        "mean_fitness": 0.7476745591446324,
+        "best_J": 0.28548488448295817,
+        "diversity": 0.92
+      },
+      {
+        "number": 18,
+        "best_fitness": 0.7779165761270038,
+        "mean_fitness": 0.7456510849246095,
+        "best_J": 0.28548488448295817,
+        "diversity": 0.96
+      },
+      {
+        "number": 19,
+        "best_fitness": 0.7779165761270038,
+        "mean_fitness": 0.74376480264614,
+        "best_J": 0.28548488448295817,
+        "diversity": 0.96
+      },
+      {
+        "number": 20,
+        "best_fitness": 0.7779165761270038,
+        "mean_fitness": 0.7428094522098034,
+        "best_J": 0.28548488448295817,
+        "diversity": 0.92
+      },
+      {
+        "number": 21,
+        "best_fitness": 0.7806231834133641,
+        "mean_fitness": 0.7434322802767309,
+        "best_J": 0.2810278009261596,
+        "diversity": 0.88
+      },
+      {
+        "number": 22,
+        "best_fitness": 0.7808345071725499,
+        "mean_fitness": 0.7442269834261327,
+        "best_J": 0.2806811056814868,
+        "diversity": 0.95
+      },
+      {
+        "number": 23,
+        "best_fitness": 0.7808345071725499,
+        "mean_fitness": 0.7501021821117787,
+        "best_J": 0.2806811056814868,
+        "diversity": 0.88
+      },
+      {
+        "number": 24,
+        "best_fitness": 0.7808345071725499,
+        "mean_fitness": 0.7513284034250266,
+        "best_J": 0.2806811056814868,
+        "diversity": 0.87
+      },
+      {
+        "number": 25,
+        "best_fitness": 0.7808914636809561,
+        "mean_fitness": 0.7475757661065034,
+        "best_J": 0.280587695614206,
+        "diversity": 0.89
+      },
+      {
+        "number": 26,
+        "best_fitness": 0.7810166326198108,
+        "mean_fitness": 0.7495093554619747,
+        "best_J": 0.28038246336142697,
+        "diversity": 0.97
+      },
+      {
+        "number": 27,
+        "best_fitness": 0.7810166326198108,
+        "mean_fitness": 0.748763115106312,
+        "best_J": 0.28038246336142697,
+        "diversity": 0.96
+      },
+      {
+        "number": 28,
+        "best_fitness": 0.7810166326198108,
+        "mean_fitness": 0.7461447231258951,
+        "best_J": 0.28038246336142697,
+        "diversity": 0.91
+      },
+      {
+        "number": 29,
+        "best_fitness": 0.7810166326198108,
+        "mean_fitness": 0.7460152706945528,
+        "best_J": 0.28038246336142697,
+        "diversity": 0.92
+      },
+      {
+        "number": 30,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.7460774086152704,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.9
+      },
+      {
+        "number": 31,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.748486852890436,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.91
+      },
+      {
+        "number": 32,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.7466302516988396,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.9
+      },
+      {
+        "number": 33,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.7485854288073663,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.86
+      },
+      {
+        "number": 34,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.7509506027877013,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.83
+      },
+      {
+        "number": 35,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.7539981951795147,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.78
+      },
+      {
+        "number": 36,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.758949083460759,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.66
+      },
+      {
+        "number": 37,
+        "best_fitness": 0.7824054318373496,
+        "mean_fitness": 0.758505638923229,
+        "best_J": 0.27810973608869966,
+        "diversity": 0.67
+      },
+      {
+        "number": 38,
+        "best_fitness": 0.7828810800200171,
+        "mean_fitness": 0.7606735465351556,
+        "best_J": 0.27733320618047325,
+        "diversity": 0.77
+      },
+      {
+        "number": 39,
+        "best_fitness": 0.7836004773571493,
+        "mean_fitness": 0.7576193366492143,
+        "best_J": 0.27616052937167884,
+        "diversity": 0.7
+      },
+      {
+        "number": 40,
+        "best_fitness": 0.785300610526717,
+        "mean_fitness": 0.7592951778311487,
+        "best_J": 0.2733977111380058,
+        "diversity": 0.7
+      },
+      {
+        "number": 41,
+        "best_fitness": 0.785300610526717,
+        "mean_fitness": 0.7609560465423959,
+        "best_J": 0.2733977111380058,
+        "diversity": 0.63
+      },
+      {
+        "number": 42,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7569785584530776,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.7
+      },
+      {
+        "number": 43,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7603416791583031,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.75
+      },
+      {
+        "number": 44,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7609243062909157,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.74
+      },
+      {
+        "number": 45,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7607299749889437,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.75
+      },
+      {
+        "number": 46,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7622476490658593,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.79
+      },
+      {
+        "number": 47,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7589416359760403,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.85
+      },
+      {
+        "number": 48,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7617703384286488,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.8
+      },
+      {
+        "number": 49,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7621591847139496,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.77
+      },
+      {
+        "number": 50,
+        "best_fitness": 0.7864014982180496,
+        "mean_fitness": 0.7623775427190157,
+        "best_J": 0.27161507482622427,
+        "diversity": 0.74
+      },
+      {
+        "number": 51,
+        "best_fitness": 0.7869523914786729,
+        "mean_fitness": 0.7657409099371819,
+        "best_J": 0.2707249013132974,
+        "diversity": 0.71
+      },
+      {
+        "number": 52,
+        "best_fitness": 0.7869523914786729,
+        "mean_fitness": 0.7653781587032653,
+        "best_J": 0.2707249013132974,
+        "diversity": 0.73
+      },
+      {
+        "number": 53,
+        "best_fitness": 0.7869523914786729,
+        "mean_fitness": 0.7646269751302611,
+        "best_J": 0.2707249013132974,
+        "diversity": 0.74
+      },
+      {
+        "number": 54,
+        "best_fitness": 0.7869523914786729,
+        "mean_fitness": 0.7637186003118126,
+        "best_J": 0.2707249013132974,
+        "diversity": 0.73
+      },
+      {
+        "number": 55,
+        "best_fitness": 0.7881850067617392,
+        "mean_fitness": 0.7665884383939361,
+        "best_J": 0.2687376585714355,
+        "diversity": 0.69
+      },
+      {
+        "number": 56,
+        "best_fitness": 0.7881850067617392,
+        "mean_fitness": 0.7669998404216394,
+        "best_J": 0.2687376585714355,
+        "diversity": 0.63
+      },
+      {
+        "number": 57,
+        "best_fitness": 0.7881850067617392,
+        "mean_fitness": 0.7682968880149578,
+        "best_J": 0.2687376585714355,
+        "diversity": 0.56
+      },
+      {
+        "number": 58,
+        "best_fitness": 0.7881850067617392,
+        "mean_fitness": 0.7728418154953719,
+        "best_J": 0.2687376585714355,
+        "diversity": 0.53
+      },
+      {
+        "number": 59,
+        "best_fitness": 0.7881850067617392,
+        "mean_fitness": 0.7723165515895838,
+        "best_J": 0.2687376585714355,
+        "diversity": 0.45
+      },
+      {
+        "number": 60,
+        "best_fitness": 0.7881850067617392,
+        "mean_fitness": 0.7728098640544778,
+        "best_J": 0.2687376585714355,
+        "diversity": 0.46
+      },
+      {
+        "number": 61,
+        "best_fitness": 0.7895912362133198,
+        "mean_fitness": 0.7734624364069949,
+        "best_J": 0.2664780890879027,
+        "diversity": 0.34
+      },
+      {
+        "number": 62,
+        "best_fitness": 0.7895912362133198,
+        "mean_fitness": 0.7729382462792371,
+        "best_J": 0.2664780890879027,
+        "diversity": 0.29
+      },
+      {
+        "number": 63,
+        "best_fitness": 0.7895912362133198,
+        "mean_fitness": 0.7760363248911888,
+        "best_J": 0.2664780890879027,
+        "diversity": 0.3
+      },
+      {
+        "number": 64,
+        "best_fitness": 0.7895994395790658,
+        "mean_fitness": 0.7772732526773757,
+        "best_J": 0.2664649312987082,
+        "diversity": 0.26
+      },
+      {
+        "number": 65,
+        "best_fitness": 0.7895994395790658,
+        "mean_fitness": 0.7770114393894991,
+        "best_J": 0.2664649312987082,
+        "diversity": 0.33
+      },
+      {
+        "number": 66,
+        "best_fitness": 0.7895994395790658,
+        "mean_fitness": 0.777554335245578,
+        "best_J": 0.2664649312987082,
+        "diversity": 0.35
+      },
+      {
+        "number": 67,
+        "best_fitness": 0.7895994395790658,
+        "mean_fitness": 0.7771031374358333,
+        "best_J": 0.2664649312987082,
+        "diversity": 0.39
+      },
+      {
+        "number": 68,
+        "best_fitness": 0.7895994395790658,
+        "mean_fitness": 0.7781226930220219,
+        "best_J": 0.2664649312987082,
+        "diversity": 0.35
+      },
+      {
+        "number": 69,
+        "best_fitness": 0.7895994395790658,
+        "mean_fitness": 0.7771057473077825,
+        "best_J": 0.2664649312987082,
+        "diversity": 0.46
+      },
+      {
+        "number": 70,
+        "best_fitness": 0.7895994395790658,
+        "mean_fitness": 0.7747440959466119,
+        "best_J": 0.2664649312987082,
+        "diversity": 0.5
+      },
+      {
+        "number": 71,
+        "best_fitness": 0.7902621265341526,
+        "mean_fitness": 0.775527379211404,
+        "best_J": 0.26540291685961637,
+        "diversity": 0.57
+      },
+      {
+        "number": 72,
+        "best_fitness": 0.7902621265341526,
+        "mean_fitness": 0.7723726336491942,
+        "best_J": 0.26540291685961637,
+        "diversity": 0.52
+      },
+      {
+        "number": 73,
+        "best_fitness": 0.7902621265341526,
+        "mean_fitness": 0.7747074165596283,
+        "best_J": 0.26540291685961637,
+        "diversity": 0.6
+      },
+      {
+        "number": 74,
+        "best_fitness": 0.7902621265341526,
+        "mean_fitness": 0.7741726870970459,
+        "best_J": 0.26540291685961637,
+        "diversity": 0.64
+      },
+      {
+        "number": 75,
+        "best_fitness": 0.7902621265341526,
+        "mean_fitness": 0.772776723252486,
+        "best_J": 0.26540291685961637,
+        "diversity": 0.7
+      },
+      {
+        "number": 76,
+        "best_fitness": 0.7902621265341526,
+        "mean_fitness": 0.773529169633446,
+        "best_J": 0.26540291685961637,
+        "diversity": 0.74
+      },
+      {
+        "number": 77,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7726369791187926,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.66
+      },
+      {
+        "number": 78,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7749787819795979,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.73
+      },
+      {
+        "number": 79,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7734634228934602,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.77
+      },
+      {
+        "number": 80,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7720778724452745,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.81
+      },
+      {
+        "number": 81,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7738307006500696,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.91
+      },
+      {
+        "number": 82,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7713755497892137,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.82
+      },
+      {
+        "number": 83,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7706978900581913,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.91
+      },
+      {
+        "number": 84,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7674877237990845,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.93
+      },
+      {
+        "number": 85,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7656752487215264,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.88
+      },
+      {
+        "number": 86,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7643545888175304,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.92
+      },
+      {
+        "number": 87,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7647751184010244,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.91
+      },
+      {
+        "number": 88,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7658767541933564,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.88
+      },
+      {
+        "number": 89,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7691743299237551,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.87
+      },
+      {
+        "number": 90,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7704999479523639,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.87
+      },
+      {
+        "number": 91,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7706701422245442,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.87
+      },
+      {
+        "number": 92,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7676831175456407,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.89
+      },
+      {
+        "number": 93,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7640907597969039,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.91
+      },
+      {
+        "number": 94,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7642065275167762,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.92
+      },
+      {
+        "number": 95,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7650796865557621,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.87
+      },
+      {
+        "number": 96,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7624949611892329,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.89
+      },
+      {
+        "number": 97,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7649808941210362,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.87
+      },
+      {
+        "number": 98,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7660203993658111,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.89
+      },
+      {
+        "number": 99,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7661205041571054,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.89
+      },
+      {
+        "number": 100,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7680246747105085,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.81
+      },
+      {
+        "number": 101,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7639900651525074,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.94
+      },
+      {
+        "number": 102,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7668297487578676,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.85
+      },
+      {
+        "number": 103,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.763974281632387,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.89
+      },
+      {
+        "number": 104,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7659940411052623,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.9
+      },
+      {
+        "number": 105,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7621307251541056,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.88
+      },
+      {
+        "number": 106,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7636959523776882,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.79
+      },
+      {
+        "number": 107,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7660016113138228,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.82
+      },
+      {
+        "number": 108,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7689233362546014,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.81
+      },
+      {
+        "number": 109,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7689883601276746,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.86
+      },
+      {
+        "number": 110,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7683530902135761,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.84
+      },
+      {
+        "number": 111,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7669430942393715,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.8
+      },
+      {
+        "number": 112,
+        "best_fitness": 0.791489582298825,
+        "mean_fitness": 0.7687783870518529,
+        "best_J": 0.2634405080804365,
+        "diversity": 0.8
+      }
+    ],
+    "44": [
+      {
+        "number": 0,
+        "best_fitness": 0.7512639559112317,
+        "mean_fitness": 0.6385564616397885,
+        "best_J": 0.33109008109815213,
+        "diversity": 1.0
+      },
+      {
+        "number": 1,
+        "best_fitness": 0.7512639559112317,
+        "mean_fitness": 0.6909435956087414,
+        "best_J": 0.33109008109815213,
+        "diversity": 0.96
+      },
+      {
+        "number": 2,
+        "best_fitness": 0.7518325298446902,
+        "mean_fitness": 0.717707496649887,
+        "best_J": 0.330083443192562,
+        "diversity": 0.97
+      },
+      {
+        "number": 3,
+        "best_fitness": 0.7665111357654399,
+        "mean_fitness": 0.7320036665289312,
+        "best_J": 0.30461248811655883,
+        "diversity": 0.96
+      },
+      {
+        "number": 4,
+        "best_fitness": 0.7691911064409797,
+        "mean_fitness": 0.7372771599022748,
+        "best_J": 0.3000670335711043,
+        "diversity": 0.96
+      },
+      {
+        "number": 5,
+        "best_fitness": 0.7725841834782005,
+        "mean_fitness": 0.7400657733870523,
+        "best_J": 0.2943573288000354,
+        "diversity": 0.92
+      },
+      {
+        "number": 6,
+        "best_fitness": 0.7747010714908448,
+        "mean_fitness": 0.7435259323699115,
+        "best_J": 0.2908204684364086,
+        "diversity": 0.94
+      },
+      {
+        "number": 7,
+        "best_fitness": 0.7747010714908448,
+        "mean_fitness": 0.7414262318683363,
+        "best_J": 0.2908204684364086,
+        "diversity": 0.91
+      },
+      {
+        "number": 8,
+        "best_fitness": 0.7747010714908448,
+        "mean_fitness": 0.7417405951107291,
+        "best_J": 0.2908204684364086,
+        "diversity": 0.93
+      },
+      {
+        "number": 9,
+        "best_fitness": 0.7747010714908448,
+        "mean_fitness": 0.7424929444648197,
+        "best_J": 0.2908204684364086,
+        "diversity": 0.9
+      },
+      {
+        "number": 10,
+        "best_fitness": 0.7747010714908448,
+        "mean_fitness": 0.7409414070330992,
+        "best_J": 0.2908204684364086,
+        "diversity": 0.86
+      },
+      {
+        "number": 11,
+        "best_fitness": 0.7766220387786816,
+        "mean_fitness": 0.7417394418811408,
+        "best_J": 0.28762763618272186,
+        "diversity": 0.8
+      },
+      {
+        "number": 12,
+        "best_fitness": 0.7766220387786816,
+        "mean_fitness": 0.7397509957566102,
+        "best_J": 0.28762763618272186,
+        "diversity": 0.87
+      },
+      {
+        "number": 13,
+        "best_fitness": 0.7766220387786816,
+        "mean_fitness": 0.740228858515122,
+        "best_J": 0.28762763618272186,
+        "diversity": 0.87
+      },
+      {
+        "number": 14,
+        "best_fitness": 0.7766220387786816,
+        "mean_fitness": 0.7409091012640754,
+        "best_J": 0.28762763618272186,
+        "diversity": 0.84
+      },
+      {
+        "number": 15,
+        "best_fitness": 0.7766220387786816,
+        "mean_fitness": 0.7394974997798535,
+        "best_J": 0.28762763618272186,
+        "diversity": 0.89
+      },
+      {
+        "number": 16,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7406802511253556,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.88
+      },
+      {
+        "number": 17,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7423390551480372,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.88
+      },
+      {
+        "number": 18,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7385771249070525,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.87
+      },
+      {
+        "number": 19,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.740681528081932,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.96
+      },
+      {
+        "number": 20,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7390868109627878,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.91
+      },
+      {
+        "number": 21,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7426122061000414,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.97
+      },
+      {
+        "number": 22,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7431105582445069,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.97
+      },
+      {
+        "number": 23,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7438067584081874,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.91
+      },
+      {
+        "number": 24,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7462356201250807,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.96
+      },
+      {
+        "number": 25,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7462444583345897,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.92
+      },
+      {
+        "number": 26,
+        "best_fitness": 0.7821096537211537,
+        "mean_fitness": 0.7505320352786028,
+        "best_J": 0.2785930914446058,
+        "diversity": 0.94
+      },
+      {
+        "number": 27,
+        "best_fitness": 0.7822516277300969,
+        "mean_fitness": 0.7456363389032039,
+        "best_J": 0.2783610344177302,
+        "diversity": 0.93
+      },
+      {
+        "number": 28,
+        "best_fitness": 0.7822516277300969,
+        "mean_fitness": 0.7471512999940698,
+        "best_J": 0.2783610344177302,
+        "diversity": 0.94
+      },
+      {
+        "number": 29,
+        "best_fitness": 0.7824869653424253,
+        "mean_fitness": 0.7465452789228884,
+        "best_J": 0.27797655972759666,
+        "diversity": 0.92
+      },
+      {
+        "number": 30,
+        "best_fitness": 0.7824869653424253,
+        "mean_fitness": 0.7451183094082344,
+        "best_J": 0.27797655972759666,
+        "diversity": 0.93
+      },
+      {
+        "number": 31,
+        "best_fitness": 0.7824869653424253,
+        "mean_fitness": 0.7459852642520712,
+        "best_J": 0.27797655972759666,
+        "diversity": 0.93
+      },
+      {
+        "number": 32,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7479476014760871,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.9
+      },
+      {
+        "number": 33,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7484476503463301,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.92
+      },
+      {
+        "number": 34,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7490097332645499,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.92
+      },
+      {
+        "number": 35,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7495096941571526,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.9
+      },
+      {
+        "number": 36,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7471951432680882,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.95
+      },
+      {
+        "number": 37,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7480219423136454,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.83
+      },
+      {
+        "number": 38,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7519480235844551,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.88
+      },
+      {
+        "number": 39,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7507445607453249,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.91
+      },
+      {
+        "number": 40,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7497755769769221,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.93
+      },
+      {
+        "number": 41,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7543612616815046,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.97
+      },
+      {
+        "number": 42,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7576590070903072,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.97
+      },
+      {
+        "number": 43,
+        "best_fitness": 0.7854586024891971,
+        "mean_fitness": 0.7556571312158747,
+        "best_J": 0.2731415721094654,
+        "diversity": 0.95
+      },
+      {
+        "number": 44,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.7543657092782893,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.9
+      },
+      {
+        "number": 45,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.7547858348755114,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.94
+      },
+      {
+        "number": 46,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.7529493443972329,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.93
+      },
+      {
+        "number": 47,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.7549388255565955,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.97
+      },
+      {
+        "number": 48,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.7568856533600321,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.93
+      },
+      {
+        "number": 49,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.7509970966380972,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.94
+      },
+      {
+        "number": 50,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.748679552431525,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.99
+      },
+      {
+        "number": 51,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.749431249826872,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.98
+      },
+      {
+        "number": 52,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.7518335208128615,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.94
+      },
+      {
+        "number": 53,
+        "best_fitness": 0.7898441049816212,
+        "mean_fitness": 0.752230953991431,
+        "best_J": 0.2660726258421199,
+        "diversity": 0.89
+      },
+      {
+        "number": 54,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7543158144996569,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.85
+      },
+      {
+        "number": 55,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7560098299909132,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.85
+      },
+      {
+        "number": 56,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7544934217096403,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.89
+      },
+      {
+        "number": 57,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7555885930793315,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.94
+      },
+      {
+        "number": 58,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7571920391152388,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.92
+      },
+      {
+        "number": 59,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7554627864378509,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.93
+      },
+      {
+        "number": 60,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7574447700866139,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.94
+      },
+      {
+        "number": 61,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7553404624286919,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.95
+      },
+      {
+        "number": 62,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7567839218722427,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.96
+      },
+      {
+        "number": 63,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7544732260144302,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.98
+      },
+      {
+        "number": 64,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7562893193800861,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.93
+      },
+      {
+        "number": 65,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7543837628808574,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.94
+      },
+      {
+        "number": 66,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7507458627893634,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.98
+      },
+      {
+        "number": 67,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7538745781352101,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.93
+      },
+      {
+        "number": 68,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7513794361282713,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.92
+      },
+      {
+        "number": 69,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7534302893560786,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.96
+      },
+      {
+        "number": 70,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7567942976606028,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.83
+      },
+      {
+        "number": 71,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7584371329860111,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.9
+      },
+      {
+        "number": 72,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7551331634157001,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.92
+      },
+      {
+        "number": 73,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7589011108278649,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.92
+      },
+      {
+        "number": 74,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7570466064585255,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.88
+      },
+      {
+        "number": 75,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7549725818970049,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.9
+      },
+      {
+        "number": 76,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7521070246102519,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.9
+      },
+      {
+        "number": 77,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7524665710083913,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.9
+      },
+      {
+        "number": 78,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7559960136118832,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.91
+      },
+      {
+        "number": 79,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7565664262931281,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.92
+      },
+      {
+        "number": 80,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7568318368054746,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.89
+      },
+      {
+        "number": 81,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7589270457031343,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.87
+      },
+      {
+        "number": 82,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7496940115999571,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.97
+      },
+      {
+        "number": 83,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7448023431613539,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.96
+      },
+      {
+        "number": 84,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7515150177526757,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.93
+      },
+      {
+        "number": 85,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7534607478126293,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.92
+      },
+      {
+        "number": 86,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7502061859875252,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.96
+      },
+      {
+        "number": 87,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7532910420208598,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.97
+      },
+      {
+        "number": 88,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7541878420276152,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.9
+      },
+      {
+        "number": 89,
+        "best_fitness": 0.7898681003697524,
+        "mean_fitness": 0.7520059510962547,
+        "best_J": 0.2660341638456862,
+        "diversity": 0.93
+      }
+    ]
+  },
+  "solutions_by_seed": {
+    "11": {
+      "chromosome": {
+        "pi": [
+          "C11",
+          "C10",
+          "C18",
+          "C15",
+          "C04",
+          "C17",
+          "C13",
+          "C12",
+          "C02",
+          "C07",
+          "C16",
+          "C03",
+          "C06",
+          "C08",
+          "C09",
+          "C14",
+          "C05",
+          "C01"
+        ],
+        "q": {
+          "C01": 0,
+          "C02": 11,
+          "C03": 7,
+          "C04": 8,
+          "C05": 0,
+          "C06": 10,
+          "C07": 10,
+          "C08": 6,
+          "C09": 16,
+          "C10": 0,
+          "C11": 12,
+          "C12": 10,
+          "C13": 7,
+          "C14": 8,
+          "C15": 0,
+          "C16": 10,
+          "C17": 14,
+          "C18": 6
+        }
+      },
+      "routes": [
+        {
+          "vehicle_id": "V01",
+          "capacity_lots": 50,
+          "load_lots": 50,
+          "km": 20.937553,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C11",
+            "C04",
+            "C17",
+            "C09",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C11",
+              "lots": 12
+            },
+            {
+              "order": 2,
+              "center_id": "C04",
+              "lots": 8
+            },
+            {
+              "order": 3,
+              "center_id": "C17",
+              "lots": 14
+            },
+            {
+              "order": 4,
+              "center_id": "C09",
+              "lots": 16
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V02",
+          "capacity_lots": 50,
+          "load_lots": 49,
+          "km": 21.41599,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C12",
+            "C02",
+            "C07",
+            "C16",
+            "C14",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C12",
+              "lots": 10
+            },
+            {
+              "order": 2,
+              "center_id": "C02",
+              "lots": 11
+            },
+            {
+              "order": 3,
+              "center_id": "C07",
+              "lots": 10
+            },
+            {
+              "order": 4,
+              "center_id": "C16",
+              "lots": 10
+            },
+            {
+              "order": 5,
+              "center_id": "C14",
+              "lots": 8
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V03",
+          "capacity_lots": 50,
+          "load_lots": 36,
+          "km": 20.253318999999998,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C18",
+            "C13",
+            "C03",
+            "C06",
+            "C08",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C18",
+              "lots": 6
+            },
+            {
+              "order": 2,
+              "center_id": "C13",
+              "lots": 7
+            },
+            {
+              "order": 3,
+              "center_id": "C03",
+              "lots": 7
+            },
+            {
+              "order": 4,
+              "center_id": "C06",
+              "lots": 10
+            },
+            {
+              "order": 5,
+              "center_id": "C08",
+              "lots": 6
+            }
+          ]
+        }
+      ],
+      "assignments": [
+        {
+          "center_id": "C01",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 0,
+          "pending_lots": 10,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C02",
+          "priority_weight": 3,
+          "demand_lots": 11,
+          "assigned_lots": 11,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C03",
+          "priority_weight": 3,
+          "demand_lots": 7,
+          "assigned_lots": 7,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C04",
+          "priority_weight": 2,
+          "demand_lots": 9,
+          "assigned_lots": 8,
+          "pending_lots": 1,
+          "vehicle_id": "V01",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C05",
+          "priority_weight": 1,
+          "demand_lots": 13,
+          "assigned_lots": 0,
+          "pending_lots": 13,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C06",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C07",
+          "priority_weight": 1,
+          "demand_lots": 15,
+          "assigned_lots": 10,
+          "pending_lots": 5,
+          "vehicle_id": "V02",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C08",
+          "priority_weight": 2,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 5,
+          "partial_only": false
+        },
+        {
+          "center_id": "C09",
+          "priority_weight": 3,
+          "demand_lots": 16,
+          "assigned_lots": 16,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C10",
+          "priority_weight": 1,
+          "demand_lots": 8,
+          "assigned_lots": 0,
+          "pending_lots": 8,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C11",
+          "priority_weight": 3,
+          "demand_lots": 12,
+          "assigned_lots": 12,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C12",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C13",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 7,
+          "pending_lots": 3,
+          "vehicle_id": "V03",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C14",
+          "priority_weight": 2,
+          "demand_lots": 8,
+          "assigned_lots": 8,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 5,
+          "partial_only": false
+        },
+        {
+          "center_id": "C15",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 0,
+          "pending_lots": 6,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C16",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C17",
+          "priority_weight": 2,
+          "demand_lots": 14,
+          "assigned_lots": 14,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C18",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 1,
+          "partial_only": false
+        }
+      ],
+      "validation": {
+        "feasible": true,
+        "checks": [
+          {
+            "id": "permutation",
+            "description": "π es una permutación completa de los centros, sin repetidos",
+            "ok": true,
+            "detail": "18 genes para 18 centros"
+          },
+          {
+            "id": "quantity_domain",
+            "description": "0 ≤ q_i ≤ d_i y q_i ≤ max C_v para todo centro",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "inventory",
+            "description": "Σ q_i ≤ B (inventario)",
+            "ok": true,
+            "detail": "135 ≤ 135 lotes"
+          },
+          {
+            "id": "vehicle_capacity",
+            "description": "La carga de cada vehículo no supera su capacidad C_v",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "single_visit",
+            "description": "Cada centro con q_i > 0 se visita exactamente una vez, en un único vehículo",
+            "ok": true,
+            "detail": "14 centros con entrega, 14 paradas"
+          },
+          {
+            "id": "depot_round_trip",
+            "description": "Cada ruta usada inicia y termina en el depósito",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "pi_suborder",
+            "description": "Dentro de cada vehículo, las paradas respetan el orden relativo de π",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "distance_recomputed",
+            "description": "La distancia total coincide con la recalculada desde la matriz D",
+            "ok": true,
+            "detail": "recalculada 62.606862 km; informada 62.606862 km"
+          }
+        ]
+      },
+      "repair": {
+        "total_lots_removed": 0,
+        "by_reason": {}
+      }
+    },
+    "22": {
+      "chromosome": {
+        "pi": [
+          "C11",
+          "C16",
+          "C07",
+          "C04",
+          "C15",
+          "C17",
+          "C05",
+          "C02",
+          "C13",
+          "C01",
+          "C12",
+          "C18",
+          "C09",
+          "C14",
+          "C08",
+          "C10",
+          "C03",
+          "C06"
+        ],
+        "q": {
+          "C01": 0,
+          "C02": 11,
+          "C03": 7,
+          "C04": 8,
+          "C05": 12,
+          "C06": 10,
+          "C07": 10,
+          "C08": 6,
+          "C09": 16,
+          "C10": 0,
+          "C11": 12,
+          "C12": 0,
+          "C13": 0,
+          "C14": 8,
+          "C15": 0,
+          "C16": 10,
+          "C17": 14,
+          "C18": 6
+        }
+      },
+      "routes": [
+        {
+          "vehicle_id": "V01",
+          "capacity_lots": 50,
+          "load_lots": 50,
+          "km": 20.937553,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C11",
+            "C04",
+            "C17",
+            "C09",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C11",
+              "lots": 12
+            },
+            {
+              "order": 2,
+              "center_id": "C04",
+              "lots": 8
+            },
+            {
+              "order": 3,
+              "center_id": "C17",
+              "lots": 14
+            },
+            {
+              "order": 4,
+              "center_id": "C09",
+              "lots": 16
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V02",
+          "capacity_lots": 50,
+          "load_lots": 50,
+          "km": 24.622495999999998,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C16",
+            "C07",
+            "C05",
+            "C02",
+            "C03",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C16",
+              "lots": 10
+            },
+            {
+              "order": 2,
+              "center_id": "C07",
+              "lots": 10
+            },
+            {
+              "order": 3,
+              "center_id": "C05",
+              "lots": 12
+            },
+            {
+              "order": 4,
+              "center_id": "C02",
+              "lots": 11
+            },
+            {
+              "order": 5,
+              "center_id": "C03",
+              "lots": 7
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V03",
+          "capacity_lots": 50,
+          "load_lots": 30,
+          "km": 12.475349000000001,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C18",
+            "C14",
+            "C08",
+            "C06",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C18",
+              "lots": 6
+            },
+            {
+              "order": 2,
+              "center_id": "C14",
+              "lots": 8
+            },
+            {
+              "order": 3,
+              "center_id": "C08",
+              "lots": 6
+            },
+            {
+              "order": 4,
+              "center_id": "C06",
+              "lots": 10
+            }
+          ]
+        }
+      ],
+      "assignments": [
+        {
+          "center_id": "C01",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 0,
+          "pending_lots": 10,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C02",
+          "priority_weight": 3,
+          "demand_lots": 11,
+          "assigned_lots": 11,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C03",
+          "priority_weight": 3,
+          "demand_lots": 7,
+          "assigned_lots": 7,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 5,
+          "partial_only": false
+        },
+        {
+          "center_id": "C04",
+          "priority_weight": 2,
+          "demand_lots": 9,
+          "assigned_lots": 8,
+          "pending_lots": 1,
+          "vehicle_id": "V01",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C05",
+          "priority_weight": 1,
+          "demand_lots": 13,
+          "assigned_lots": 12,
+          "pending_lots": 1,
+          "vehicle_id": "V02",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C06",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C07",
+          "priority_weight": 1,
+          "demand_lots": 15,
+          "assigned_lots": 10,
+          "pending_lots": 5,
+          "vehicle_id": "V02",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C08",
+          "priority_weight": 2,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C09",
+          "priority_weight": 3,
+          "demand_lots": 16,
+          "assigned_lots": 16,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C10",
+          "priority_weight": 1,
+          "demand_lots": 8,
+          "assigned_lots": 0,
+          "pending_lots": 8,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C11",
+          "priority_weight": 3,
+          "demand_lots": 12,
+          "assigned_lots": 12,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C12",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 0,
+          "pending_lots": 10,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C13",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 0,
+          "pending_lots": 10,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C14",
+          "priority_weight": 2,
+          "demand_lots": 8,
+          "assigned_lots": 8,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C15",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 0,
+          "pending_lots": 6,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C16",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C17",
+          "priority_weight": 2,
+          "demand_lots": 14,
+          "assigned_lots": 14,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C18",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 1,
+          "partial_only": false
+        }
+      ],
+      "validation": {
+        "feasible": true,
+        "checks": [
+          {
+            "id": "permutation",
+            "description": "π es una permutación completa de los centros, sin repetidos",
+            "ok": true,
+            "detail": "18 genes para 18 centros"
+          },
+          {
+            "id": "quantity_domain",
+            "description": "0 ≤ q_i ≤ d_i y q_i ≤ max C_v para todo centro",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "inventory",
+            "description": "Σ q_i ≤ B (inventario)",
+            "ok": true,
+            "detail": "130 ≤ 135 lotes"
+          },
+          {
+            "id": "vehicle_capacity",
+            "description": "La carga de cada vehículo no supera su capacidad C_v",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "single_visit",
+            "description": "Cada centro con q_i > 0 se visita exactamente una vez, en un único vehículo",
+            "ok": true,
+            "detail": "13 centros con entrega, 13 paradas"
+          },
+          {
+            "id": "depot_round_trip",
+            "description": "Cada ruta usada inicia y termina en el depósito",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "pi_suborder",
+            "description": "Dentro de cada vehículo, las paradas respetan el orden relativo de π",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "distance_recomputed",
+            "description": "La distancia total coincide con la recalculada desde la matriz D",
+            "ok": true,
+            "detail": "recalculada 58.035398 km; informada 58.035398 km"
+          }
+        ]
+      },
+      "repair": {
+        "total_lots_removed": 0,
+        "by_reason": {}
+      }
+    },
+    "33": {
+      "chromosome": {
+        "pi": [
+          "C08",
+          "C06",
+          "C11",
+          "C04",
+          "C12",
+          "C02",
+          "C10",
+          "C01",
+          "C05",
+          "C07",
+          "C03",
+          "C17",
+          "C09",
+          "C13",
+          "C15",
+          "C18",
+          "C14",
+          "C16"
+        ],
+        "q": {
+          "C01": 0,
+          "C02": 11,
+          "C03": 7,
+          "C04": 8,
+          "C05": 0,
+          "C06": 10,
+          "C07": 9,
+          "C08": 6,
+          "C09": 16,
+          "C10": 0,
+          "C11": 12,
+          "C12": 10,
+          "C13": 8,
+          "C14": 8,
+          "C15": 0,
+          "C16": 10,
+          "C17": 14,
+          "C18": 6
+        }
+      },
+      "routes": [
+        {
+          "vehicle_id": "V01",
+          "capacity_lots": 50,
+          "load_lots": 50,
+          "km": 20.937553,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C11",
+            "C04",
+            "C17",
+            "C09",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C11",
+              "lots": 12
+            },
+            {
+              "order": 2,
+              "center_id": "C04",
+              "lots": 8
+            },
+            {
+              "order": 3,
+              "center_id": "C17",
+              "lots": 14
+            },
+            {
+              "order": 4,
+              "center_id": "C09",
+              "lots": 16
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V02",
+          "capacity_lots": 50,
+          "load_lots": 50,
+          "km": 21.455171,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C06",
+            "C12",
+            "C02",
+            "C07",
+            "C16",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C06",
+              "lots": 10
+            },
+            {
+              "order": 2,
+              "center_id": "C12",
+              "lots": 10
+            },
+            {
+              "order": 3,
+              "center_id": "C02",
+              "lots": 11
+            },
+            {
+              "order": 4,
+              "center_id": "C07",
+              "lots": 9
+            },
+            {
+              "order": 5,
+              "center_id": "C16",
+              "lots": 10
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V03",
+          "capacity_lots": 50,
+          "load_lots": 35,
+          "km": 20.480994,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C08",
+            "C03",
+            "C13",
+            "C18",
+            "C14",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C08",
+              "lots": 6
+            },
+            {
+              "order": 2,
+              "center_id": "C03",
+              "lots": 7
+            },
+            {
+              "order": 3,
+              "center_id": "C13",
+              "lots": 8
+            },
+            {
+              "order": 4,
+              "center_id": "C18",
+              "lots": 6
+            },
+            {
+              "order": 5,
+              "center_id": "C14",
+              "lots": 8
+            }
+          ]
+        }
+      ],
+      "assignments": [
+        {
+          "center_id": "C01",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 0,
+          "pending_lots": 10,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C02",
+          "priority_weight": 3,
+          "demand_lots": 11,
+          "assigned_lots": 11,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C03",
+          "priority_weight": 3,
+          "demand_lots": 7,
+          "assigned_lots": 7,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C04",
+          "priority_weight": 2,
+          "demand_lots": 9,
+          "assigned_lots": 8,
+          "pending_lots": 1,
+          "vehicle_id": "V01",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C05",
+          "priority_weight": 1,
+          "demand_lots": 13,
+          "assigned_lots": 0,
+          "pending_lots": 13,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C06",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C07",
+          "priority_weight": 1,
+          "demand_lots": 15,
+          "assigned_lots": 9,
+          "pending_lots": 6,
+          "vehicle_id": "V02",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C08",
+          "priority_weight": 2,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C09",
+          "priority_weight": 3,
+          "demand_lots": 16,
+          "assigned_lots": 16,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C10",
+          "priority_weight": 1,
+          "demand_lots": 8,
+          "assigned_lots": 0,
+          "pending_lots": 8,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C11",
+          "priority_weight": 3,
+          "demand_lots": 12,
+          "assigned_lots": 12,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C12",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C13",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 8,
+          "pending_lots": 2,
+          "vehicle_id": "V03",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C14",
+          "priority_weight": 2,
+          "demand_lots": 8,
+          "assigned_lots": 8,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 5,
+          "partial_only": false
+        },
+        {
+          "center_id": "C15",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 0,
+          "pending_lots": 6,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C16",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 5,
+          "partial_only": false
+        },
+        {
+          "center_id": "C17",
+          "priority_weight": 2,
+          "demand_lots": 14,
+          "assigned_lots": 14,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C18",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 4,
+          "partial_only": false
+        }
+      ],
+      "validation": {
+        "feasible": true,
+        "checks": [
+          {
+            "id": "permutation",
+            "description": "π es una permutación completa de los centros, sin repetidos",
+            "ok": true,
+            "detail": "18 genes para 18 centros"
+          },
+          {
+            "id": "quantity_domain",
+            "description": "0 ≤ q_i ≤ d_i y q_i ≤ max C_v para todo centro",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "inventory",
+            "description": "Σ q_i ≤ B (inventario)",
+            "ok": true,
+            "detail": "135 ≤ 135 lotes"
+          },
+          {
+            "id": "vehicle_capacity",
+            "description": "La carga de cada vehículo no supera su capacidad C_v",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "single_visit",
+            "description": "Cada centro con q_i > 0 se visita exactamente una vez, en un único vehículo",
+            "ok": true,
+            "detail": "14 centros con entrega, 14 paradas"
+          },
+          {
+            "id": "depot_round_trip",
+            "description": "Cada ruta usada inicia y termina en el depósito",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "pi_suborder",
+            "description": "Dentro de cada vehículo, las paradas respetan el orden relativo de π",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "distance_recomputed",
+            "description": "La distancia total coincide con la recalculada desde la matriz D",
+            "ok": true,
+            "detail": "recalculada 62.873718 km; informada 62.873718 km"
+          }
+        ]
+      },
+      "repair": {
+        "total_lots_removed": 0,
+        "by_reason": {}
+      }
+    },
+    "44": {
+      "chromosome": {
+        "pi": [
+          "C05",
+          "C09",
+          "C10",
+          "C07",
+          "C17",
+          "C02",
+          "C18",
+          "C13",
+          "C12",
+          "C16",
+          "C03",
+          "C06",
+          "C14",
+          "C04",
+          "C11",
+          "C08",
+          "C15",
+          "C01"
+        ],
+        "q": {
+          "C01": 0,
+          "C02": 11,
+          "C03": 7,
+          "C04": 9,
+          "C05": 0,
+          "C06": 10,
+          "C07": 10,
+          "C08": 6,
+          "C09": 15,
+          "C10": 0,
+          "C11": 12,
+          "C12": 10,
+          "C13": 7,
+          "C14": 8,
+          "C15": 0,
+          "C16": 10,
+          "C17": 14,
+          "C18": 6
+        }
+      },
+      "routes": [
+        {
+          "vehicle_id": "V01",
+          "capacity_lots": 50,
+          "load_lots": 50,
+          "km": 20.937553,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C09",
+            "C17",
+            "C04",
+            "C11",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C09",
+              "lots": 15
+            },
+            {
+              "order": 2,
+              "center_id": "C17",
+              "lots": 14
+            },
+            {
+              "order": 3,
+              "center_id": "C04",
+              "lots": 9
+            },
+            {
+              "order": 4,
+              "center_id": "C11",
+              "lots": 12
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V02",
+          "capacity_lots": 50,
+          "load_lots": 49,
+          "km": 21.811678,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C07",
+            "C02",
+            "C12",
+            "C16",
+            "C14",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C07",
+              "lots": 10
+            },
+            {
+              "order": 2,
+              "center_id": "C02",
+              "lots": 11
+            },
+            {
+              "order": 3,
+              "center_id": "C12",
+              "lots": 10
+            },
+            {
+              "order": 4,
+              "center_id": "C16",
+              "lots": 10
+            },
+            {
+              "order": 5,
+              "center_id": "C14",
+              "lots": 8
+            }
+          ]
+        },
+        {
+          "vehicle_id": "V03",
+          "capacity_lots": 50,
+          "load_lots": 36,
+          "km": 20.253318999999998,
+          "used": true,
+          "path": [
+            "DEPOT",
+            "C18",
+            "C13",
+            "C03",
+            "C06",
+            "C08",
+            "DEPOT"
+          ],
+          "stops": [
+            {
+              "order": 1,
+              "center_id": "C18",
+              "lots": 6
+            },
+            {
+              "order": 2,
+              "center_id": "C13",
+              "lots": 7
+            },
+            {
+              "order": 3,
+              "center_id": "C03",
+              "lots": 7
+            },
+            {
+              "order": 4,
+              "center_id": "C06",
+              "lots": 10
+            },
+            {
+              "order": 5,
+              "center_id": "C08",
+              "lots": 6
+            }
+          ]
+        }
+      ],
+      "assignments": [
+        {
+          "center_id": "C01",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 0,
+          "pending_lots": 10,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C02",
+          "priority_weight": 3,
+          "demand_lots": 11,
+          "assigned_lots": 11,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C03",
+          "priority_weight": 3,
+          "demand_lots": 7,
+          "assigned_lots": 7,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C04",
+          "priority_weight": 2,
+          "demand_lots": 9,
+          "assigned_lots": 9,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C05",
+          "priority_weight": 1,
+          "demand_lots": 13,
+          "assigned_lots": 0,
+          "pending_lots": 13,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C06",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C07",
+          "priority_weight": 1,
+          "demand_lots": 15,
+          "assigned_lots": 10,
+          "pending_lots": 5,
+          "vehicle_id": "V02",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C08",
+          "priority_weight": 2,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 5,
+          "partial_only": false
+        },
+        {
+          "center_id": "C09",
+          "priority_weight": 3,
+          "demand_lots": 16,
+          "assigned_lots": 15,
+          "pending_lots": 1,
+          "vehicle_id": "V01",
+          "stop_order": 1,
+          "partial_only": false
+        },
+        {
+          "center_id": "C10",
+          "priority_weight": 1,
+          "demand_lots": 8,
+          "assigned_lots": 0,
+          "pending_lots": 8,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C11",
+          "priority_weight": 3,
+          "demand_lots": 12,
+          "assigned_lots": 12,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C12",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 3,
+          "partial_only": false
+        },
+        {
+          "center_id": "C13",
+          "priority_weight": 1,
+          "demand_lots": 10,
+          "assigned_lots": 7,
+          "pending_lots": 3,
+          "vehicle_id": "V03",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C14",
+          "priority_weight": 2,
+          "demand_lots": 8,
+          "assigned_lots": 8,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 5,
+          "partial_only": false
+        },
+        {
+          "center_id": "C15",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 0,
+          "pending_lots": 6,
+          "vehicle_id": null,
+          "stop_order": null,
+          "partial_only": false
+        },
+        {
+          "center_id": "C16",
+          "priority_weight": 2,
+          "demand_lots": 10,
+          "assigned_lots": 10,
+          "pending_lots": 0,
+          "vehicle_id": "V02",
+          "stop_order": 4,
+          "partial_only": false
+        },
+        {
+          "center_id": "C17",
+          "priority_weight": 2,
+          "demand_lots": 14,
+          "assigned_lots": 14,
+          "pending_lots": 0,
+          "vehicle_id": "V01",
+          "stop_order": 2,
+          "partial_only": false
+        },
+        {
+          "center_id": "C18",
+          "priority_weight": 1,
+          "demand_lots": 6,
+          "assigned_lots": 6,
+          "pending_lots": 0,
+          "vehicle_id": "V03",
+          "stop_order": 1,
+          "partial_only": false
+        }
+      ],
+      "validation": {
+        "feasible": true,
+        "checks": [
+          {
+            "id": "permutation",
+            "description": "π es una permutación completa de los centros, sin repetidos",
+            "ok": true,
+            "detail": "18 genes para 18 centros"
+          },
+          {
+            "id": "quantity_domain",
+            "description": "0 ≤ q_i ≤ d_i y q_i ≤ max C_v para todo centro",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "inventory",
+            "description": "Σ q_i ≤ B (inventario)",
+            "ok": true,
+            "detail": "135 ≤ 135 lotes"
+          },
+          {
+            "id": "vehicle_capacity",
+            "description": "La carga de cada vehículo no supera su capacidad C_v",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "single_visit",
+            "description": "Cada centro con q_i > 0 se visita exactamente una vez, en un único vehículo",
+            "ok": true,
+            "detail": "14 centros con entrega, 14 paradas"
+          },
+          {
+            "id": "depot_round_trip",
+            "description": "Cada ruta usada inicia y termina en el depósito",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "pi_suborder",
+            "description": "Dentro de cada vehículo, las paradas respetan el orden relativo de π",
+            "ok": true,
+            "detail": "sin violaciones"
+          },
+          {
+            "id": "distance_recomputed",
+            "description": "La distancia total coincide con la recalculada desde la matriz D",
+            "ok": true,
+            "detail": "recalculada 63.002550 km; informada 63.002550 km"
+          }
+        ]
+      },
+      "repair": {
+        "total_lots_removed": 0,
+        "by_reason": {}
+      }
+    }
+  }
+}

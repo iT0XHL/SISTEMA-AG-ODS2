@@ -1,0 +1,29 @@
+[project]
+name = "nutriruta-ag"
+version = "1.0.0"
+description = "Optimizador genético de asignación de lotes alimentarios y rutas (ODS 2, prototipo académico)"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["."]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "C4", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = [
+    # starlette recomienda migrar el TestClient a httpx2; httpx sigue funcionando.
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
+markers = [
+    "e2e: pruebas contra el stack Docker en ejecución (requieren E2E_BASE_URL)",
+    "slow: pruebas de fuerza bruta o corridas completas",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "tests"]

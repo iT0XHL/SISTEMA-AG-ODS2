@@ -1,0 +1,12 @@
+**/node_modules
+**/dist
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/.hypothesis
+**/*.pyc
+**/*.db
+.git
+.github
+*.docx
+frontend/coverage
