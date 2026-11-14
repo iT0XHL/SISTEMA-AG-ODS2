@@ -18,6 +18,7 @@ export function RunPage() {
   const { scenario, runId, setRunId } = useStore();
   const { run, history, error } = useRun(runId);
   const [recent, setRecent] = useState<RunState[]>([]);
+  const [showAllRecent, setShowAllRecent] = useState(false);
   const [cancelError, setCancelError] = useState<string | null>(null);
   const [replay, setReplay] = useState<number | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -69,6 +70,7 @@ export function RunPage() {
   );
   const last = visible[visible.length - 1];
   const xMax = finished ? history[history.length - 1]?.number : run?.progress.max_generations;
+  const recentToShow = showAllRecent ? recent : recent.slice(0, 5);
 
   async function cancel() {
     if (!runId) return;
@@ -298,6 +300,16 @@ export function RunPage() {
         <section className="stack">
           <div className="section-title">
             <h2>Corridas de este escenario</h2>
+            {recent.length > 5 && (
+              <button
+                type="button"
+                className="btn small"
+                aria-expanded={showAllRecent}
+                onClick={() => setShowAllRecent((value) => !value)}
+              >
+                {showAllRecent ? "Mostrar recientes" : `Ver las ${recent.length} corridas`}
+              </button>
+            )}
           </div>
           <div className="table-wrap">
             <table className="data">
@@ -316,7 +328,7 @@ export function RunPage() {
                 </tr>
               </thead>
               <tbody>
-                {recent.map((item) => (
+                {recentToShow.map((item) => (
                   <tr key={item.run_id} className={item.run_id === runId ? "emph" : undefined}>
                     <td>
                       <input

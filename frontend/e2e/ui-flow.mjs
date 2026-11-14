@@ -29,7 +29,12 @@ const browser = await chromium.launch({
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "es-PE" });
 const page = await context.newPage();
 const errors = [];
-page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+let expectedTileErrors = 0;
+page.on("console", (m) => {
+  if (m.type() !== "error") return;
+  if (m.text().includes("403 (Forbidden)")) expectedTileErrors += 1;
+  else errors.push(m.text());
+});
 page.on("pageerror", (e) => errors.push(e.message));
 
 // 1) Inicio → demo rápida → Configuración
@@ -48,6 +53,19 @@ await page.getByRole("link", { name: /Ver resultados/ }).waitFor({ timeout: 6000
 check("La corrida se completa y muestra «Solución validada»", await page.getByText("Solución validada").isVisible());
 const bestFitness = await page.locator(".kpi", { hasText: "Mejor fitness" }).locator(".kpi-value").innerText();
 check("KPI de mejor fitness visible", /0,7\d+/.test(bestFitness), bestFitness.trim());
+const runHistory = page.locator("section.stack").filter({
+  has: page.getByRole("heading", { name: "Corridas de este escenario" }),
+});
+const recentRunCount = await runHistory.locator(".data tbody tr").count();
+if (recentRunCount > 5) {
+  check("El historial limita las corridas visibles inicialmente", recentRunCount === 5, `${recentRunCount} visibles`);
+  await runHistory.getByRole("button", { name: /^Ver las .* corridas$/ }).click();
+  check("El control permite desplegar el historial completo", (await runHistory.locator(".data tbody tr").count()) > 5);
+  await runHistory.getByRole("button", { name: "Mostrar recientes" }).click();
+  check("El historial vuelve al resumen de cinco corridas", (await runHistory.locator(".data tbody tr").count()) === 5);
+} else {
+  check("El historial muestra todas las corridas cuando son cinco o menos", recentRunCount <= 5);
+}
 await page.screenshot({ path: `${OUT}/ui-ejecucion.png`, fullPage: true });
 await page.getByRole("link", { name: /Ver resultados/ }).click();
 await page.waitForURL("**/resultados");
@@ -55,7 +73,12 @@ await page.getByText("AG frente a la línea base").waitFor();
 check("Resultados muestra insignia Factible", await page.locator(".badge.good", { hasText: "Factible" }).first().isVisible());
 const j = await page.locator("tr", { hasText: "J (sin unidades)" }).locator("td").first().innerText();
 check("J de la semilla 22 coincide con la evidencia (0,26275)", j.trim() === "0,26275", j.trim());
+await page.route("https://tile.openstreetmap.org/**", (route) =>
+  route.fulfill({ status: 403, contentType: "text/plain", body: "Access blocked" }),
+);
 await page.getByRole("tab", { name: "Rutas" }).click();
+await page.getByText(/El mapa base no está disponible en esta red/).waitFor({ timeout: 15000 });
+check("El mapa informa el bloqueo de teselas sin ocultar datos de ruta", true);
 check("Pestaña Rutas muestra 3 hojas de ruta", (await page.locator(".manifest").count()) === 3);
 check("El mapa dibuja 3 rutas", (await page.locator("path.route-line").count()) === 3);
 const dots = await page.locator("path.center-dot").count();
@@ -97,7 +120,11 @@ await page.keyboard.press("Tab");
 const focused = await page.evaluate(() => document.activeElement?.textContent?.trim());
 check("El primer foco de teclado es «Saltar al contenido»", focused === "Saltar al contenido", focused);
 
-check("Sin errores de consola durante el recorrido", errors.length === 0, errors.slice(0, 3).join(" | "));
+check(
+  "Sin errores inesperados de consola durante el recorrido",
+  errors.length === 0 && expectedTileErrors > 0,
+  errors.slice(0, 3).join(" | "),
+);
 await browser.close();
 const failed = results.filter((r) => !r.ok).length;
 console.log(`\n${results.length - failed}/${results.length} comprobaciones superadas`);

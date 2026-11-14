@@ -60,6 +60,7 @@ const depotIcon = L.divIcon({
 
 export function RouteMap({ depot, centers, distanceMode, routes, assignments, title }: Props) {
   const [tiles, setTiles] = useState(true);
+  const [tileError, setTileError] = useState(false);
   // En pantallas angostas el mapa empieza plegado: KPIs, tabla y hojas de ruta bastan.
   const [open, setOpen] = useState(
     () => typeof window === "undefined" || !window.matchMedia("(max-width: 960px)").matches,
@@ -136,6 +137,12 @@ export function RouteMap({ depot, centers, distanceMode, routes, assignments, ti
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                 maxZoom={18}
                 attribution='&copy; colaboradores de <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                eventHandlers={{
+                  tileerror: () => {
+                    setTileError(true);
+                    setTiles(false);
+                  },
+                }}
               />
             )}
             <FitBounds points={points} />
@@ -224,6 +231,13 @@ export function RouteMap({ depot, centers, distanceMode, routes, assignments, ti
           </MapContainer>
         )}
       </div>
+
+      {tileError && open && (
+        <p className="small muted map-tile-status" role="status">
+          El mapa base no está disponible en esta red. Se mantienen las rutas y los centros; puedes
+          consultar el detalle en las hojas de ruta y la tabla.
+        </p>
+      )}
 
       <ul className="legend" aria-label="Leyenda del mapa">
         <li>
