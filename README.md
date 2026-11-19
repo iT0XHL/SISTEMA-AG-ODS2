@@ -135,7 +135,7 @@ Con `APP_ENV=production` la API **no arranca** si conserva valores de demostraci
 
 ### Despliegue en AWS
 
-`infra/` contiene Terraform (ECS Fargate + RDS + ALB + CloudFront + Amplify) y `.github/workflows/deploy.yml` despliega con GitHub Actions. Pasos en [infra/README.md](infra/README.md). Detrás de CloudFront + ALB se usa `TRUSTED_PROXY_HOPS=2` para que el rate limit lea la IP real del cliente.
+`infra/` contiene Terraform (ECS Fargate + RDS + ALB + CloudFront + Amplify) y `scripts/desplegar_aws.ps1` lo despliega todo desde tu PC con un comando. Pasos en [infra/README.md](infra/README.md). Detrás de CloudFront + ALB se usa `TRUSTED_PROXY_HOPS=2` para que el rate limit lea la IP real del cliente.
 
 ## Límites
 

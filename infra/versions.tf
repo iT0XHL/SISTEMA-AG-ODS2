@@ -12,12 +12,9 @@ terraform {
     }
   }
 
-  # El bucket y la región se pasan con -backend-config (ver infra/README.md).
-  backend "s3" {
-    key          = "nutriruta/terraform.tfstate"
-    use_lockfile = true
-    encrypt      = true
-  }
+  # Estado local (infra/terraform.tfstate): contiene las contraseñas generadas y no se
+  # sube al repositorio (ver .gitignore). Para una demo de pocos días no compensa un
+  # backend S3.
 }
 
 provider "aws" {

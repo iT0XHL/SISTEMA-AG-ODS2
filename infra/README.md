@@ -7,69 +7,39 @@ Usuario ──HTTPS──► CloudFront ──┬─ /api/*, /health ─► ALB 
 
 - **Un solo dominio** (`https://xxxx.cloudfront.net`): la cookie de sesión funciona sin CORS. Entre siempre por esa URL, no por `*.amplifyapp.com`.
 - **API y worker** usan la misma imagen (ECR). El worker debe ser una sola réplica: ejecuta las corridas del algoritmo genético tomándolas de la base de datos.
-- **Sin NAT**, RDS `db.t4g.micro` privada, sin backups: costo aproximado **USD 35–45/mes** mientras esté encendido. Al terminar la demo, ejecute *destroy* (paso 6).
+- **Sin NAT**, RDS `db.t4g.micro` privada, sin backups: costo aproximado **USD 35–45/mes** mientras esté encendido. Al terminar la demo, ejecute `scripts\desplegar_aws.ps1 -Destruir`.
 - Las contraseñas (BD y administrador) se generan y viven en Secrets Manager. La app arranca con `APP_ENV=production`.
 
-## Pasos manuales (una sola vez)
+## Desplegar (un solo comando)
 
-Se usa un único usuario IAM con `AdministratorAccess` (aquí `poscosegran-deploy`, perfil `poscosegran`), tanto en tu PC como en GitHub Actions. No hay rol OIDC.
+Requisitos en tu PC: [Terraform ≥ 1.10](https://developer.hashicorp.com/terraform/install), [AWS CLI v2](https://aws.amazon.com/cli/), Node.js y **Docker Desktop iniciado**. Se usa un único usuario IAM con `AdministratorAccess` (aquí el perfil `poscosegran`).
 
-### 1. Perfil de AWS en tu PC
 ```powershell
-$env:AWS_PROFILE = "poscosegran"
-aws sts get-caller-identity      # debe mostrar user/poscosegran-deploy
+powershell -ExecutionPolicy Bypass -File scripts\desplegar_aws.ps1 -Perfil poscosegran
 ```
-Herramientas: [AWS CLI v2](https://aws.amazon.com/cli/) y [Terraform ≥ 1.10](https://developer.hashicorp.com/terraform/install).
 
-### 2. Bucket para el state de Terraform
+El script hace, en orden: `terraform init` → crea el repositorio ECR → construye y sube la imagen del backend → `terraform apply` (te pide escribir `yes`; con `-SinPreguntar` no) → espera a que `api` y `worker` estén estables → compila el frontend y lo sube a Amplify → prueba `/health` → imprime la URL y cómo leer la contraseña.
+
+La primera vez tarda ~15–20 min (RDS y CloudFront). Volver a ejecutarlo despliega la versión nueva.
+
+| Opción | Efecto |
+|---|---|
+| `-Perfil <nombre>` | perfil de AWS CLI a usar (si no, el de `AWS_PROFILE`) |
+| `-SinPreguntar` | aplica Terraform sin pedir confirmación |
+| `-SoloFrontend` | solo recompila y sube el frontend |
+| `-Destruir` | borra toda la infraestructura (**hazlo al terminar la demo** para no pagar) |
+
+### Entrar a la aplicación
 ```powershell
-cd infra/bootstrap
-terraform init
-terraform apply        # escriba "yes"
-terraform output       # anote tf_state_bucket
+aws secretsmanager get-secret-value --secret-id nutriruta/admin_password --query SecretString --output text --profile poscosegran
 ```
-(Alternativa sin Terraform: los dos comandos `aws s3api` que figuran al inicio de `infra/bootstrap/main.tf`.)
+Usuario `admin` y esa contraseña, en la URL que imprime el script (`terraform output app_url` en `infra/`). La cuenta se crea una sola vez al primer arranque; cambiar el secreto después no cambia la contraseña ya creada (use `python -m app.users` dentro de la tarea o destruya y recree).
 
-### 3. Secrets y variables en GitHub
-Repositorio → Settings → Secrets and variables → Actions.
-
-**Secrets** (pestaña *Secrets*): crea una access key nueva para `poscosegran-deploy` (IAM → Users → Security credentials → Create access key) o usa la que ya tenga, y guárdala:
-
-| Secret | Valor |
-|---|---|
-| `AWS_ACCESS_KEY_ID` | Access key ID |
-| `AWS_SECRET_ACCESS_KEY` | Secret access key |
-
-**Variables** (pestaña *Variables*):
-
-| Variable | Valor |
-|---|---|
-| `AWS_REGION` | `us-east-1` |
-| `TF_STATE_BUCKET` | salida `tf_state_bucket` del paso 2 |
-
-> La clave tiene permisos de administrador: no la compartas ni la subas al repositorio. Al terminar la demo, bórrala en IAM.
-
-### 4. Desplegar
-Cualquiera de las dos:
-- Hacer push a `main`: cuando el workflow **CI** termine en verde se ejecuta **Deploy AWS**.
-- Actions → **Deploy AWS** → *Run workflow* → `deploy` (no espera al CI).
-
-El primer despliegue tarda ~15–20 min (RDS y CloudFront). Hace, en orden: crea ECR → construye y sube la imagen → `terraform apply` → espera a `api` y `worker` → compila el frontend y lo publica en Amplify → prueba `/health`. La URL final queda en el resumen del job.
-
-### 5. Entrar
-```bash
-aws secretsmanager get-secret-value --secret-id nutriruta/admin_password --query SecretString --output text
-```
-Usuario `admin` y esa contraseña, en la URL `app_url` (`terraform output app_url` o resumen del job). La cuenta se crea una sola vez al primer arranque; cambiar el secreto después no cambia la contraseña ya creada (use `python -m app.users` dentro de la tarea o destruya y recree).
-
-### 6. Apagar todo (evita costos)
-Actions → **Deploy AWS** → *Run workflow* → `destroy`.
-(El bucket de state queda; no cuesta. Para quitarlo: vacíelo y ejecute `terraform destroy` en `infra/bootstrap`.)
+> **Estado local.** Terraform guarda su estado en `infra/terraform.tfstate`, que contiene las contraseñas generadas y está en `.gitignore`. No lo borres mientras la infraestructura exista: sin él, `-Destruir` no sabe qué borrar. No se usa GitHub Actions para desplegar.
 
 ## Operación
 - **Logs:** CloudWatch → grupo `/ecs/nutriruta` (streams `api/…` y `worker/…`).
-- **Redeploy sin cambios:** *Run workflow* → `deploy`.
-- **Local:** `cd infra && terraform init -backend-config="bucket=<tf_state_bucket>" -backend-config="region=us-east-1" && terraform plan -var image_tag=<sha>`.
+- **Redeploy:** volver a ejecutar `scripts\desplegar_aws.ps1`.
 - **Si CloudFront tarda o `/health` da 403:** el ALB solo acepta el encabezado secreto que añade CloudFront; no hay acceso directo al ALB por diseño.
 - **Subredes:** se usan las de la VPC por defecto en `us-east-1a/b`. Si su cuenta no tiene VPC por defecto, créela (`aws ec2 create-default-vpc`) o ajuste `availability_zones`.
 - **Límites conocidos:** el ALB usa HTTP hacia CloudFront (tráfico dentro de AWS); el rate limit usa memoria del proceso (una sola tarea `api`).
