@@ -19,8 +19,11 @@ import type {
   Solution,
   ValidationReport,
 } from "../types";
+import { clearToken, getToken, setToken } from "./session";
 
-const BASE = "/api/v1";
+// VITE_API_URL solo se define al publicar el frontend aparte de la API (Amplify); vacío = mismo origen.
+const API_ORIGIN = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
+const BASE = `${API_ORIGIN}/api/v1`;
 
 export const UNAUTHORIZED_EVENT = "nutriruta:unauthorized";
 
@@ -48,8 +51,11 @@ export class ApiError extends Error {
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
+  const headers = new Headers(init?.headers);
+  const token = getToken();
+  if (token) headers.set("Authorization", `Bearer ${token}`);
   try {
-    response = await fetch(path, init);
+    response = await fetch(path, { ...init, headers });
   } catch {
     throw new ApiError(
       0,
@@ -68,6 +74,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     body = null;
   }
   if (response.status === 401 && !path.includes("/auth/")) {
+    clearToken();
     window.dispatchEvent(new Event(UNAUTHORIZED_EVENT));
   }
   if (!response.ok) {
@@ -117,9 +124,21 @@ export const api = {
   meta: () => request<Meta>(`${BASE}/meta`),
 
   me: () => request<{ user: AuthUser }>(`${BASE}/auth/me`),
-  login: (username: string, password: string) =>
-    post<{ user: AuthUser }>(`${BASE}/auth/login`, { username, password }),
-  logout: () => request<void>(`${BASE}/auth/logout`, { method: "POST" }),
+  login: async (username: string, password: string) => {
+    const result = await post<{ user: AuthUser; token?: string }>(`${BASE}/auth/login`, {
+      username,
+      password,
+    });
+    if (result.token) setToken(result.token);
+    return { user: result.user };
+  },
+  logout: async () => {
+    try {
+      await request<void>(`${BASE}/auth/logout`, { method: "POST" });
+    } finally {
+      clearToken();
+    }
+  },
 
   demoScenario: (n_centers = 18, fixture_seed = 2026) =>
     post<ScenarioPayload>(`${BASE}/scenarios/demo`, { n_centers, fixture_seed }),

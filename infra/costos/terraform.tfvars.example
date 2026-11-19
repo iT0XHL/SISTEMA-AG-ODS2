@@ -1,0 +1,4 @@
+alert_email         = "tu-correo@ejemplo.com"
+anomaly_monitor_arn = "arn:aws:ce::<ID_CUENTA>:anomalymonitor/<ID_DEL_MONITOR>"
+# budget_usd            = 10
+# anomaly_threshold_usd = 2

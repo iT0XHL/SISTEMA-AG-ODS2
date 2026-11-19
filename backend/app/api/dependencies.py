@@ -28,10 +28,18 @@ def get_session() -> Iterator[Session]:
         session.close()
 
 
+def session_token(request: Request) -> str | None:
+    """Token de sesión: cabecera ``Authorization: Bearer`` (frontend en otro dominio) o cookie."""
+    scheme, _, value = request.headers.get("authorization", "").partition(" ")
+    if scheme.lower() == "bearer" and value.strip():
+        return value.strip()
+    return request.cookies.get(auth.SESSION_COOKIE)
+
+
 def require_user(request: Request) -> AppUser:
-    """Exige una sesión válida: la cookie debe corresponder a una sesión vigente."""
+    """Exige una sesión válida: el token debe corresponder a una sesión vigente."""
     with session_scope() as session:
-        user = auth.user_for_token(session, request.cookies.get(auth.SESSION_COOKIE))
+        user = auth.user_for_token(session, session_token(request))
     if user is None:
         raise ApiError(401, "NOT_AUTHENTICATED", "Inicie sesión para continuar.")
     return user

@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app import auth
-from app.api.dependencies import get_session, require_user
+from app.api.dependencies import get_session, require_user, session_token
 from app.api.errors import ApiError
 from app.config import Settings, get_settings
 from app.storage.models import AppUser
@@ -56,7 +56,9 @@ def login(
         secure=settings.secure_cookies,
         path="/",
     )
-    return {"user": _user_body(user)}
+    # El token también viaja en el cuerpo: un frontend en otro dominio (Amplify) lo guarda y lo
+    # envía como «Authorization: Bearer», sin depender de cookies de terceros.
+    return {"user": _user_body(user), "token": token}
 
 
 @router.post("/logout", status_code=204)
@@ -64,7 +66,7 @@ def logout(
     request: Request,
     session: Session = Depends(get_session, scope="function"),
 ) -> Response:
-    auth.revoke_session(session, request.cookies.get(auth.SESSION_COOKIE))
+    auth.revoke_session(session, session_token(request))
     response = Response(status_code=204)
     response.delete_cookie(auth.SESSION_COOKIE, path="/")
     return response

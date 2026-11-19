@@ -11,12 +11,6 @@ resource "random_password" "admin" {
   special = false
 }
 
-# Secreto compartido CloudFront -> ALB: el ALB rechaza lo que no lo traiga.
-resource "random_password" "origin_secret" {
-  length  = 32
-  special = false
-}
-
 resource "aws_secretsmanager_secret" "db_url" {
   name                    = "${var.project}/db_url"
   recovery_window_in_days = 0 # demo: permite recrear con el mismo nombre tras un destroy

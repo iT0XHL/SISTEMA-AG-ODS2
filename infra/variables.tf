@@ -15,7 +15,7 @@ variable "image_tag" {
 }
 
 variable "availability_zones" {
-  description = "AZ cuyas subredes de la VPC por defecto se usan (evita us-east-1e, sin soporte de ALB)."
+  description = "AZ cuyas subredes de la VPC por defecto se usan (evita us-east-1e, sin soporte del VPC Link)."
   type        = list(string)
   default     = ["us-east-1a", "us-east-1b"]
 }

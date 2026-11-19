@@ -66,7 +66,9 @@ def test_login_me_and_logout_flow(anon_api) -> None:
 
     response = login(anon_api)
     assert response.status_code == 200
-    assert response.json() == {"user": {"username": "admin", "display_name": "Administrador"}}
+    body = response.json()
+    assert body["user"] == {"username": "admin", "display_name": "Administrador"}
+    assert set(body) == {"user", "token"}
     cookie = response.headers["set-cookie"].lower()
     assert "httponly" in cookie and "samesite=lax" in cookie
 
@@ -171,3 +173,47 @@ def test_cli_lists_and_adds_accounts(anon_api, capsys) -> None:
     assert users.main(["list"]) == 0
     output = capsys.readouterr().out
     assert "luis" in output and "admin" in output
+
+
+def test_bearer_token_authenticates_without_cookies(anon_api) -> None:
+    """Un frontend en otro dominio guarda el token del login y lo envía como Bearer."""
+    login = anon_api.post("/api/v1/auth/login", json=ADMIN)
+    assert login.status_code == 200
+    token = login.json()["token"]
+    assert token and token == anon_api.cookies.get(auth.SESSION_COOKIE)
+    anon_api.cookies.clear()
+    assert anon_api.get(f"{API}/auth/me").status_code == 401
+    bearer = {"Authorization": f"Bearer {token}"}
+    assert anon_api.get(f"{API}/auth/me", headers=bearer).json()["user"]["username"] == "admin"
+    assert anon_api.get(f"{API}/scenarios", headers=bearer).status_code == 200
+    assert (
+        anon_api.get(f"{API}/scenarios", headers={"Authorization": "Bearer falso"}).status_code
+        == 401
+    )
+    # Cerrar sesión con el token la revoca
+    assert anon_api.post(f"{API}/auth/logout", headers=bearer).status_code == 204
+    assert anon_api.get(f"{API}/auth/me", headers=bearer).status_code == 401
+
+
+def test_cors_preflight_allows_authorization_header(anon_api, monkeypatch) -> None:
+    from app.config import get_settings
+
+    monkeypatch.setenv("CORS_ORIGINS", "https://main.d123.amplifyapp.com")
+    get_settings.cache_clear()
+    from fastapi.testclient import TestClient
+
+    from app.main import create_app
+
+    with TestClient(create_app()) as client:
+        response = client.options(
+            f"{API}/scenarios",
+            headers={
+                "Origin": "https://main.d123.amplifyapp.com",
+                "Access-Control-Request-Method": "GET",
+                "Access-Control-Request-Headers": "authorization",
+            },
+        )
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "https://main.d123.amplifyapp.com"
+    assert "authorization" in response.headers["access-control-allow-headers"].lower()
+    get_settings.cache_clear()

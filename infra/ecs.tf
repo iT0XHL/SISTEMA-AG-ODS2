@@ -1,13 +1,14 @@
 locals {
   image = "${aws_ecr_repository.backend.repository_url}:${var.image_tag}"
 
-  public_url = "https://${aws_cloudfront_distribution.main.domain_name}"
+  api_url = aws_apigatewayv2_api.main.api_endpoint
+  web_url = "https://${aws_amplify_branch.main.branch_name}.${aws_amplify_app.frontend.default_domain}"
 
   # Mismas variables para API y worker (APP_ENV=production activa las validaciones de la app).
   app_environment = [
     { name = "APP_ENV", value = "production" },
     { name = "COOKIE_SECURE", value = "true" },
-    { name = "CORS_ORIGINS", value = local.public_url },
+    { name = "CORS_ORIGINS", value = local.web_url },
     { name = "ADMIN_USERNAME", value = var.admin_username },
     { name = "ADMIN_NAME", value = "Administrador" },
     { name = "MIN_CENTERS", value = "5" },
@@ -15,8 +16,8 @@ locals {
     { name = "MAX_GENERATIONS", value = "1000" },
     { name = "MAX_UPLOAD_MB", value = "5" },
     { name = "MAX_RUN_SECONDS", value = "120" },
-    # CloudFront + ALB: la IP real del cliente es la penúltima de X-Forwarded-For.
-    { name = "TRUSTED_PROXY_HOPS", value = "2" },
+    # API Gateway añade la IP real del cliente al final de X-Forwarded-For (un solo salto).
+    { name = "TRUSTED_PROXY_HOPS", value = "1" },
     { name = "GIT_COMMIT", value = var.image_tag },
   ]
 
@@ -77,10 +78,6 @@ resource "aws_ecs_service" "api" {
   desired_count   = 1
   launch_type     = "FARGATE"
 
-  health_check_grace_period_seconds  = 90
-  deployment_minimum_healthy_percent = 100
-  deployment_maximum_percent         = 200
-
   deployment_circuit_breaker {
     enable   = true
     rollback = true
@@ -92,13 +89,11 @@ resource "aws_ecs_service" "api" {
     assign_public_ip = true
   }
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.api.arn
-    container_name   = "api"
-    container_port   = 8000
+  service_registries {
+    registry_arn   = aws_service_discovery_service.api.arn
+    container_name = "api"
+    container_port = 8000
   }
-
-  depends_on = [aws_lb_listener_rule.from_cloudfront]
 }
 
 # ---------------------------------------------------------------------- Worker

@@ -1,5 +1,7 @@
-# VPC por defecto, sin NAT (ahorra ~USD 32/mes): las tareas usan IP pública pero solo
-# aceptan tráfico del ALB; la base de datos no es pública.
+# VPC por defecto, sin NAT (ahorra ~USD 32/mes). Cadena de confianza:
+#   API Gateway --(VPC Link)--> tareas ECS :8000 --> RDS :5432
+# Las tareas usan IP pública solo para descargar la imagen y leer los secretos;
+# solo aceptan tráfico del VPC Link, y la base de datos no es pública.
 
 data "aws_vpc" "default" {
   default = true
@@ -16,22 +18,11 @@ data "aws_subnets" "default" {
   }
 }
 
-data "aws_ec2_managed_prefix_list" "cloudfront" {
-  name = "com.amazonaws.global.cloudfront.origin-facing"
-}
-
-resource "aws_security_group" "alb" {
-  name        = "${var.project}-alb"
-  description = "ALB: solo CloudFront"
+# El VPC Link solo es el conector de API Gateway: lo que protege a la API es el grupo de las tareas.
+resource "aws_security_group" "vpclink" {
+  name        = "${var.project}-vpclink"
+  description = "VPC Link de API Gateway hacia la API"
   vpc_id      = data.aws_vpc.default.id
-
-  ingress {
-    description     = "HTTP desde CloudFront"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    prefix_list_ids = [data.aws_ec2_managed_prefix_list.cloudfront.id]
-  }
 
   egress {
     from_port   = 0
@@ -42,16 +33,18 @@ resource "aws_security_group" "alb" {
 }
 
 resource "aws_security_group" "tasks" {
-  name        = "${var.project}-tasks"
+  name = "${var.project}-tasks"
+  # La descripción de un grupo de seguridad no se puede cambiar sin reemplazarlo; se conserva
+  # el texto original para poder actualizarlo en el sitio (ahora el origen es el VPC Link).
   description = "Tareas ECS: API solo desde el ALB"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description     = "API desde el ALB"
+    description     = "API desde el VPC Link de API Gateway"
     from_port       = 8000
     to_port         = 8000
     protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
+    security_groups = [aws_security_group.vpclink.id]
   }
 
   egress {
