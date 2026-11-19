@@ -27,7 +27,7 @@ from app.domain.metrics import (
 from app.domain.models import build_problem
 from app.domain.validators import Limits, validate_scenario
 from app.ga.evolution import run_ga
-from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
+from app.ga.params import OFFICIAL_SEEDS, STANDARD_PRESET
 
 
 def main() -> None:

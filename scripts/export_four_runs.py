@@ -13,9 +13,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
-import os
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -26,9 +26,7 @@ from pathlib import Path
 class Api:
     def __init__(self, base: str) -> None:
         self.base = base.rstrip("/")
-        self.opener = urllib.request.build_opener(
-            urllib.request.HTTPCookieProcessor(CookieJar())
-        )
+        self.opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
 
     def call(self, method: str, path: str, body: object | None = None) -> tuple[int, bytes]:
         data = json.dumps(body).encode("utf-8") if body is not None else None

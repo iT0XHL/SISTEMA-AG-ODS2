@@ -56,8 +56,20 @@ class RateLimiter:
             del self._hits[key]
 
 
-def client_key(request: Request) -> str:
-    """IP del cliente: nginx la fija en ``X-Real-IP``; sin proxy se usa la conexión directa."""
+def client_key(request: Request, trusted_hops: int = 0) -> str:
+    """IP del cliente.
+
+    Con ``trusted_hops > 0`` (p. ej. 2 detrás de CloudFront + ALB) se toma de
+    ``X-Forwarded-For`` la entrada que añadió el primer proxy de confianza, ignorando lo que el
+    cliente haya escrito antes. Sin saltos, nginx la fija en ``X-Real-IP``; sin proxy se usa la
+    conexión directa.
+    """
+    if trusted_hops > 0:
+        chain = [
+            p.strip() for p in request.headers.get("x-forwarded-for", "").split(",") if p.strip()
+        ]
+        if len(chain) >= trusted_hops:
+            return chain[-trusted_hops]
     forwarded = request.headers.get("x-real-ip", "").strip()
     if forwarded:
         return forwarded

@@ -41,3 +41,22 @@ def test_each_client_ip_has_its_own_quota(limited_api) -> None:
         limited_api.get(f"{API}/meta", headers={"X-Real-IP": "10.0.0.1"})
     assert limited_api.get(f"{API}/meta", headers={"X-Real-IP": "10.0.0.1"}).status_code == 429
     assert limited_api.get(f"{API}/meta", headers={"X-Real-IP": "10.0.0.2"}).status_code == 200
+
+
+def test_client_ip_is_taken_from_the_trusted_proxy_hop() -> None:
+    from starlette.requests import Request
+
+    from app.ratelimit import client_key
+
+    def req(xff: str) -> Request:
+        scope = {
+            "type": "http",
+            "headers": [(b"x-forwarded-for", xff.encode()), (b"x-real-ip", b"6.6.6.6")],
+            "client": ("10.0.0.9", 1234),
+        }
+        return Request(scope)
+
+    # CloudFront + ALB: [lo que escribió el cliente, IP real, borde de CloudFront]
+    assert client_key(req("1.1.1.1, 203.0.113.7, 130.176.0.1"), trusted_hops=2) == "203.0.113.7"
+    assert client_key(req("130.176.0.1"), trusted_hops=2) == "6.6.6.6"
+    assert client_key(req("203.0.113.7, 130.176.0.1")) == "6.6.6.6"

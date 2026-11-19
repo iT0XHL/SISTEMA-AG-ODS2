@@ -1,0 +1,171 @@
+name: Deploy AWS
+
+# Se despliega solo cuando el CI de main termina en verde, o a mano desde la pestaña Actions
+# (acción "deploy" o "destroy"). Requiere los secrets AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY
+# (claves del usuario IAM poscosegran-deploy) y las variables AWS_REGION y TF_STATE_BUCKET
+# (ver infra/README.md).
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "deploy = desplegar/actualizar · destroy = borrar toda la infraestructura"
+        type: choice
+        options: [deploy, destroy]
+        default: deploy
+
+concurrency:
+  group: deploy-aws
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+  ACTION: ${{ github.event.inputs.action || 'deploy' }}
+  SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+jobs:
+  deploy:
+    name: ${{ github.event.inputs.action || 'deploy' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SHA }}
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.14.8"
+          terraform_wrapper: false
+
+      - name: Terraform init
+        working-directory: infra
+        run: |
+          terraform init -input=false \
+            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
+            -backend-config="region=${AWS_REGION}"
+
+      - name: Terraform fmt y validate
+        working-directory: infra
+        run: |
+          terraform fmt -check -recursive
+          terraform validate
+
+      # ---------------------------------------------------------------- destroy
+      - name: Terraform destroy
+        if: env.ACTION == 'destroy'
+        working-directory: infra
+        run: terraform destroy -input=false -auto-approve -var "image_tag=${SHA}"
+
+      # ----------------------------------------------------------------- deploy
+      - name: Crear repositorio ECR (primer despliegue)
+        if: env.ACTION == 'deploy'
+        working-directory: infra
+        run: terraform apply -input=false -auto-approve -target=aws_ecr_repository.backend -var "image_tag=${SHA}"
+
+      - name: Login en ECR
+        if: env.ACTION == 'deploy'
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - uses: docker/setup-buildx-action@v3
+        if: env.ACTION == 'deploy'
+
+      - name: Construir y subir la imagen del backend
+        if: env.ACTION == 'deploy'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: backend/Dockerfile
+          target: runtime
+          push: true
+          build-args: GIT_COMMIT=${{ env.SHA }}
+          tags: ${{ steps.ecr.outputs.registry }}/nutriruta-backend:${{ env.SHA }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Terraform apply
+        if: env.ACTION == 'deploy'
+        working-directory: infra
+        run: terraform apply -input=false -auto-approve -var "image_tag=${SHA}"
+
+      - name: Leer salidas
+        if: env.ACTION == 'deploy'
+        working-directory: infra
+        run: |
+          {
+            echo "APP_URL=$(terraform output -raw app_url)"
+            echo "CLUSTER=$(terraform output -raw ecs_cluster)"
+            echo "AMPLIFY_APP_ID=$(terraform output -raw amplify_app_id)"
+            echo "AMPLIFY_BRANCH=$(terraform output -raw amplify_branch)"
+          } >> "$GITHUB_ENV"
+
+      - name: Esperar a que API y worker estén estables
+        if: env.ACTION == 'deploy'
+        run: aws ecs wait services-stable --cluster "$CLUSTER" --services api worker
+
+      - uses: actions/setup-node@v4
+        if: env.ACTION == 'deploy'
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Construir el frontend
+        if: env.ACTION == 'deploy'
+        working-directory: frontend
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - name: Publicar el frontend en Amplify
+        if: env.ACTION == 'deploy'
+        run: |
+          (cd frontend/dist && zip -qr ../../frontend.zip .)
+          read -r JOB_ID UPLOAD_URL < <(aws amplify create-deployment \
+            --app-id "$AMPLIFY_APP_ID" --branch-name "$AMPLIFY_BRANCH" \
+            --query '[jobId, zipUploadUrl]' --output text)
+          curl -fsS -X PUT -H "Content-Type: application/zip" --data-binary @frontend.zip "$UPLOAD_URL"
+          aws amplify start-deployment --app-id "$AMPLIFY_APP_ID" --branch-name "$AMPLIFY_BRANCH" --job-id "$JOB_ID" >/dev/null
+          for _ in $(seq 1 60); do
+            STATUS=$(aws amplify get-job --app-id "$AMPLIFY_APP_ID" --branch-name "$AMPLIFY_BRANCH" \
+              --job-id "$JOB_ID" --query 'job.summary.status' --output text)
+            echo "Amplify: $STATUS"
+            case "$STATUS" in
+              SUCCEED) exit 0 ;;
+              FAILED|CANCELLED) exit 1 ;;
+            esac
+            sleep 5
+          done
+          echo "Tiempo agotado esperando a Amplify"; exit 1
+
+      - name: Prueba de humo
+        if: env.ACTION == 'deploy'
+        run: |
+          for i in $(seq 1 20); do
+            if curl -fsS "$APP_URL/health" | grep -q '"ok"'; then
+              echo "API sana en $APP_URL"
+              curl -fsS -o /dev/null -w "Frontend HTTP %{http_code}\n" "$APP_URL/"
+              echo "### Desplegado: $APP_URL" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "La API no respondió OK en $APP_URL/health"; exit 1

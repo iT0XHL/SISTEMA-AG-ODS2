@@ -36,6 +36,7 @@ class Settings(BaseSettings):
     cookie_secure: bool = Field(default=False, alias="COOKIE_SECURE")
     login_max_attempts: int = Field(default=5, alias="LOGIN_MAX_ATTEMPTS")
     login_lock_seconds: float = Field(default=60.0, alias="LOGIN_LOCK_SECONDS")
+    trusted_proxy_hops: int = Field(default=0, alias="TRUSTED_PROXY_HOPS")
     rate_limit_enabled: bool = Field(default=True, alias="RATE_LIMIT_ENABLED")
     rate_limit_per_min: int = Field(default=1200, alias="RATE_LIMIT_PER_MIN")
     rate_limit_heavy_per_min: int = Field(default=30, alias="RATE_LIMIT_HEAVY_PER_MIN")

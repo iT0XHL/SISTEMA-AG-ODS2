@@ -133,6 +133,10 @@ Con `APP_ENV=production` la API **no arranca** si conserva valores de demostraci
 - Restringe `CORS_ORIGINS` al dominio público y respalda el volumen `db_data` (`pg_dump`).
 - Ajusta los límites de cada solicitud con las variables `RATE_LIMIT_*` y `MAX_*` de `.env.example`.
 
+### Despliegue en AWS
+
+`infra/` contiene Terraform (ECS Fargate + RDS + ALB + CloudFront + Amplify) y `.github/workflows/deploy.yml` despliega con GitHub Actions. Pasos en [infra/README.md](infra/README.md). Detrás de CloudFront + ALB se usa `TRUSTED_PROXY_HOPS=2` para que el rate limit lea la IP real del cliente.
+
 ## Límites
 
 > [!WARNING]

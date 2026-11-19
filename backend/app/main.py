@@ -85,7 +85,9 @@ def create_app() -> FastAPI:
             rule = classify(request.method, request.url.path, settings)
             if rule is not None:
                 bucket, limit = rule
-                wait = request.app.state.rate_limiter.hit(bucket, client_key(request), limit)
+                wait = request.app.state.rate_limiter.hit(
+                    bucket, client_key(request, settings.trusted_proxy_hops), limit
+                )
                 if wait:
                     return JSONResponse(
                         status_code=429,

@@ -25,3 +25,10 @@ Thumbs.db
 # Documentación local y resultados generados: no se versionan
 docs/
 evidencia/
+
+# Terraform
+infra/**/.terraform/
+infra/**/*.tfstate
+infra/**/*.tfstate.*
+infra/**/terraform.tfvars
+*.tfplan

@@ -1,0 +1,5 @@
+# Todo tiene valor por defecto; copie a terraform.tfvars solo si quiere cambiar algo.
+# region             = "us-east-1"
+# availability_zones = ["us-east-1a", "us-east-1b"]
+# admin_username     = "admin"
+# db_instance_class  = "db.t4g.micro"
