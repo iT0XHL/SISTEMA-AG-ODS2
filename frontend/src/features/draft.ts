@@ -33,7 +33,7 @@ export function saveDraft(draft: ScenarioPayload): void {
   try {
     sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
   } catch {
-    /* el borrador vive en memoria si no hay almacenamiento */
+    /* sin sessionStorage */
   }
 }
 
@@ -51,7 +51,6 @@ const CENTER_KEYS: (keyof Center)[] = [
   "users_aggregate",
 ];
 
-/** Conserva solo los campos del contrato: cualquier otro (p. ej. datos personales) se descarta. */
 export function pickScenario(input: unknown): ScenarioPayload {
   const wrapper = (input ?? {}) as Record<string, unknown>;
   const raw = (
@@ -96,7 +95,6 @@ export function pickScenario(input: unknown): ScenarioPayload {
   };
 }
 
-/** Agrupa los errores por fila de centro a partir del campo `centers[k].…`. */
 export function issuesByCenterRow(issues: Issue[]): Map<number, Issue[]> {
   const rows = new Map<number, Issue[]>();
   for (const issue of issues) {
@@ -115,7 +113,56 @@ export function nextId(prefix: string, existing: string[]): string {
   return `${prefix}${String(n).padStart(2, "0")}`;
 }
 
-/** Regla declarada de demanda: ceil(usuarios × raciones_por_usuario / raciones_por_lote). */
 export function demandFromUsers(users: number, perUser: number, perLot: number): number {
   return Math.ceil((users * perUser) / perLot);
+}
+
+export interface StepStatus {
+  done: boolean;
+  missing: string | null;
+}
+
+export function stepStatus(
+  draft: ScenarioPayload,
+  validated: boolean,
+  minCenters = 5,
+): StepStatus[] {
+  const geo = draft.distance_mode === "haversine_demo";
+  const centers = draft.centers;
+  const first: string[] = [];
+  if (centers.length < minCenters) {
+    first.push(
+      centers.length === 0 ? "aún no hay centros" : `faltan ${minCenters - centers.length} centros`,
+    );
+  }
+  const noDemand = centers.filter((c) => c.demand_lots == null).length;
+  if (noDemand) first.push(`${noDemand} sin demanda`);
+  if (geo) {
+    const noCoords = centers.filter((c) => c.lat == null || c.lon == null).length;
+    if (noCoords) first.push(`${noCoords} sin coordenadas`);
+  }
+
+  const second: string[] = [];
+  if (geo && (draft.depot.lat == null || draft.depot.lon == null)) {
+    second.push("coordenadas del depósito");
+  }
+  if (draft.vehicles.length === 0) second.push("ningún vehículo");
+  else {
+    const noCapacity = draft.vehicles.filter(
+      (v) => !v.capacity_lots || v.capacity_lots <= 0,
+    ).length;
+    if (noCapacity) second.push(`${noCapacity} vehículos sin capacidad`);
+  }
+
+  const third: string[] = [];
+  if (!draft.inventory_lots || draft.inventory_lots <= 0) third.push("el inventario");
+
+  const fourth: string[] = [];
+  if (!draft.label.trim()) fourth.push("el nombre");
+  if (!validated) fourth.push("validar");
+
+  return [first, second, third, fourth].map((missing) => ({
+    done: missing.length === 0,
+    missing: missing.length ? missing.join(", ") : null,
+  }));
 }

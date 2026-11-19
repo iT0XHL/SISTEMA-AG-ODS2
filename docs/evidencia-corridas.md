@@ -24,7 +24,7 @@ Resultados producidos por la aplicación, sin retoques. Sirven de base para la s
 - Inventario **B = 135 lotes**; flota de 3 vehículos de 50 lotes (150 en total).
 - **Escasez estructural:** como máximo se pueden entregar 135 lotes; al menos 46 quedan sin cubrir en cualquier solución.
 
-### Parámetros (preset Docente, idénticos en las cuatro corridas)
+### Parámetros (preset estándar, idénticos en las cuatro corridas)
 
 | Parámetro | Valor | Parámetro | Valor |
 |---|---|---|---|

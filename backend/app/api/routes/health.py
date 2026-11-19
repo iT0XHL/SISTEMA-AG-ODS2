@@ -15,7 +15,7 @@ from app.api.dependencies import get_session
 from app.config import Settings, get_settings
 from app.data.imports import ALLOWED_FIELDS
 from app.domain.models import DISTANCE_MODE_LABELS
-from app.ga.params import DOCENTE_PRESET, OFFICIAL_SEEDS
+from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
 from app.services.exports import DECLARATION
 from app.storage import repository as repo
 from app.storage.models import Run
@@ -25,7 +25,8 @@ router = APIRouter(tags=["estado"])
 
 @router.get("/health")
 def health(
-    session: Session = Depends(get_session), settings: Settings = Depends(get_settings)
+    session: Session = Depends(get_session, scope="function"),
+    settings: Settings = Depends(get_settings),
 ) -> JSONResponse:
     try:
         session.execute(text("SELECT 1"))
@@ -49,7 +50,7 @@ def health(
 
 @router.get("/api/v1/meta")
 def meta(settings: Settings = Depends(get_settings)) -> dict[str, Any]:
-    """Límites, preset docente y textos que la interfaz muestra tal cual."""
+    """Límites, preset estándar y textos que la interfaz muestra tal cual."""
     return {
         "app": "NutriRuta AG",
         "version": __version__,
@@ -64,7 +65,7 @@ def meta(settings: Settings = Depends(get_settings)) -> dict[str, Any]:
             "max_upload_mb": settings.max_upload_mb,
             "max_run_seconds": settings.max_run_seconds,
         },
-        "docente_preset": DOCENTE_PRESET.to_dict(),
+        "standard_preset": STANDARD_PRESET.to_dict(),
         "official_seeds": list(OFFICIAL_SEEDS),
         "distance_modes": DISTANCE_MODE_LABELS,
         "import_allowed_fields": ALLOWED_FIELDS,

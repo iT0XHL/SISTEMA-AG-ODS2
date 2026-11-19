@@ -5,7 +5,7 @@ Solo usa la biblioteca estándar: funciona con cualquier Python ≥ 3.10 sin ins
     python scripts/export_four_runs.py --api http://localhost:8090 --out docs/evidencia
 
 Pasos: asegura el escenario demo (sintético, determinista) → línea base → encola las
-semillas 11/22/33/44 con el preset «Docente» → espera al worker → descarga CSV y JSON.
+semillas 11/22/33/44 con el preset «Estándar» → espera al worker → descarga CSV y JSON.
 Las cifras salen del programa en ejecución; este script no calcula ni inventa resultados.
 """
 

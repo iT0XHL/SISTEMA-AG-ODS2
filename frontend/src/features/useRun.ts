@@ -4,7 +4,6 @@ import type { GenerationPoint, RunState } from "../types";
 
 const POLL_MS = 350;
 
-/** Sigue una corrida: estado + historial incremental mientras está en cola o en ejecución. */
 export function useRun(runId: string | null) {
   const [run, setRun] = useState<RunState | null>(null);
   const [history, setHistory] = useState<GenerationPoint[]>([]);
@@ -34,7 +33,6 @@ export function useRun(runId: string | null) {
         }
         setRun(state);
         const active = state.status === "queued" || state.status === "running";
-        // unas pocas lecturas extra tras terminar garantizan el historial completo
         const incomplete = state.progress.generation + 1 > historyRef.current.length;
         if (active || (incomplete && extraReads < 5)) {
           if (!active) extraReads += 1;

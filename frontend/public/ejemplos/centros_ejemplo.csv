@@ -1,0 +1,19 @@
+codigo,nombre,distrito,direccion,latitud,longitud,demanda_lotes,prioridad
+C01,Centro ficticio 01,Zona ilustrativa Sur,,-13.10032,-76.31681,10,1
+C02,Centro ficticio 02,Zona ilustrativa Centro,,-13.08096,-76.29723,11,3
+C03,Centro ficticio 03,Zona ilustrativa Sur,,-13.10049,-76.31514,7,3
+C04,Centro ficticio 04,Zona ilustrativa Norte,,-13.01882,-76.31734,9,2
+C05,Centro ficticio 05,Zona ilustrativa Centro,,-13.06333,-76.29263,13,1
+C06,Centro ficticio 06,Zona ilustrativa Sur,,-13.08943,-76.37058,10,2
+C07,Centro ficticio 07,Zona ilustrativa Centro,,-13.0726,-76.31379,15,1
+C08,Centro ficticio 08,Zona ilustrativa Centro,,-13.07983,-76.3746,6,2
+C09,Centro ficticio 09,Zona ilustrativa Centro,,-13.07212,-76.361,16,3
+C10,Centro ficticio 10,Zona ilustrativa Norte,,-13.03228,-76.32113,8,1
+C11,Centro ficticio 11,Zona ilustrativa Norte,,-13.01585,-76.32676,12,3
+C12,Centro ficticio 12,Zona ilustrativa Sur,,-13.08487,-76.30952,10,1
+C13,Centro ficticio 13,Zona ilustrativa Sur,,-13.09123,-76.30889,10,1
+C14,Centro ficticio 14,Zona ilustrativa Centro,,-13.0562,-76.37544,8,2
+C15,Centro ficticio 15,Zona ilustrativa Centro,,-13.05967,-76.3192,6,1
+C16,Centro ficticio 16,Zona ilustrativa Centro,,-13.06557,-76.3389,10,2
+C17,Centro ficticio 17,Zona ilustrativa Centro,,-13.05651,-76.34588,14,2
+C18,Centro ficticio 18,Zona ilustrativa Centro,,-13.06287,-76.35755,6,1

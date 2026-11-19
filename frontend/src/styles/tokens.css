@@ -1,41 +1,32 @@
-/* NutriRuta AG — sistema de diseño.
-   Concepto: «mesa de despacho». Barra lateral oscura con el recorrido de la demo, hojas de
-   trabajo claras y sobrias, y todo lo que es dato (IDs, genes, lotes, km) en monoespaciada.
-   Dos familias: IBM Plex Sans (texto) e IBM Plex Mono (datos). */
-
 :root {
   color-scheme: light;
 
-  /* superficies y tinta (neutros con un leve sesgo verde-azulado) */
-  --bg: #f1f3f0;
+  --bg: #f2f4f1;
   --surface: #fbfcfa;
-  --surface-2: #e9ece7;
-  --surface-3: #dde2dc;
+  --surface-2: #eaeee9;
+  --surface-3: #dde3dc;
   --ink: #14211d;
   --ink-2: #44524d;
   --ink-3: #65726c;
-  --line: #d6dcd5;
+  --line: #d9dfd8;
   --line-strong: #b4beb6;
 
-  /* acento de interfaz (misma familia que la serie 1 de los gráficos: «AG») */
   --accent: #1c5cab;
   --accent-hover: #174c8e;
   --accent-ink: #ffffff;
   --accent-soft: #e0eaf8;
   --focus: #1c5cab;
 
-  /* marca ODS 2 (solo para la insignia) */
   --ods: #dda63a;
   --ods-ink: #2a1e00;
+  --ods-soft: #fbf0d4;
 
-  /* navegación */
-  --nav-bg: #14211d;
+  --nav-bg: #12201b;
   --nav-ink: #eef1ee;
   --nav-ink-2: #a9b5af;
   --nav-line: #2b3a35;
-  --nav-active: #223530;
+  --nav-active: #213630;
 
-  /* estado: siempre acompañado de icono y texto */
   --good: #0ca30c;
   --good-ink: #00580a;
   --good-soft: #e2f3e0;
@@ -47,7 +38,6 @@
   --critical-ink: #8f1d1d;
   --critical-soft: #fbe4e1;
 
-  /* series categóricas (orden fijo, validado para daltonismo) */
   --series-1: #2a78d6;
   --series-2: #eb6834;
   --series-3: #1baf7a;
@@ -63,10 +53,17 @@
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
-  --radius: 6px;
-  --radius-sm: 4px;
-  --shadow: 0 1px 2px rgb(20 33 29 / 6%), 0 6px 20px rgb(20 33 29 / 5%);
-  --nav-width: 252px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 14px;
+  --shadow: 0 1px 2px rgb(20 33 29 / 6%), 0 8px 24px rgb(20 33 29 / 6%);
+  --shadow-lift: 0 2px 4px rgb(20 33 29 / 8%), 0 12px 32px rgb(20 33 29 / 10%);
+  --nav-width: 260px;
+
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-1: 140ms;
+  --dur-2: 260ms;
+  --dur-3: 320ms;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -86,6 +83,7 @@
     --accent-ink: #0b1626;
     --accent-soft: #1b2c44;
     --focus: #86b6ef;
+    --ods-soft: #3a2d0c;
     --nav-bg: #0a0f0d;
     --nav-ink: #eef1ee;
     --nav-ink-2: #97a39e;
@@ -108,7 +106,8 @@
     --baseline: #898781;
     --grid: #26302c;
     --axis: #3a4741;
-    --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 6px 20px rgb(0 0 0 / 25%);
+    --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 25%);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 45%), 0 12px 32px rgb(0 0 0 / 35%);
   }
 }
 
@@ -128,6 +127,7 @@
   --accent-ink: #0b1626;
   --accent-soft: #1b2c44;
   --focus: #86b6ef;
+  --ods-soft: #3a2d0c;
   --nav-bg: #0a0f0d;
   --nav-ink: #eef1ee;
   --nav-ink-2: #97a39e;
@@ -150,5 +150,6 @@
   --baseline: #898781;
   --grid: #26302c;
   --axis: #3a4741;
-  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 6px 20px rgb(0 0 0 / 25%);
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 25%);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 45%), 0 12px 32px rgb(0 0 0 / 35%);
 }

@@ -1,6 +1,6 @@
 """Experimento de cuatro corridas con semillas fijas 11/22/33/44 (plan §6.2, §9.2).
 
-El experimento usa siempre el preset «Docente»: mismos parámetros, mismo escenario,
+El experimento usa siempre el preset «Estándar»: mismos parámetros, mismo escenario,
 misma matriz y misma ``D_ref`` para las cuatro semillas.
 """
 
@@ -16,7 +16,7 @@ from app.api.dependencies import get_session, require_scenario
 from app.api.errors import ApiError
 from app.api.schemas import FourRunsRequest
 from app.config import Settings, get_settings
-from app.ga.params import DOCENTE_PRESET, OFFICIAL_SEEDS
+from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
 from app.services import exports
 from app.services.run_service import experiment_payload
 from app.storage import repository as repo
@@ -35,13 +35,13 @@ def _require_experiment(session: Session, experiment_id: str) -> Experiment:
 @router.post("/four-runs", status_code=202)
 def four_runs(
     body: FourRunsRequest,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
     settings: Settings = Depends(get_settings),
 ) -> dict[str, Any]:
     """Encola exactamente cuatro corridas (11, 22, 33, 44) sin mezclar semillas ni parámetros."""
     scenario = require_scenario(session, body.scenario_id)
     experiment = repo.create_experiment(
-        session, scenario, list(OFFICIAL_SEEDS), DOCENTE_PRESET.to_dict(), settings.code_version
+        session, scenario, list(OFFICIAL_SEEDS), STANDARD_PRESET.to_dict(), settings.code_version
     )
     session.refresh(experiment)
     return {
@@ -59,7 +59,8 @@ def four_runs(
 
 @router.get("")
 def list_experiments(
-    scenario_id: str | None = Query(default=None), session: Session = Depends(get_session)
+    scenario_id: str | None = Query(default=None),
+    session: Session = Depends(get_session, scope="function"),
 ) -> list[dict[str, Any]]:
     return [
         {
@@ -74,7 +75,9 @@ def list_experiments(
 
 
 @router.get("/{experiment_id}")
-def read_experiment(experiment_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+def read_experiment(
+    experiment_id: str, session: Session = Depends(get_session, scope="function")
+) -> dict[str, Any]:
     experiment = _require_experiment(session, experiment_id)
     scenario = repo.get_scenario(session, experiment.scenario_id)
     return experiment_payload(experiment, scenario)
@@ -84,7 +87,7 @@ def read_experiment(experiment_id: str, session: Session = Depends(get_session))
 def export_experiment(
     experiment_id: str,
     format: str = Query(default="csv", pattern="^(json|csv)$"),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
 ) -> Response:
     """Tabla de las cuatro corridas en CSV UTF-8 (o JSON con historial y metadatos)."""
     experiment = _require_experiment(session, experiment_id)

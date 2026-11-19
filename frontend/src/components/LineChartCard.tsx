@@ -3,6 +3,8 @@ import {
   CartesianGrid,
   Line,
   LineChart,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -14,7 +16,6 @@ import { num } from "../utils/format";
 export interface SeriesDef {
   key: string;
   label: string;
-  /** Color de la serie como variable CSS, p. ej. `var(--series-1)`. */
   color: string;
   dash?: string;
 }
@@ -29,12 +30,13 @@ interface Props {
   xLabel: string;
   digits?: number;
   height?: number;
-  /** Valor máximo del eje X (para que el gráfico no «salte» mientras llegan generaciones). */
   xMax?: number;
   reference?: { y: number; label: string };
+  shade?: { from: number; label: string };
   actions?: ReactNode;
-  /** Etiqueta directa al final de cada serie (solo con ≤ 4 series). */
-  endLabels?: boolean;
+  animate?: boolean;
+  syncId?: string;
+  percent?: boolean;
 }
 
 interface TooltipShape {
@@ -48,11 +50,13 @@ function ChartTooltip({
   series,
   xLabel,
   digits,
+  percent,
 }: {
   tip: TooltipShape;
   series: SeriesDef[];
   xLabel: string;
   digits: number;
+  percent: boolean;
 }) {
   if (!tip.active || !tip.payload?.length) return null;
   return (
@@ -72,7 +76,7 @@ function ChartTooltip({
               />
               {s.label}
             </span>
-            <span>{num(item.value, digits)}</span>
+            <span>{percent ? `${num(item.value * 100, 0)} %` : num(item.value, digits)}</span>
           </div>
         );
       })}
@@ -80,7 +84,6 @@ function ChartTooltip({
   );
 }
 
-/** Filas para la vista de tabla: como máximo ~24, siempre con la primera y la última. */
 function sample(rows: ChartRow[]): ChartRow[] {
   if (rows.length <= 24) return rows;
   const step = Math.ceil(rows.length / 22);
@@ -99,19 +102,25 @@ export function LineChartCard({
   height = 290,
   xMax,
   reference,
+  shade,
   actions,
-  endLabels = false,
+  animate = false,
+  syncId,
+  percent = false,
 }: Props) {
-  const lastIndex: Record<string, number> = {};
-  for (const s of series) {
-    for (let i = data.length - 1; i >= 0; i -= 1) {
-      if (data[i][s.key] != null) {
-        lastIndex[s.key] = i;
-        break;
+  const ends = series
+    .map((s) => {
+      for (let i = data.length - 1; i >= 0; i -= 1) {
+        const value = data[i][s.key];
+        if (value != null) return { key: s.key, color: s.color, x: data[i].x, y: value };
       }
-    }
-  }
-  const showEndLabels = endLabels && series.length <= 4;
+      return null;
+    })
+    .filter((item): item is { key: string; color: string; x: number; y: number } => item !== null);
+
+  const sampled = sample(data);
+  const tick = (value: number) =>
+    percent ? `${num(value * 100, 0)} %` : num(value, Math.min(digits, 3));
 
   return (
     <section className="card chart-card">
@@ -146,9 +155,17 @@ export function LineChartCard({
           Aún no hay generaciones registradas.
         </p>
       ) : (
-        <div className="chart-box" role="img" aria-label={`${title}. ${subtitle ?? ""}`}>
+        <div
+          className={`chart-box ${animate ? "reveal" : ""}`}
+          role="img"
+          aria-label={`${title}. ${subtitle ?? ""}`}
+        >
           <ResponsiveContainer width="100%" height={height}>
-            <LineChart data={data} margin={{ top: 12, right: 18, bottom: 22, left: 4 }}>
+            <LineChart
+              data={data}
+              syncId={syncId}
+              margin={{ top: 14, right: 20, bottom: 22, left: 4 }}
+            >
               <CartesianGrid stroke="var(--grid)" vertical={false} />
               <XAxis
                 dataKey="x"
@@ -160,11 +177,11 @@ export function LineChartCard({
                 label={{ value: xLabel, position: "insideBottom", offset: -14 }}
               />
               <YAxis
-                domain={["auto", "auto"]}
+                domain={percent ? [0, 1] : ["auto", "auto"]}
                 tickLine={false}
                 axisLine={false}
-                width={62}
-                tickFormatter={(value: number) => num(value, Math.min(digits, 3))}
+                width={percent ? 48 : 62}
+                tickFormatter={tick}
               />
               <Tooltip
                 isAnimationActive={false}
@@ -175,11 +192,28 @@ export function LineChartCard({
                     series={series}
                     xLabel={xLabel}
                     digits={digits}
+                    percent={percent}
                   />
                 )}
               />
+              {shade && (
+                <ReferenceArea
+                  x1={shade.from}
+                  x2={xMax ?? data[data.length - 1].x}
+                  fill="var(--surface-3)"
+                  fillOpacity={0.55}
+                  stroke="none"
+                  ifOverflow="hidden"
+                  label={{ value: shade.label, position: "insideTop" }}
+                />
+              )}
               {reference && (
-                <ReferenceLine y={reference.y} stroke="var(--baseline)" strokeWidth={2} />
+                <ReferenceLine
+                  y={reference.y}
+                  stroke="var(--baseline)"
+                  strokeWidth={2}
+                  ifOverflow="extendDomain"
+                />
               )}
               {series.map((s) => (
                 <Line
@@ -196,33 +230,18 @@ export function LineChartCard({
                   activeDot={{ r: 4.5, stroke: "var(--surface)", strokeWidth: 2 }}
                   isAnimationActive={false}
                   connectNulls={false}
-                  label={
-                    showEndLabels
-                      ? (point: { x?: number | string; y?: number | string; index?: number }) => {
-                          const px = Number(point.x);
-                          const py = Number(point.y);
-                          if (
-                            point.index !== lastIndex[s.key] ||
-                            !Number.isFinite(px) ||
-                            !Number.isFinite(py)
-                          ) {
-                            return <g key={`skip-${s.key}-${point.index}`} />;
-                          }
-                          return (
-                            <g key={`end-${s.key}`}>
-                              <circle
-                                cx={px}
-                                cy={py}
-                                r={4}
-                                fill={s.color}
-                                stroke="var(--surface)"
-                                strokeWidth={2}
-                              />
-                            </g>
-                          );
-                        }
-                      : undefined
-                  }
+                />
+              ))}
+              {ends.map((end) => (
+                <ReferenceDot
+                  key={end.key}
+                  x={end.x}
+                  y={end.y}
+                  r={4.5}
+                  fill={end.color}
+                  stroke="var(--surface)"
+                  strokeWidth={2}
+                  ifOverflow="visible"
                 />
               ))}
             </LineChart>
@@ -245,12 +264,16 @@ export function LineChartCard({
                 </tr>
               </thead>
               <tbody>
-                {sample(data).map((row) => (
+                {sampled.map((row) => (
                   <tr key={row.x}>
                     <td className="num">{row.x}</td>
                     {series.map((s) => (
                       <td className="num" key={s.key}>
-                        {num(row[s.key], digits + 1)}
+                        {percent
+                          ? row[s.key] == null
+                            ? "—"
+                            : `${num((row[s.key] as number) * 100, 1)} %`
+                          : num(row[s.key], digits + 1)}
                       </td>
                     ))}
                   </tr>
@@ -258,7 +281,7 @@ export function LineChartCard({
               </tbody>
               {data.length > 24 && (
                 <caption>
-                  Muestra de {sample(data).length} de {data.length} generaciones; el export JSON
+                  Muestra de {sampled.length} de {data.length} generaciones; el JSON exportado
                   contiene todas.
                 </caption>
               )}

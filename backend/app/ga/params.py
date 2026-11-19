@@ -1,4 +1,4 @@
-"""Parámetros del AG. El preset «Docente» es el contrato operativo del plan (§4)."""
+"""Parámetros del AG. El preset «Estándar» es el contrato operativo del plan (§4)."""
 
 from __future__ import annotations
 
@@ -62,4 +62,4 @@ class GAParams:
             raise ValueError("los pesos w_u, w_r, w_h deben ser ≥ 0 y sumar 1")
 
 
-DOCENTE_PRESET = GAParams()
+STANDARD_PRESET = GAParams()

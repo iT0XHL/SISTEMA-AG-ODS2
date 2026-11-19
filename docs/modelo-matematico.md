@@ -92,7 +92,7 @@ Lotes entregados y pendientes, inventario remanente, demanda ponderada cubierta,
 
 ## 6. Algoritmo genético
 
-| Componente | Implementación | Parámetro (preset Docente) |
+| Componente | Implementación | Parámetro (preset estándar) |
 |---|---|---|
 | Población inicial | 70 % aleatoria, 20 % sesgada por prioridad, 10 % heurística perturbada | `N = 100` |
 | Selección | Torneo: `k` individuos distintos al azar, gana el de mayor fitness | `k = 3` |

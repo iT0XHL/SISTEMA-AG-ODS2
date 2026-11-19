@@ -37,7 +37,7 @@ def test_health_and_meta(api) -> None:
     assert health.json()["status"] == "ok" and health.json()["database"] == "ok"
     meta = api.get(f"{API}/meta").json()
     assert meta["official_seeds"] == [11, 22, 33, 44]
-    assert meta["docente_preset"]["population_size"] == 100
+    assert meta["standard_preset"]["population_size"] == 100
     assert meta["limits"]["max_centers"] == 50
     assert "inseguridad alimentaria" in meta["declaration"]
 

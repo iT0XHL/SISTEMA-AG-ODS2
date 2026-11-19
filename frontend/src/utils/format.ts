@@ -1,5 +1,3 @@
-// Formato de interfaz: coma decimal (como en el informe); la API usa punto decimal.
-
 const formatters = new Map<string, Intl.NumberFormat>();
 
 function formatter(min: number, max: number): Intl.NumberFormat {
@@ -22,7 +20,6 @@ export function isNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
 
-/** Número con `digits` decimales fijos y coma decimal. */
 export function num(value: unknown, digits = 0): string {
   return isNumber(value) ? formatter(digits, digits).format(value) : DASH;
 }
@@ -35,7 +32,6 @@ export function pct(fraction: unknown, digits = 1): string {
   return isNumber(fraction) ? `${num(fraction * 100, digits)} %` : DASH;
 }
 
-/** Diferencia con signo explícito (−/+), para comparar AG vs. línea base. */
 export function signed(value: unknown, digits = 2): string {
   if (!isNumber(value)) return DASH;
   const rounded = Number(value.toFixed(digits));
@@ -58,7 +54,6 @@ export function shortHash(hash: string | null | undefined, length = 12): string 
   return hash ? `${hash.slice(0, length)}…` : DASH;
 }
 
-/** Convierte lo tecleado en un campo numérico: admite coma o punto; vacío → null. */
 export function parseInput(raw: string): number | null {
   const text = raw.trim().replace(",", ".");
   if (text === "") return null;

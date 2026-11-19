@@ -21,7 +21,6 @@ import type {
 
 const BASE = "/api/v1";
 
-/** Error estructurado de la API: `{code, message, field, details}`. */
 export class ApiError extends Error {
   status: number;
   code: string;

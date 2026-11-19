@@ -20,7 +20,7 @@ from app.domain.metrics import chromosome_payload, routes_payload, validate_solu
 from app.ga.chromosome import Chromosome
 from app.ga.evolution import run_ga
 from app.ga.fitness import evaluate
-from app.ga.params import DOCENTE_PRESET, OFFICIAL_SEEDS
+from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
 from tests.conftest import make_problem
 
 EPS = 1e-12
@@ -45,7 +45,7 @@ def small_instance():
 def exhaustive():
     problem = small_instance()
     baseline = compute_baseline(problem)
-    weights = DOCENTE_PRESET.weights
+    weights = STANDARD_PRESET.weights
     best_j = float("inf")
     count = 0
     for perm in permutations(range(problem.n)):
@@ -69,10 +69,10 @@ def test_enumeration_covers_the_whole_search_space(exhaustive) -> None:
 @pytest.mark.slow
 def test_ga_never_beats_the_exhaustive_optimum_and_is_feasible(exhaustive) -> None:
     problem, baseline, best_j, _ = exhaustive
-    weights = DOCENTE_PRESET.weights
+    weights = STANDARD_PRESET.weights
     gaps = {}
     for seed in OFFICIAL_SEEDS:
-        result = run_ga(problem, DOCENTE_PRESET, seed, baseline)
+        result = run_ga(problem, STANDARD_PRESET, seed, baseline)
         best = result.best
         assert best.j >= best_j - EPS, "el AG no puede ser mejor que el óptimo enumerado"
         report = validate_solution(
@@ -93,6 +93,6 @@ def test_ga_never_beats_the_exhaustive_optimum_and_is_feasible(exhaustive) -> No
 def test_baseline_never_beats_the_exhaustive_optimum_of_its_own_encoding(exhaustive) -> None:
     problem, baseline, best_j, _ = exhaustive
     encoded = evaluate(
-        problem, baseline.as_chromosome(problem), baseline.d_ref, DOCENTE_PRESET.weights
+        problem, baseline.as_chromosome(problem), baseline.d_ref, STANDARD_PRESET.weights
     )
     assert encoded.j >= best_j - EPS

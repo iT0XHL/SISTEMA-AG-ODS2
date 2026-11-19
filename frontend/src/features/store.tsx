@@ -10,11 +10,10 @@ import {
 import { ApiError, api } from "../services/api";
 import type { GAParams, Meta, ScenarioDetail } from "../types";
 
-export type Preset = "docente" | "experimental";
+export type Preset = "standard" | "experimental";
 export type Theme = "system" | "light" | "dark";
 
-/** Preset «Docente»: contrato operativo del plan (§4). El servidor es la fuente de verdad. */
-export const DOCENTE_FALLBACK: GAParams = {
+export const STANDARD_FALLBACK: GAParams = {
   population_size: 100,
   max_generations: 200,
   tournament_k: 3,
@@ -49,8 +48,8 @@ const DEFAULTS: Persisted = {
   scenarioId: null,
   runId: null,
   experimentId: null,
-  preset: "docente",
-  params: DOCENTE_FALLBACK,
+  preset: "standard",
+  params: STANDARD_FALLBACK,
   seed: 11,
   theme: "system",
 };
@@ -59,7 +58,9 @@ function load(): Persisted {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULTS;
-    return { ...DEFAULTS, ...(JSON.parse(raw) as Partial<Persisted>) };
+    const saved = JSON.parse(raw) as Partial<Persisted>;
+    const preset: Preset = saved.preset === "experimental" ? "experimental" : "standard";
+    return { ...DEFAULTS, ...saved, preset };
   } catch {
     return DEFAULTS;
   }
@@ -68,10 +69,9 @@ function load(): Persisted {
 interface Store extends Persisted {
   meta: Meta | null;
   metaError: string | null;
-  docente: GAParams;
+  standard: GAParams;
   scenario: ScenarioDetail | null;
   scenarioLoading: boolean;
-  /** Parámetros efectivos: el preset docente bloquea los valores. */
   effectiveParams: GAParams;
   selectScenario: (id: string | null) => void;
   reloadScenario: () => void;
@@ -101,7 +101,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {
-      /* sin almacenamiento local la aplicación sigue funcionando */
+      /* sin localStorage */
     }
   }, [state]);
 
@@ -138,7 +138,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       .catch((error: unknown) => {
         if (cancelled) return;
         setScenario(null);
-        // El escenario guardado ya no existe (p. ej. se reinició la base de datos).
         if (error instanceof ApiError && error.status === 404) {
           patch({ scenarioId: null, runId: null, experimentId: null });
         }
@@ -152,15 +151,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [state.scenarioId, reloadToken, patch]);
 
   const value = useMemo<Store>(() => {
-    const docente = meta?.docente_preset ?? DOCENTE_FALLBACK;
+    const standard = meta?.standard_preset ?? STANDARD_FALLBACK;
     return {
       ...state,
       meta,
       metaError,
-      docente,
+      standard,
       scenario,
       scenarioLoading,
-      effectiveParams: state.preset === "docente" ? docente : state.params,
+      effectiveParams: state.preset === "standard" ? standard : state.params,
       selectScenario: (id) =>
         setState((previous) =>
           previous.scenarioId === id

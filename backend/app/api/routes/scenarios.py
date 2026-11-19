@@ -83,7 +83,7 @@ def validate(body: ScenarioIn, settings: Settings = Depends(get_settings)) -> di
 def create_scenario(
     body: ScenarioIn,
     response: Response,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
     settings: Settings = Depends(get_settings),
 ) -> dict[str, Any]:
     """Guarda un escenario depurado. Rechaza cualquier escenario incompleto o inválido."""
@@ -128,14 +128,16 @@ def create_scenario(
 
 
 @router.get("")
-def list_scenarios(session: Session = Depends(get_session)) -> list[dict[str, Any]]:
+def list_scenarios(
+    session: Session = Depends(get_session, scope="function"),
+) -> list[dict[str, Any]]:
     return [summary(row, repo.count_runs(session, row.id)) for row in repo.list_scenarios(session)]
 
 
 @router.get("/{scenario_id}")
 def read_scenario(
     scenario_id: str,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
     settings: Settings = Depends(get_settings),
 ) -> dict[str, Any]:
     """Escenario completo. No contiene datos personales: el esquema no los admite."""
@@ -153,7 +155,9 @@ def read_scenario(
 
 
 @router.get("/{scenario_id}/matrix")
-def read_matrix(scenario_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+def read_matrix(
+    scenario_id: str, session: Session = Depends(get_session, scope="function")
+) -> dict[str, Any]:
     row = require_scenario(session, scenario_id)
     node_ids, matrix = repo.stored_matrix(row)
     return {
@@ -167,7 +171,9 @@ def read_matrix(scenario_id: str, session: Session = Depends(get_session)) -> di
 
 
 @router.delete("/{scenario_id}", status_code=204)
-def delete_scenario(scenario_id: str, session: Session = Depends(get_session)) -> Response:
+def delete_scenario(
+    scenario_id: str, session: Session = Depends(get_session, scope="function")
+) -> Response:
     """Elimina un escenario junto con sus corridas y experimentos."""
     row = require_scenario(session, scenario_id)
     for run in repo.list_runs(session, row.id, limit=100000):

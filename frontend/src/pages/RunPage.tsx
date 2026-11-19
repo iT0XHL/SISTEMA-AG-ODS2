@@ -1,18 +1,21 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
+import { EvolutionLoop } from "../components/Explainers";
 import { LineChartCard, type ChartRow } from "../components/LineChartCard";
-import { Callout, Icon, Kpi, PageHead, Spinner, StatusChip } from "../components/ui";
+import { Callout, Icon, Kpi, Meter, PageHead, Skeleton, StatusChip } from "../components/ui";
 import { useStore } from "../features/store";
 import { useRun } from "../features/useRun";
 import { api, errorMessage } from "../services/api";
 import type { RunState } from "../types";
-import { STATUS_LABEL, STOP_LABEL, dateTime, num, pct } from "../utils/format";
+import { STATUS_LABEL, STOP_LABEL, dateTime, num, pct, signed } from "../utils/format";
+import { lastImprovement } from "../utils/evolution";
 
 const FITNESS_SERIES = [
   { key: "best", label: "Mejor fitness", color: "var(--series-1)" },
   { key: "mean", label: "Fitness promedio", color: "var(--series-2)" },
 ];
 const DIVERSITY_SERIES = [{ key: "diversity", label: "Diversidad", color: "var(--series-3)" }];
+const SPEEDS = [1, 2, 4];
 
 export function RunPage() {
   const { scenario, runId, setRunId } = useStore();
@@ -22,10 +25,12 @@ export function RunPage() {
   const [cancelError, setCancelError] = useState<string | null>(null);
   const [replay, setReplay] = useState<number | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [speed, setSpeed] = useState(1);
   const timer = useRef<number | undefined>(undefined);
 
   const scenarioId = scenario?.scenario_id;
-  const finished = run ? !["queued", "running"].includes(run.status) : false;
+  const active = run ? ["queued", "running"].includes(run.status) : false;
+  const finished = run ? !active : false;
 
   useEffect(() => {
     if (!scenarioId) return;
@@ -40,7 +45,6 @@ export function RunPage() {
     setPlaying(false);
   }, [runId]);
 
-  // Reproducción de la evolución: avanza generación a generación y se puede pausar.
   useEffect(() => {
     window.clearInterval(timer.current);
     if (!playing) return;
@@ -53,11 +57,14 @@ export function RunPage() {
         }
         return next;
       });
-    }, 70);
+    }, 70 / speed);
     return () => window.clearInterval(timer.current);
-  }, [playing, history.length]);
+  }, [playing, speed, history.length]);
 
-  const visible = replay == null ? history : history.slice(0, replay + 1);
+  const visible = useMemo(
+    () => (replay == null ? history : history.slice(0, replay + 1)),
+    [history, replay],
+  );
   const rows: ChartRow[] = useMemo(
     () =>
       visible.map((g) => ({
@@ -69,8 +76,14 @@ export function RunPage() {
     [visible],
   );
   const last = visible[visible.length - 1];
+  const first = history[0];
   const xMax = finished ? history[history.length - 1]?.number : run?.progress.max_generations;
   const recentToShow = showAllRecent ? recent : recent.slice(0, 5);
+  const tolerance = run?.parameters.improvement_tolerance ?? 1e-6;
+  const stagnationLimit = run?.parameters.stagnation_generations ?? 0;
+  const stall = lastImprovement(visible, tolerance);
+  const showShade =
+    finished && replay == null && run?.stop_reason === "stagnation" && stall.since > 0;
 
   async function cancel() {
     if (!runId) return;
@@ -104,15 +117,14 @@ export function RunPage() {
           </Link>
         }
       >
-        El servidor encola la corrida y un proceso aparte (worker) ejecuta el algoritmo. Aquí se ve
-        el avance por generaciones: el mejor fitness nunca baja porque el elitismo conserva las dos
-        mejores soluciones.
+        Un proceso aparte ejecuta el algoritmo mientras esta página lee el avance. El mejor fitness
+        nunca baja porque el elitismo conserva las mejores soluciones.
       </PageHead>
 
       {!runId && (
         <Callout tone="info" title="Aún no hay una corrida seleccionada">
-          Vaya a <Link to="/configuracion">Configuración AG</Link> y pulse «Ejecutar AG», o elija
-          una corrida anterior de la lista.
+          Pulse «Ejecutar AG» en <Link to="/configuracion">Configuración</Link> o elija una corrida
+          de la lista.
         </Callout>
       )}
       {error && (
@@ -120,7 +132,7 @@ export function RunPage() {
           {error}
         </Callout>
       )}
-      {runId && !run && !error && <Spinner label="Consultando la corrida…" />}
+      {runId && !run && !error && <Skeleton height={200} label="Consultando la corrida" />}
 
       {run && (
         <>
@@ -150,14 +162,14 @@ export function RunPage() {
               </div>
             </div>
             <div>
-              <div className="meter-row">
+              <div className="meter-row" style={{ marginBottom: "0.4rem" }}>
                 <span>
                   Generación {run.progress.generation} de {run.progress.max_generations} como máximo
                 </span>
                 <span className="mono">{pct(run.progress.fraction, 0)}</span>
               </div>
               <div
-                className="progress"
+                className={`progress ${active ? "live" : ""}`}
                 role="progressbar"
                 aria-label="Avance de la corrida"
                 aria-valuemin={0}
@@ -167,10 +179,18 @@ export function RunPage() {
                 <span style={{ width: `${run.progress.fraction * 100}%` }} />
               </div>
             </div>
+            {stagnationLimit > 0 && (
+              <Meter
+                label="Generaciones sin mejora relevante"
+                value={Math.min(stall.since, stagnationLimit)}
+                max={stagnationLimit}
+                unit="gen."
+              />
+            )}
             <p className="small muted" aria-live="polite">
               {STATUS_LABEL[run.status]}
               {run.stop_reason &&
-                ` · criterio de parada: ${STOP_LABEL[run.stop_reason] ?? run.stop_reason}`}
+                ` · parada por ${(STOP_LABEL[run.stop_reason] ?? run.stop_reason).toLowerCase()}`}
               {run.started_at && ` · inicio ${dateTime(run.started_at)}`}
               {run.ended_at && ` · fin ${dateTime(run.ended_at)}`}
             </p>
@@ -181,59 +201,55 @@ export function RunPage() {
             )}
             {run.status === "cancelled" && (
               <Callout tone="warn" title="Corrida cancelada">
-                Se conserva el historial hasta la generación {run.progress.generation}, pero no se
+                Se conserva el historial hasta la generación {run.progress.generation}; no se
                 publica ninguna solución.
               </Callout>
             )}
             {run.status === "completed" && (
               <Callout tone="good" title="Solución validada">
-                La mejor solución superó la comprobación de inventario, capacidades y visitas
-                únicas.
+                Cumple inventario, capacidades y visitas únicas.
               </Callout>
             )}
             {cancelError && <Callout tone="error">{cancelError}</Callout>}
           </section>
 
-          <div className="kpis" style={{ "--kpi-cols": 5 } as CSSProperties}>
+          <div className="kpis" style={{ "--kpi-cols": 3 } as CSSProperties}>
             <Kpi
               label="Generación"
               value={last ? last.number : "—"}
               definition="Última generación mostrada en los gráficos."
             />
             <Kpi
-              label="Mejor fitness (sin unidades)"
+              label="Mejor fitness"
               value={num(last?.best_fitness, 5)}
-              definition="1 / (1 + J) del mejor individuo; mayor es mejor."
-            />
-            <Kpi
-              label="Fitness promedio (sin unidades)"
-              value={num(last?.mean_fitness, 5)}
-              definition="Media de la población en esa generación."
-            />
-            <Kpi
-              label="Mejor J (sin unidades)"
-              value={num(last?.best_J, 5)}
-              definition="0,75·U + 0,20·R + 0,05·H; menor es mejor."
+              definition="Calidad del mejor reparto hallado; mayor es mejor."
+              delta={
+                first && last && last.number > 0
+                  ? `${signed(last.best_fitness - first.best_fitness, 5)} desde la generación 0`
+                  : undefined
+              }
+              deltaTone="good"
             />
             <Kpi
               label="Diversidad"
               value={pct(last?.diversity, 0)}
-              definition="Proporción de permutaciones π distintas en la población."
+              definition="Qué tan distintas son las soluciones de la población."
             />
           </div>
 
-          {finished && history.length > 2 && (
-            <section className="card no-print">
-              <div className="card-title">
-                <h3>Reproducir la evolución</h3>
-                <span className="card-note">
-                  Opcional · se puede pausar en cualquier generación
-                </span>
-              </div>
-              <div className="row">
+          <section className="stack">
+            <div className="section-title">
+              <h2>Evolución</h2>
+            </div>
+            {finished && history.length > 2 && (
+              <div
+                className="player no-print"
+                role="group"
+                aria-label="Reproducción de la evolución"
+              >
                 <button
                   type="button"
-                  className="btn"
+                  className="btn small"
                   onClick={() => {
                     if (!playing && (replay == null || replay >= history.length - 1)) setReplay(0);
                     setPlaying((value) => !value);
@@ -241,9 +257,34 @@ export function RunPage() {
                 >
                   <Icon name={playing ? "pause" : "play"} /> {playing ? "Pausar" : "Reproducir"}
                 </button>
+                <div className="segmented" role="group" aria-label="Velocidad">
+                  {SPEEDS.map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-pressed={speed === value}
+                      style={{ minHeight: 30, paddingInline: "0.6rem" }}
+                      onClick={() => setSpeed(value)}
+                    >
+                      {value}×
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="range"
+                  aria-label="Generación mostrada"
+                  min={0}
+                  max={history.length - 1}
+                  value={replay ?? history.length - 1}
+                  onChange={(event) => {
+                    setPlaying(false);
+                    setReplay(Number(event.target.value));
+                  }}
+                />
+                <span className="mono small">{replay ?? history.length - 1}</span>
                 <button
                   type="button"
-                  className="btn"
+                  className="btn small ghost"
                   onClick={() => {
                     setPlaying(false);
                     setReplay(null);
@@ -252,47 +293,51 @@ export function RunPage() {
                 >
                   <Icon name="replay" /> Mostrar todo
                 </button>
-                <label className="row grow" style={{ gap: "0.6rem" }}>
-                  <span className="small">Generación</span>
-                  <input
-                    className="grow"
-                    type="range"
-                    min={0}
-                    max={history.length - 1}
-                    value={replay ?? history.length - 1}
-                    onChange={(event) => {
-                      setPlaying(false);
-                      setReplay(Number(event.target.value));
-                    }}
-                    style={{ accentColor: "var(--accent)", minHeight: "44px" }}
-                  />
-                  <span className="mono small">{replay ?? history.length - 1}</span>
-                </label>
               </div>
-            </section>
-          )}
-
-          <div className="split wide-left">
+            )}
             <LineChartCard
               title="Fitness por generación"
-              subtitle="Mejor individuo y promedio de la población (sin unidades, mayor es mejor)"
+              subtitle="Mejor individuo y promedio de la población"
               data={rows}
               series={FITNESS_SERIES}
               xLabel="Generación"
               xMax={xMax}
               digits={4}
-              endLabels={false}
+              syncId="run"
+              shade={showShade ? { from: stall.at, label: "Sin mejora" } : undefined}
             />
-            <LineChartCard
-              title="Diversidad de la población"
-              subtitle="Proporción de permutaciones π distintas (0 a 1)"
-              data={rows}
-              series={DIVERSITY_SERIES}
-              xLabel="Generación"
-              xMax={xMax}
-              digits={2}
-            />
-          </div>
+            <EvolutionLoop params={run.parameters} />
+            <details className="advanced">
+              <summary>
+                Más indicadores <span>fitness promedio, J y diversidad</span>
+              </summary>
+              <div className="advanced-body stack" style={{ "--gap": "1rem" } as CSSProperties}>
+                <div className="kpis" style={{ "--kpi-cols": 2 } as CSSProperties}>
+                  <Kpi
+                    label="Fitness promedio"
+                    value={num(last?.mean_fitness, 5)}
+                    definition="Media de la población en esa generación."
+                  />
+                  <Kpi
+                    label="Mejor J"
+                    value={num(last?.best_J, 5)}
+                    definition="Puntaje del mejor reparto; menor es mejor."
+                  />
+                </div>
+                <LineChartCard
+                  title="Diversidad de la población"
+                  subtitle="Proporción de permutaciones π distintas"
+                  data={rows}
+                  series={DIVERSITY_SERIES}
+                  xLabel="Generación"
+                  xMax={xMax}
+                  digits={2}
+                  syncId="run"
+                  percent
+                />
+              </div>
+            </details>
+          </section>
         </>
       )}
 

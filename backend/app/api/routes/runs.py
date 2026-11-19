@@ -51,7 +51,9 @@ def checked_params(body: GAParamsIn | None, settings: Settings) -> GAParams:
 
 
 @router.post("/baselines")
-def baseline(body: BaselineRequest, session: Session = Depends(get_session)) -> dict[str, Any]:
+def baseline(
+    body: BaselineRequest, session: Session = Depends(get_session, scope="function")
+) -> dict[str, Any]:
     """Línea base determinista del escenario (misma matriz, unidades y ``D_ref`` que el AG)."""
     scenario = require_scenario(session, body.scenario_id)
     weights = Weights(**body.weights.model_dump()) if body.weights else Weights()
@@ -67,7 +69,7 @@ def baseline(body: BaselineRequest, session: Session = Depends(get_session)) -> 
 @router.post("/runs", status_code=202)
 def start_run(
     body: RunRequest,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
     settings: Settings = Depends(get_settings),
 ) -> dict[str, Any]:
     """Encola una corrida del AG. El worker la ejecuta de forma asíncrona."""
@@ -81,19 +83,23 @@ def start_run(
 def list_runs(
     scenario_id: str | None = Query(default=None),
     limit: int = Query(default=50, ge=1, le=200),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
 ) -> list[dict[str, Any]]:
     return [run_status_payload(run) for run in repo.list_runs(session, scenario_id, limit)]
 
 
 @router.get("/runs/{run_id}")
-def read_run(run_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+def read_run(
+    run_id: str, session: Session = Depends(get_session, scope="function")
+) -> dict[str, Any]:
     run = require_run(session, run_id)
     return run_status_payload(run, repo.latest_generation(session, run_id))
 
 
 @router.post("/runs/{run_id}/cancel")
-def cancel_run(run_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+def cancel_run(
+    run_id: str, session: Session = Depends(get_session, scope="function")
+) -> dict[str, Any]:
     """Solicita cancelar. Una corrida en cola se cancela de inmediato; una en ejecución,
     al cerrar la generación en curso."""
     run = require_run(session, run_id)
@@ -119,7 +125,9 @@ def _completed_run(session: Session, run_id: str):
 
 
 @router.get("/runs/{run_id}/solution")
-def read_solution(run_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+def read_solution(
+    run_id: str, session: Session = Depends(get_session, scope="function")
+) -> dict[str, Any]:
     """Mejor solución **validada** de la corrida: rutas, cantidades y métricas."""
     return solution_payload(_completed_run(session, run_id))
 
@@ -128,7 +136,7 @@ def read_solution(run_id: str, session: Session = Depends(get_session)) -> dict[
 def read_history(
     run_id: str,
     since: int = Query(default=0, ge=0),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
 ) -> dict[str, Any]:
     """Fitness por generación (vector para el gráfico). ``since`` permite lectura incremental."""
     run = require_run(session, run_id)
@@ -153,7 +161,7 @@ def read_history(
 def export_run(
     run_id: str,
     format: str = Query(default="json", pattern="^(json|csv)$"),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_session, scope="function"),
 ) -> Response:
     """Evidencia de una corrida: JSON completo o CSV de asignaciones."""
     run = _completed_run(session, run_id)

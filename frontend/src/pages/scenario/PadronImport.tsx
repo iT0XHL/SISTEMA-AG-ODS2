@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge, Callout, Field, Icon, Spinner } from "../../components/ui";
 import { api, errorMessage } from "../../services/api";
 import type { Center, DemandRule, ImportPreview, ImportReport } from "../../types";
 
 interface Props {
   maxUploadMb: number;
+  initialFile?: File | null;
   onImported: (centers: Center[], rule: DemandRule | null) => void;
 }
 
-/** Asistente de importación del padrón: mapeo de columnas con lista permitida y sin PII. */
-export function PadronImport({ maxUploadMb, onImported }: Props) {
+export function PadronImport({ maxUploadMb, initialFile, onImported }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<ImportPreview | null>(null);
   const [mapping, setMapping] = useState<Record<string, string>>({});
@@ -46,6 +46,11 @@ export function PadronImport({ maxUploadMb, onImported }: Props) {
     }
   }
 
+  useEffect(() => {
+    if (initialFile) void choose(initialFile);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialFile]);
+
   function rule(): DemandRule | null {
     if (!useRule) return null;
     return {
@@ -59,7 +64,6 @@ export function PadronImport({ maxUploadMb, onImported }: Props) {
     setBusy(true);
     setError(null);
     try {
-      // el servidor espera {campo permitido: columna}
       const byField: Record<string, string> = {};
       for (const [column, field] of Object.entries(mapping)) if (field) byField[field] = column;
       setResult(await api.normalizePadron(file, byField, rule()));

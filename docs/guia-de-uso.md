@@ -28,7 +28,7 @@ La barra lateral sigue el orden de la demostración. La franja superior muestra 
 |---|---|---|
 | 1 | Inicio · ODS 2 | Problema, entradas y salidas, fórmula, límites y fuentes |
 | 2 | Escenario | Cargar la demo, importar un padrón o construir un escenario; validarlo y guardarlo |
-| 3 | Configuración AG | Parámetros del algoritmo, preset «Docente» y semilla |
+| 3 | Configuración AG | Parámetros del algoritmo, preset «Estándar» y semilla |
 | 4 | Ejecución | Avance por generaciones, fitness, diversidad, cancelar |
 | 5 | Resultados | Asignación, rutas, mapa, comparación con la línea base, evidencia |
 | 6 | Cuatro corridas | Experimento 11/22/33/44, tabla, gráficos y exportación |
@@ -39,7 +39,7 @@ En la barra lateral también se elige el tema (Auto / Claro / Oscuro).
 ## 3. Camino corto: la demo
 
 1. En **Inicio**, pulse **«Usar el escenario demo»**. Se genera el escenario sintético (18 centros, semilla de fixture 2026), se guarda como `demo-cañete-001` y se abre la configuración.
-2. En **Configuración AG**, deje el preset **Docente** y la semilla **11**; pulse **«Ejecutar AG con semilla 11»**.
+2. En **Configuración AG**, deje el preset **Estándar** y la semilla **11**; pulse **«Ejecutar AG con semilla 11»**.
 3. En **Ejecución** verá la corrida completarse (menos de un segundo de CPU en el escenario demo). Pulse **«Ver resultados»**.
 4. En **Cuatro corridas**, pulse **«Lanzar las cuatro corridas»** y luego **«Exportar CSV»**.
 
@@ -100,7 +100,7 @@ Para probar el flujo sin datos reales use `fixtures/invalid/padron_con_pii_ficti
 
 ## 5. Configuración AG
 
-- **Preset Docente (bloqueado)**: población 100, 200 generaciones, torneo 3, `p_c` 0,90, `p_π` 0,15, `p_q` 0,08, élite 2, estancamiento 35, pesos 0,75/0,20/0,05. Es el que usan las cuatro corridas.
+- **Preset estándar (bloqueado)**: población 100, 200 generaciones, torneo 3, `p_c` 0,90, `p_π` 0,15, `p_q` 0,08, élite 2, estancamiento 35, pesos 0,75/0,20/0,05. Es el que usan las cuatro corridas.
 - **Experimental**: desbloquea todos los campos. La página avisa si las fracciones de población inicial o los pesos no suman 1, o si se superan los límites del servidor.
 - **Semilla evolutiva**: cualquier entero ≥ 0; los botones 11/22/33/44 son las semillas oficiales.
 
@@ -133,7 +133,7 @@ Si una corrida falla, se muestra el código y un mensaje legible (por ejemplo `T
 
 ## 8. Cuatro corridas
 
-**«Lanzar las cuatro corridas»** encola exactamente las semillas 11, 22, 33 y 44 con el preset Docente. La tabla se actualiza sola y, al terminar, muestra una fila por corrida, la fila de la línea base y la media ± desviación estándar muestral. Debajo: `J` por semilla frente a la línea base y las cuatro curvas de convergencia.
+**«Lanzar las cuatro corridas»** encola exactamente las semillas 11, 22, 33 y 44 con el preset estándar. La tabla se actualiza sola y, al terminar, muestra una fila por corrida, la fila de la línea base y la media ± desviación estándar muestral. Debajo: `J` por semilla frente a la línea base y las cuatro curvas de convergencia.
 
 - **Exportar CSV / JSON**: disponibles solo cuando las cuatro corridas terminaron (no se exportan tablas parciales).
 - **Captura para el informe**: abre el diálogo de impresión con una versión limpia de la página.

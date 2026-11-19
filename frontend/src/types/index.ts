@@ -1,5 +1,3 @@
-// Contratos de la API de NutriRuta AG (ver docs/api.md).
-
 export type DataOrigin = "synthetic" | "official" | "declared" | "mixed";
 export type CenterSource = "synthetic" | "official" | "declared";
 export type DemandOrigin = "synthetic" | "declared" | "inferred";
@@ -167,7 +165,7 @@ export interface Meta {
     max_upload_mb: number;
     max_run_seconds: number;
   };
-  docente_preset: GAParams;
+  standard_preset: GAParams;
   official_seeds: number[];
   distance_modes: Record<DistanceMode, string>;
   import_allowed_fields: Record<string, string>;

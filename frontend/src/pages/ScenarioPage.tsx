@@ -17,6 +17,7 @@ import {
   demandFromUsers,
   issuesByCenterRow,
   loadDraft,
+  stepStatus,
   nextId,
   pickScenario,
   saveDraft,
@@ -59,6 +60,7 @@ export function ScenarioPage() {
   const [step, setStep] = useState(0);
   const [editing, setEditing] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [importFile, setImportFile] = useState<File | null>(null);
   const [demoSize, setDemoSize] = useState(18);
   const [report, setReport] = useState<ValidationReport | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -80,7 +82,6 @@ export function ScenarioPage() {
   useEffect(refreshSaved, [refreshSaved]);
   useEffect(() => saveDraft(draft), [draft]);
 
-  /** Cualquier edición invalida el informe anterior: hay que volver a validar. */
   const update = useCallback((changes: Partial<ScenarioPayload>) => {
     setDraft((current) => ({ ...current, ...changes }));
     setReport(null);
@@ -135,6 +136,17 @@ export function ScenarioPage() {
     setNotice(
       `Escenario demo de ${demo.centers.length} centros ficticios cargado en el borrador (semilla de fixture ${demo.fixture_seed}).`,
     );
+  }
+
+  function onFile(file: File | null) {
+    if (!file) return;
+    if (/\.json$/i.test(file.name)) {
+      setShowImport(false);
+      loadJson(file);
+    } else {
+      setImportFile(file);
+      setShowImport(true);
+    }
   }
 
   function loadJson(file: File | null) {
@@ -260,6 +272,7 @@ export function ScenarioPage() {
     refreshSaved();
   }
 
+  const statuses = stepStatus(draft, report?.valid === true, limits?.min_centers ?? 5);
   const coordsRequired = draft.distance_mode === "haversine_demo";
   const depotIssues = errors.filter((issue) => issue.field?.startsWith("depot"));
   const fleetIssues = errors.filter((issue) => issue.field?.startsWith("vehicles"));
@@ -503,72 +516,97 @@ export function ScenarioPage() {
             </div>
           </div>
           <ol className="stepper">
-            {STEPS.map((label, index) => (
-              <li key={label}>
-                <button
-                  type="button"
-                  aria-current={step === index ? "step" : undefined}
-                  onClick={() => setStep(index)}
-                >
-                  <span className="step-n">{index + 1}</span>
-                  {label}
-                </button>
-              </li>
-            ))}
+            {STEPS.map((label, index) => {
+              const state = statuses[index];
+              return (
+                <li key={label}>
+                  <button
+                    type="button"
+                    aria-current={step === index ? "step" : undefined}
+                    onClick={() => setStep(index)}
+                  >
+                    <span className={`step-n ${state.done ? "ok" : ""}`}>
+                      {state.done ? <Icon name="check" /> : index + 1}
+                    </span>
+                    <span>
+                      {label}
+                      <span className={`step-state ${state.done ? "ok" : ""}`}>
+                        {state.done ? "Completo" : `Falta: ${state.missing}`}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
           </ol>
 
           {step === 0 && (
             <div className="stack">
               <div className="card">
-                <h3>¿De dónde vienen los centros?</h3>
-                <div className="row" style={{ alignItems: "flex-end" }}>
-                  <Field label="Centros de la demo" hint="Entre 15 y 20, todos ficticios">
-                    {(props) => (
-                      <select
-                        {...props}
-                        className="select"
-                        style={{ width: "7rem" }}
-                        value={demoSize}
-                        onChange={(e) => setDemoSize(Number(e.target.value))}
-                      >
-                        {[15, 16, 17, 18, 19, 20].map((n) => (
-                          <option key={n}>{n}</option>
-                        ))}
-                      </select>
-                    )}
-                  </Field>
+                <h3>¿Cómo quiere cargar los centros?</h3>
+                <div className="start-options">
                   <button
                     type="button"
-                    className="btn primary"
+                    className="start-card"
                     onClick={loadDemo}
                     disabled={busy !== null}
                   >
-                    <Icon name="flask" /> Cargar demo sintética
+                    <Icon name="flask" />
+                    <strong>Usar la demo</strong>
+                    <span>
+                      {demoSize} centros ficticios de Cañete, con todo lo necesario para ejecutar.
+                    </span>
                   </button>
-                  <button type="button" className="btn" onClick={() => setShowImport((v) => !v)}>
-                    <Icon name="upload" /> Importar padrón (CSV/XLSX)
-                  </button>
-                  <label className="btn">
-                    <Icon name="upload" /> Abrir escenario JSON
+                  <label className="start-card">
+                    <Icon name="upload" />
+                    <strong>Subir un archivo</strong>
+                    <span>CSV, Excel o JSON. El formato se detecta solo.</span>
                     <input
                       type="file"
-                      accept=".json,application/json"
+                      accept=".csv,.xlsx,.xlsm,.txt,.tsv,.json,application/json"
                       className="sr-only"
-                      onChange={(e) => loadJson(e.target.files?.[0] ?? null)}
+                      onChange={(e) => {
+                        onFile(e.target.files?.[0] ?? null);
+                        e.target.value = "";
+                      }}
                     />
                   </label>
-                  <button type="button" className="btn" onClick={addCenter}>
-                    <Icon name="plus" /> Agregar centro
+                  <button type="button" className="start-card" onClick={addCenter}>
+                    <Icon name="plus" />
+                    <strong>Escribir a mano</strong>
+                    <span>Agregue los centros uno por uno en la tabla.</span>
                   </button>
                 </div>
+                <div className="row small">
+                  <span className="muted">Archivos de ejemplo:</span>
+                  <a href="/ejemplos/centros_ejemplo.csv" download>
+                    Centros (CSV)
+                  </a>
+                  <a href="/ejemplos/escenario_ejemplo.json" download>
+                    Escenario completo (JSON)
+                  </a>
+                  <span className="muted">· Tamaño de la demo:</span>
+                  <select
+                    className="select"
+                    style={{ width: "5rem", minHeight: 32 }}
+                    aria-label="Centros de la demo"
+                    value={demoSize}
+                    onChange={(e) => setDemoSize(Number(e.target.value))}
+                  >
+                    {[15, 16, 17, 18, 19, 20].map((n) => (
+                      <option key={n}>{n}</option>
+                    ))}
+                  </select>
+                </div>
                 <p className="small muted">
-                  El MVP admite entre {limits?.min_centers ?? 5} y {limits?.max_centers ?? 50}{" "}
-                  centros. La demo usa nombres «Centro ficticio NN»: no combina nombres reales con
-                  coordenadas inventadas.
+                  Entre {limits?.min_centers ?? 5} y {limits?.max_centers ?? 50} centros. El CSV usa
+                  las columnas codigo, nombre, distrito, direccion, latitud, longitud, demanda_lotes
+                  y prioridad; las columnas con datos personales se descartan.
                 </p>
               </div>
               {showImport && (
                 <PadronImport
+                  initialFile={importFile}
                   maxUploadMb={limits?.max_upload_mb ?? 5}
                   onImported={(centers, rule) => {
                     update({
@@ -854,48 +892,53 @@ export function ScenarioPage() {
                   </span>
                 </div>
               </div>
-              <div className="card">
-                <h3>Regla declarada de demanda</h3>
-                <p className="small muted">
-                  Solo para centros con cifra agregada de usuarios. demanda = ⌈usuarios × raciones
-                  por usuario / raciones por lote⌉. Toda demanda así obtenida se rotula «inferida».
-                </p>
-                <div className="form-grid">
-                  <Field label="Raciones por usuario">
-                    {(props) => (
-                      <input
-                        {...props}
-                        className="input mono"
-                        inputMode="decimal"
-                        value={ruleUsers}
-                        onChange={(e) => setRuleUsers(e.target.value)}
-                      />
-                    )}
-                  </Field>
-                  <Field label="Raciones por lote">
-                    {(props) => (
-                      <input
-                        {...props}
-                        className="input mono"
-                        inputMode="decimal"
-                        value={ruleLot}
-                        onChange={(e) => setRuleLot(e.target.value)}
-                      />
-                    )}
-                  </Field>
+              <details className="advanced">
+                <summary>
+                  Calcular la demanda desde el número de usuarios <span>opcional</span>
+                </summary>
+                <div className="advanced-body stack">
+                  <p className="small muted">
+                    Solo para centros con cifra agregada de usuarios. demanda = ⌈usuarios × raciones
+                    por usuario / raciones por lote⌉. Toda demanda así obtenida se rotula
+                    «inferida».
+                  </p>
+                  <div className="form-grid">
+                    <Field label="Raciones por usuario">
+                      {(props) => (
+                        <input
+                          {...props}
+                          className="input mono"
+                          inputMode="decimal"
+                          value={ruleUsers}
+                          onChange={(e) => setRuleUsers(e.target.value)}
+                        />
+                      )}
+                    </Field>
+                    <Field label="Raciones por lote">
+                      {(props) => (
+                        <input
+                          {...props}
+                          className="input mono"
+                          inputMode="decimal"
+                          value={ruleLot}
+                          onChange={(e) => setRuleLot(e.target.value)}
+                        />
+                      )}
+                    </Field>
+                  </div>
+                  <div className="row">
+                    <button
+                      type="button"
+                      className="btn small"
+                      disabled={!draft.centers.some((c) => c.users_aggregate != null)}
+                      onClick={applyDemandRule}
+                    >
+                      Aplicar a {draft.centers.filter((c) => c.users_aggregate != null).length}{" "}
+                      centros con usuarios
+                    </button>
+                  </div>
                 </div>
-                <div className="row">
-                  <button
-                    type="button"
-                    className="btn small"
-                    disabled={!draft.centers.some((c) => c.users_aggregate != null)}
-                    onClick={applyDemandRule}
-                  >
-                    Aplicar a {draft.centers.filter((c) => c.users_aggregate != null).length}{" "}
-                    centros con usuarios
-                  </button>
-                </div>
-              </div>
+              </details>
             </div>
           )}
 

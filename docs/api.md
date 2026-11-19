@@ -29,7 +29,7 @@ Un campo no permitido en el cuerpo (por ejemplo `dni` dentro de un centro) produ
 | Método y ruta | Función | Respuesta |
 |---|---|---|
 | `GET /health` | Estado técnico y de la base de datos | `200` / `503` |
-| `GET /api/v1/meta` | Límites, preset Docente, semillas oficiales, textos | `200` |
+| `GET /api/v1/meta` | Límites, preset estándar, semillas oficiales, textos | `200` |
 | `POST /api/v1/scenarios/demo` | Genera el escenario sintético (no lo guarda) | `200` escenario |
 | `POST /api/v1/scenarios/validate` | Valida esquema y dominio **sin guardar** | `200` informe; `422` si el esquema es incorrecto |
 | `POST /api/v1/scenarios` | Guarda un escenario válido | `201` `{id, hash, provenance}`; `200` si ya existía idéntico; `409`; `422` |
@@ -114,7 +114,7 @@ POST /api/v1/runs
 → 202 { "run_id": "3fb83402-…", "status": "queued", "seed": 11 }
 ```
 
-`parameters` es opcional (por defecto, preset Docente). Campos: `population_size`, `max_generations`, `tournament_k`, `crossover_prob`, `perm_mutation_prob`, `qty_mutation_prob`, `qty_mutation_max_step`, `elite`, `stagnation_generations`, `improvement_tolerance`, `init_random_frac`, `init_priority_frac`, `init_heuristic_frac`, `w_u`, `w_r`, `w_h`.
+`parameters` es opcional (por defecto, preset estándar). Campos: `population_size`, `max_generations`, `tournament_k`, `crossover_prob`, `perm_mutation_prob`, `qty_mutation_prob`, `qty_mutation_max_step`, `elite`, `stagnation_generations`, `improvement_tolerance`, `init_random_frac`, `init_priority_frac`, `init_heuristic_frac`, `w_u`, `w_r`, `w_h`.
 
 Estado (`GET /runs/{id}`): `status` ∈ `queued`, `running`, `completed`, `failed`, `cancelled`; `progress {generation, max_generations, fraction}`; `latest` (última generación); `stop_reason` ∈ `max_generations`, `stagnation`, `cancelled`; `error {code, message}`; `code_version`; `scenario_hash`.
 

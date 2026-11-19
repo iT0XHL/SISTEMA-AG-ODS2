@@ -15,6 +15,8 @@ import { chromium } from "playwright-core";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const BASE = process.env.UI_BASE_URL ?? "http://localhost:8090";
 const PADRON = path.resolve(here, "../../fixtures/invalid/padron_con_pii_ficticio.csv");
+const EJEMPLO_CSV = path.resolve(here, "../public/ejemplos/centros_ejemplo.csv");
+const EJEMPLO_JSON = path.resolve(here, "../public/ejemplos/escenario_ejemplo.json");
 const OUT = process.env.UI_SHOTS_DIR ?? fs.mkdtempSync(path.join(os.tmpdir(), "nutriruta-ui-"));
 const results = [];
 const check = (name, ok, detail = "") => {
@@ -62,7 +64,7 @@ await page.getByRole("button", { name: "Usar el escenario demo" }).click();
 await page.waitForURL("**/configuracion");
 check("Demo rápida activa el escenario y lleva a Configuración", true);
 const locked = await page.getByLabel("Tamaño de población").isDisabled();
-check("Preset Docente bloquea los parámetros", locked);
+check("El preset estándar bloquea los parámetros", locked);
 
 // 2) Ejecutar AG con semilla 22 → Ejecución → Resultados
 await page.getByRole("button", { name: "22", exact: true }).click();
@@ -108,7 +110,13 @@ if (await expandHistory.isVisible()) {
 await page.screenshot({ path: `${OUT}/ui-ejecucion.png`, fullPage: true });
 await page.getByRole("link", { name: /Ver resultados/ }).click();
 await page.waitForURL("**/resultados");
-await page.getByText("AG frente a la línea base").waitFor();
+await page.getByText("Puntaje J del AG frente a la línea base").waitFor();
+check(
+  "Resultados abre en la explicación en lenguaje claro",
+  await page.getByText("Qué hizo el algoritmo").isVisible(),
+);
+await page.getByRole("tab", { name: "Detalle técnico" }).click();
+await page.getByText("AG frente a la línea base").first().waitFor();
 check(
   "Resultados muestra insignia Factible",
   await page.locator(".badge.good", { hasText: "Factible" }).first().isVisible(),
@@ -126,6 +134,12 @@ await page.route("https://tile.openstreetmap.org/**", (route) => {
 });
 await page.getByRole("tab", { name: "Rutas" }).click();
 await page.getByText(/No se pudo cargar el mapa base/).waitFor({ timeout: 15000 });
+await page.getByText("Recorrido paso a paso").click();
+await page.getByRole("button", { name: "Siguiente" }).click();
+check(
+  "El recorrido paso a paso avanza a la primera parada",
+  await page.getByText(/Parada 1 de/).isVisible(),
+);
 check("El mapa informa el bloqueo de teselas sin ocultar datos de ruta", true);
 check(
   "Las peticiones de teselas incluyen el origen de la aplicación",
@@ -157,11 +171,29 @@ check(
   csv.status() === 200 && (await csv.text()).includes("asignado_lotes"),
 );
 
-// 4) Importar padrón con columnas personales
+// 4) Archivos de ejemplo descargables y carga por archivo
+for (const file of ["centros_ejemplo.csv", "escenario_ejemplo.json"]) {
+  const response = await page.request.get(BASE + "/ejemplos/" + file);
+  check("El ejemplo " + file + " se descarga", response.status() === 200);
+}
 await page.goto(BASE + "/escenario", { waitUntil: "networkidle" });
 await page.getByRole("button", { name: "Nuevo escenario" }).click();
-await page.getByRole("button", { name: /Importar padrón/ }).click();
-await page.getByLabel("Archivo del padrón").setInputFiles(PADRON);
+await page.getByLabel("Subir un archivo").setInputFiles(EJEMPLO_JSON);
+await page.getByText(/cargado en el borrador: 18 centros/).waitFor();
+check(
+  "El JSON de ejemplo carga el escenario y el paso 1 queda completo",
+  (await page.locator(".stepper button").first().innerText()).includes("Completo"),
+);
+await page.getByRole("button", { name: "Vaciar borrador" }).click();
+await page.getByLabel("Subir un archivo").setInputFiles(EJEMPLO_CSV);
+await page.getByRole("button", { name: "Depurar e importar" }).click();
+await page.getByText(/18 centros aceptados de 18 filas/).waitFor();
+check("El CSV de ejemplo se importa completo: 18 centros", true);
+
+// 5) Importar padrón con columnas personales
+await page.goto(BASE + "/escenario", { waitUntil: "networkidle" });
+await page.getByRole("button", { name: "Nuevo escenario" }).click();
+await page.getByLabel("Subir un archivo").setInputFiles(PADRON);
 await page.getByText("Dato personal").first().waitFor();
 const piiRows = await page.locator(".badge.bad", { hasText: "Dato personal" }).count();
 check(
@@ -204,7 +236,7 @@ check(
   !/ZZ00000|PERSONA FICTICIA|TEL-FICT/.test(body2),
 );
 
-// 5) Navegación por teclado: enlace de salto y foco visible
+// 6) Navegación por teclado: enlace de salto y foco visible
 await page.goto(BASE + "/glosario", { waitUntil: "networkidle" });
 await page.keyboard.press("Tab");
 const focused = await page.evaluate(() => document.activeElement?.textContent?.trim());

@@ -1,5 +1,6 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { OperatorExample, type OperatorKind } from "../components/Explainers";
 import { Callout, Field, Icon, PageHead } from "../components/ui";
 import { useStore } from "../features/store";
 import { api, errorMessage } from "../services/api";
@@ -17,11 +18,20 @@ interface FieldDef {
   max?: number;
 }
 
-const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef[] }[] = [
+interface Stage {
+  title: string;
+  concept: string;
+  kind: OperatorKind;
+  text: string;
+  fields: FieldDef[];
+}
+
+const STAGES: Stage[] = [
   {
     title: "Población inicial",
     concept: "P(0)",
-    text: "Mezcla de individuos aleatorios, sesgados por prioridad y derivados de la heurística perturbada. Todos se reparan y decodifican antes de evaluarse.",
+    kind: "poblacion",
+    text: "Aleatorios, sesgados por prioridad y derivados de la heurística. Todos se reparan antes de evaluarse.",
     fields: [
       {
         key: "population_size",
@@ -33,7 +43,7 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
       {
         key: "init_random_frac",
         label: "Fracción aleatoria",
-        hint: "π al azar y qᵢ ~ U{0…tope}",
+        hint: "π al azar, qᵢ entre 0 y el tope",
         step: 0.05,
         min: 0,
         max: 1,
@@ -41,7 +51,7 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
       {
         key: "init_priority_frac",
         label: "Fracción sesgada por prioridad",
-        hint: "Piso de qᵢ mayor para p = 2 y p = 3",
+        hint: "Piso mayor de qᵢ si p = 2 o 3",
         step: 0.05,
         min: 0,
         max: 1,
@@ -59,12 +69,13 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
   {
     title: "Selección por torneo",
     concept: "k",
-    text: "Se extraen k individuos distintos al azar y gana el de mayor fitness. Con k = 3 la presión selectiva es moderada.",
+    kind: "torneo",
+    text: "Entre k individuos al azar gana el de mayor fitness.",
     fields: [
       {
         key: "tournament_k",
         label: "Tamaño del torneo k",
-        hint: "Mayor k = más presión selectiva",
+        hint: "Mayor k, más presión selectiva",
         step: 1,
         min: 2,
         max: 20,
@@ -72,9 +83,10 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
     ],
   },
   {
-    title: "Cruce: OX + uniforme",
+    title: "Cruce OX y uniforme",
     concept: "p_c",
-    text: "En un mismo evento, π se recombina con Order Crossover (sin duplicar centros) y q con cruce uniforme gen por gen, indexado por centro.",
+    kind: "cruce",
+    text: "π se recombina con OX y q con cruce uniforme, en el mismo evento.",
     fields: [
       {
         key: "crossover_prob",
@@ -88,8 +100,9 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
   },
   {
     title: "Mutación",
-    concept: "p_π, p_q",
-    text: "π: intercambio de dos centros o inversión de una subcadena. q: cada gen varía ±1…±paso lotes, saturado al dominio.",
+    concept: "p_π · p_q",
+    kind: "mutacion",
+    text: "π: intercambio o inversión. q: ±1 a ±paso lotes por gen.",
     fields: [
       {
         key: "perm_mutation_prob",
@@ -120,7 +133,8 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
   {
     title: "Reemplazo con elitismo",
     concept: "élite",
-    text: "Las mejores soluciones pasan intactas a la siguiente generación. No garantiza el óptimo global: evita perder lo mejor hallado.",
+    kind: "elite",
+    text: "Las mejores soluciones pasan intactas a la siguiente generación.",
     fields: [
       {
         key: "elite",
@@ -134,12 +148,13 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
   {
     title: "Criterio de parada",
     concept: "G_max",
-    text: "La evolución termina al alcanzar el máximo de generaciones o tras varias generaciones seguidas sin mejora relevante.",
+    kind: "parada",
+    text: "Termina en el máximo de generaciones o tras varias sin mejora relevante.",
     fields: [
       {
         key: "max_generations",
         label: "Generaciones máximas",
-        hint: "Límite superior de la corrida",
+        hint: "Límite superior",
         step: 1,
         min: 1,
       },
@@ -162,7 +177,8 @@ const CARDS: { title: string; concept: string; text: ReactNode; fields: FieldDef
   {
     title: "Pesos de la función objetivo",
     concept: "J",
-    text: "J = w_U·U + w_R·R + w_H·H. Deben sumar 1. Son parámetros experimentales: otras ponderaciones producen rutas y repartos distintos.",
+    kind: "pesos",
+    text: "J = w_U·U + w_R·R + w_H·H. Deben sumar 1.",
     fields: [
       {
         key: "w_u",
@@ -222,12 +238,12 @@ function validate(
 
 export function ConfigPage() {
   const store = useStore();
-  const { scenario, preset, effectiveParams, params, docente, seed, meta } = store;
+  const { scenario, preset, effectiveParams, params, standard, seed, meta } = store;
   const navigate = useNavigate();
   const [baseline, setBaseline] = useState<BaselineResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const locked = preset === "docente";
+  const locked = preset === "standard";
   const problems = validate(effectiveParams, meta?.limits);
   const seeds = meta?.official_seeds ?? [11, 22, 33, 44];
 
@@ -263,182 +279,222 @@ export function ConfigPage() {
     }
   }
 
+  const p = effectiveParams;
+  const canRun = !!scenario && !busy && problems.length === 0 && Number.isFinite(seed);
+
   return (
     <>
       <PageHead step="Paso 3 de 6" title="Configuración del algoritmo genético">
-        Cada tarjeta corresponde a un componente del AG. El preset «Docente» fija los valores del
-        informe y es el que usan las cuatro corridas oficiales.
+        Cada bloque corresponde a una etapa del AG. El preset estándar fija los valores del informe
+        y es el que usan las cuatro corridas oficiales.
       </PageHead>
 
       {!scenario && (
         <Callout tone="warn" title="Primero active un escenario">
-          El AG no se ejecuta sin inventario, demandas, flota, depósito y matriz validados.{" "}
+          El AG necesita inventario, demandas, flota, depósito y distancias validados.{" "}
           <Link to="/escenario">Ir a Escenario</Link>
         </Callout>
       )}
 
-      <section className="card">
-        <div className="card-title">
-          <h2>Preset</h2>
-          <div className="segmented" role="group" aria-label="Preset de parámetros">
-            <button type="button" aria-pressed={locked} onClick={() => store.setPreset("docente")}>
-              Docente (bloqueado)
-            </button>
-            <button
-              type="button"
-              aria-pressed={!locked}
-              onClick={() => {
-                if (preset === "docente") store.setParams({ ...docente });
-                store.setPreset("experimental");
-              }}
+      <div className="config-layout">
+        <div className="stack" style={{ "--gap": "1.25rem" } as React.CSSProperties}>
+          <section className="card">
+            <h2>Elija una semilla y ejecute</h2>
+            <p className="small muted">
+              La semilla fija el azar del algoritmo: con la misma semilla se obtiene siempre la
+              misma corrida. Se usan los valores del informe (preset estándar); puede cambiarlos en
+              los ajustes avanzados.
+            </p>
+            <div
+              className="row"
+              role="group"
+              aria-label="Semillas oficiales"
+              style={{ gap: "0.5rem" }}
             >
-              Experimental
-            </button>
-          </div>
-        </div>
-        <p className="prose small">
-          {locked
-            ? "Valores bloqueados: población 100, 200 generaciones, torneo 3, p_c 0,90, p_π 0,15, p_q 0,08, élite 2, estancamiento 35. No se modifican entre las cuatro corridas."
-            : "Modo experimental: puede variar parámetros y pesos para explorar. Estas corridas no forman parte del experimento oficial de cuatro semillas."}
-        </p>
-        <div className="row" style={{ alignItems: "flex-end" }}>
-          <Field
-            label="Semilla evolutiva"
-            hint="Misma semilla + mismo escenario + mismos parámetros = misma corrida"
-          >
-            {(props) => (
-              <input
-                {...props}
-                className="input mono"
-                style={{ width: "9rem" }}
-                type="number"
-                min={0}
-                step={1}
-                value={Number.isFinite(seed) ? seed : ""}
-                onChange={(e) =>
-                  store.setSeed(
-                    e.target.value === ""
-                      ? Number.NaN
-                      : Math.max(0, Math.floor(Number(e.target.value))),
-                  )
-                }
-              />
-            )}
-          </Field>
-          <div
-            className="row"
-            role="group"
-            aria-label="Semillas oficiales"
-            style={{ gap: "0.4rem" }}
-          >
-            {seeds.map((value) => (
-              <button
-                key={value}
-                type="button"
-                className={`btn small ${seed === value ? "primary" : ""}`}
-                aria-pressed={seed === value}
-                onClick={() => store.setSeed(value)}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="cols">
-        {CARDS.map((card) => (
-          <section className="card" key={card.title}>
-            <div className="card-title">
-              <h3>{card.title}</h3>
-              <span className="mono muted small">{card.concept}</span>
-            </div>
-            <p className="small muted">{card.text}</p>
-            <div className="form-grid">
-              {card.fields.map((field) => (
-                <Field key={field.key} label={field.label} hint={field.hint}>
-                  {(props) => (
-                    <input
-                      {...props}
-                      className="input mono"
-                      type="number"
-                      step={field.step}
-                      min={field.min}
-                      max={field.max}
-                      disabled={locked}
-                      value={
-                        Number.isFinite(effectiveParams[field.key])
-                          ? effectiveParams[field.key]
-                          : ""
-                      }
-                      onChange={(e) =>
-                        store.setParams({
-                          ...params,
-                          [field.key]: e.target.value === "" ? Number.NaN : Number(e.target.value),
-                        })
-                      }
-                    />
-                  )}
-                </Field>
+              {seeds.map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  className={`btn ${seed === value ? "primary" : ""}`}
+                  aria-pressed={seed === value}
+                  onClick={() => store.setSeed(value)}
+                >
+                  {value}
+                </button>
               ))}
             </div>
           </section>
-        ))}
-      </div>
 
-      {baseline && scenario && (
-        <section className="card">
-          <div className="card-title">
-            <h2>Línea base del escenario</h2>
-            <span className="card-note">Referencia determinista para comparar; define D_ref</span>
+          <details className="advanced">
+            <summary>
+              Ajustes avanzados <span>{locked ? "Preset estándar" : "Modo experimental"}</span>
+            </summary>
+            <div
+              className="advanced-body stack"
+              style={{ "--gap": "1.25rem" } as React.CSSProperties}
+            >
+              <div className="card-title">
+                <h3>Preset</h3>
+                <div className="segmented" role="group" aria-label="Preset de parámetros">
+                  <button
+                    type="button"
+                    aria-pressed={locked}
+                    onClick={() => store.setPreset("standard")}
+                  >
+                    Estándar (bloqueado)
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={!locked}
+                    onClick={() => {
+                      if (preset === "standard") store.setParams({ ...standard });
+                      store.setPreset("experimental");
+                    }}
+                  >
+                    Experimental
+                  </button>
+                </div>
+              </div>
+              <p className="small muted">
+                {locked
+                  ? "Valores bloqueados para que las cuatro corridas sean comparables."
+                  : "Modo experimental: estas corridas no forman parte del experimento oficial."}
+              </p>
+              <Field label="Semilla evolutiva" hint="Cualquier número entero desde 0">
+                {(props) => (
+                  <input
+                    {...props}
+                    className="input mono"
+                    style={{ width: "9rem" }}
+                    type="number"
+                    min={0}
+                    step={1}
+                    value={Number.isFinite(seed) ? seed : ""}
+                    onChange={(e) =>
+                      store.setSeed(
+                        e.target.value === ""
+                          ? Number.NaN
+                          : Math.max(0, Math.floor(Number(e.target.value))),
+                      )
+                    }
+                  />
+                )}
+              </Field>
+              <ol className="stages">
+                {STAGES.map((stage, index) => (
+                  <li className="stage" key={stage.title}>
+                    <span className="stage-n" aria-hidden="true">
+                      {index + 1}
+                    </span>
+                    <section className="card">
+                      <div className="card-title">
+                        <h3>{stage.title}</h3>
+                        <span className="mono muted small">{stage.concept}</span>
+                      </div>
+                      <p className="small muted">{stage.text}</p>
+                      <OperatorExample kind={stage.kind} />
+                      <div className="form-grid">
+                        {stage.fields.map((field) => (
+                          <Field key={field.key} label={field.label} hint={field.hint}>
+                            {(props) => (
+                              <input
+                                {...props}
+                                className="input mono"
+                                type="number"
+                                step={field.step}
+                                min={field.min}
+                                max={field.max}
+                                disabled={locked}
+                                value={Number.isFinite(p[field.key]) ? p[field.key] : ""}
+                                onChange={(e) =>
+                                  store.setParams({
+                                    ...params,
+                                    [field.key]:
+                                      e.target.value === "" ? Number.NaN : Number(e.target.value),
+                                  })
+                                }
+                              />
+                            )}
+                          </Field>
+                        ))}
+                      </div>
+                    </section>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </details>
+        </div>
+
+        <aside className="aside-sticky no-print" aria-label="Resumen de la corrida">
+          <section className="card">
+            <div className="card-title">
+              <h2>Su corrida</h2>
+              <span className="badge">{locked ? "Estándar" : "Experimental"}</span>
+            </div>
+            <dl className="summary-list">
+              <dt>Semilla</dt>
+              <dd>{Number.isFinite(seed) ? seed : "—"}</dd>
+              <dt>Población</dt>
+              <dd>{Number.isFinite(p.population_size) ? p.population_size : "—"}</dd>
+              <dt>Generaciones</dt>
+              <dd>≤ {Number.isFinite(p.max_generations) ? p.max_generations : "—"}</dd>
+            </dl>
+          </section>
+
+          {baseline && scenario && (
+            <section className="card">
+              <div className="card-title">
+                <h3>Línea base</h3>
+                <span className="card-note">Define D_ref</span>
+              </div>
+              <dl className="summary-list">
+                <dt>D_ref</dt>
+                <dd>{km(baseline.d_ref_km)}</dd>
+                <dt>J base</dt>
+                <dd>{num(baseline.metrics.J, 5)}</dd>
+                <dt>Entrega</dt>
+                <dd>
+                  {baseline.metrics.lots_delivered} / {baseline.metrics.lots_demanded} lotes
+                </dd>
+                <dt>Cobertura pond.</dt>
+                <dd>{pct(baseline.metrics.weighted_coverage)}</dd>
+              </dl>
+              {baseline.d_ref_is_convention && (
+                <p className="small muted">
+                  D_ref es una convención: la línea base no tiene viajes.
+                </p>
+              )}
+            </section>
+          )}
+
+          {problems.length > 0 && (
+            <Callout tone="error" title="Parámetros inválidos">
+              <ul className="plain">
+                {problems.map((problem) => (
+                  <li key={problem}>{problem}</li>
+                ))}
+              </ul>
+            </Callout>
+          )}
+          {error && (
+            <Callout tone="error" title="No se pudo iniciar la corrida">
+              {error}
+            </Callout>
+          )}
+
+          <div className="stack" style={{ "--gap": "0.6rem" } as React.CSSProperties}>
+            <button type="button" className="btn primary" disabled={!canRun} onClick={start}>
+              <Icon name="play" />{" "}
+              {busy
+                ? "Encolando…"
+                : `Ejecutar AG con semilla ${Number.isFinite(seed) ? seed : "—"}`}
+            </button>
+            <Link className="btn" to="/cuatro-corridas">
+              Ir a las cuatro corridas oficiales
+            </Link>
           </div>
-          <p className="small muted">{baseline.method}</p>
-          <dl className="io-list">
-            <dt>D_ref</dt>
-            <dd>
-              {km(baseline.d_ref_km)}
-              {baseline.d_ref_is_convention &&
-                " (convención de normalización: la línea base no tiene viajes)"}
-            </dd>
-            <dt>J base</dt>
-            <dd className="mono">{num(baseline.metrics.J, 5)}</dd>
-            <dt>Entrega</dt>
-            <dd>
-              {baseline.metrics.lots_delivered} de {baseline.metrics.lots_demanded} lotes ·
-              cobertura ponderada {pct(baseline.metrics.weighted_coverage)}
-            </dd>
-          </dl>
-        </section>
-      )}
-
-      {problems.length > 0 && (
-        <Callout tone="error" title="Parámetros inválidos">
-          <ul className="plain">
-            {problems.map((problem) => (
-              <li key={problem}>{problem}</li>
-            ))}
-          </ul>
-        </Callout>
-      )}
-      {error && (
-        <Callout tone="error" title="No se pudo iniciar la corrida">
-          {error}
-        </Callout>
-      )}
-
-      <div className="row no-print">
-        <button
-          type="button"
-          className="btn primary"
-          disabled={!scenario || busy || problems.length > 0 || !Number.isFinite(seed)}
-          onClick={start}
-        >
-          <Icon name="play" />{" "}
-          {busy ? "Encolando…" : `Ejecutar AG con semilla ${Number.isFinite(seed) ? seed : "—"}`}
-        </button>
-        <Link className="btn" to="/cuatro-corridas">
-          Ir a las cuatro corridas oficiales
-        </Link>
+        </aside>
       </div>
     </>
   );

@@ -27,7 +27,7 @@ from app.domain.metrics import (
 from app.domain.models import build_problem
 from app.domain.validators import Limits, validate_scenario
 from app.ga.evolution import run_ga
-from app.ga.params import DOCENTE_PRESET, OFFICIAL_SEEDS
+from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
 
 
 def main() -> None:
@@ -35,7 +35,7 @@ def main() -> None:
     parser.add_argument("--sizes", type=int, nargs="+", default=[6, 18, 30, 50])
     parser.add_argument("--seeds", type=int, nargs="+", default=list(OFFICIAL_SEEDS))
     args = parser.parse_args()
-    params = DOCENTE_PRESET
+    params = STANDARD_PRESET
     print("n   seed  J_AG     J_base   ΔJ        km_AG    km_base  gens  cpu_s  factible")
     for n in args.sizes:
         # el inventario y la flota escalan con n para conservar una escasez comparable

@@ -8,7 +8,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from app.ga.params import DOCENTE_PRESET, GAParams
+from app.ga.params import STANDARD_PRESET, GAParams
 
 
 class StrictModel(BaseModel):
@@ -88,22 +88,22 @@ class DemoRequest(StrictModel):
 
 
 class GAParamsIn(StrictModel):
-    population_size: int = Field(default=DOCENTE_PRESET.population_size, ge=4)
-    max_generations: int = Field(default=DOCENTE_PRESET.max_generations, ge=1)
-    tournament_k: int = Field(default=DOCENTE_PRESET.tournament_k, ge=2, le=20)
-    crossover_prob: float = Field(default=DOCENTE_PRESET.crossover_prob, ge=0, le=1)
-    perm_mutation_prob: float = Field(default=DOCENTE_PRESET.perm_mutation_prob, ge=0, le=1)
-    qty_mutation_prob: float = Field(default=DOCENTE_PRESET.qty_mutation_prob, ge=0, le=1)
-    qty_mutation_max_step: int = Field(default=DOCENTE_PRESET.qty_mutation_max_step, ge=1, le=10)
-    elite: int = Field(default=DOCENTE_PRESET.elite, ge=0)
-    stagnation_generations: int = Field(default=DOCENTE_PRESET.stagnation_generations, ge=1)
-    improvement_tolerance: float = Field(default=DOCENTE_PRESET.improvement_tolerance, ge=0)
-    init_random_frac: float = Field(default=DOCENTE_PRESET.init_random_frac, ge=0, le=1)
-    init_priority_frac: float = Field(default=DOCENTE_PRESET.init_priority_frac, ge=0, le=1)
-    init_heuristic_frac: float = Field(default=DOCENTE_PRESET.init_heuristic_frac, ge=0, le=1)
-    w_u: float = Field(default=DOCENTE_PRESET.w_u, ge=0, le=1)
-    w_r: float = Field(default=DOCENTE_PRESET.w_r, ge=0, le=1)
-    w_h: float = Field(default=DOCENTE_PRESET.w_h, ge=0, le=1)
+    population_size: int = Field(default=STANDARD_PRESET.population_size, ge=4)
+    max_generations: int = Field(default=STANDARD_PRESET.max_generations, ge=1)
+    tournament_k: int = Field(default=STANDARD_PRESET.tournament_k, ge=2, le=20)
+    crossover_prob: float = Field(default=STANDARD_PRESET.crossover_prob, ge=0, le=1)
+    perm_mutation_prob: float = Field(default=STANDARD_PRESET.perm_mutation_prob, ge=0, le=1)
+    qty_mutation_prob: float = Field(default=STANDARD_PRESET.qty_mutation_prob, ge=0, le=1)
+    qty_mutation_max_step: int = Field(default=STANDARD_PRESET.qty_mutation_max_step, ge=1, le=10)
+    elite: int = Field(default=STANDARD_PRESET.elite, ge=0)
+    stagnation_generations: int = Field(default=STANDARD_PRESET.stagnation_generations, ge=1)
+    improvement_tolerance: float = Field(default=STANDARD_PRESET.improvement_tolerance, ge=0)
+    init_random_frac: float = Field(default=STANDARD_PRESET.init_random_frac, ge=0, le=1)
+    init_priority_frac: float = Field(default=STANDARD_PRESET.init_priority_frac, ge=0, le=1)
+    init_heuristic_frac: float = Field(default=STANDARD_PRESET.init_heuristic_frac, ge=0, le=1)
+    w_u: float = Field(default=STANDARD_PRESET.w_u, ge=0, le=1)
+    w_r: float = Field(default=STANDARD_PRESET.w_r, ge=0, le=1)
+    w_h: float = Field(default=STANDARD_PRESET.w_h, ge=0, le=1)
 
     def to_params(self) -> GAParams:
         return GAParams(**self.model_dump())

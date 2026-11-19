@@ -1,0 +1,182 @@
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+@keyframes sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes march {
+  to {
+    stroke-dashoffset: calc(var(--dash, 16) * -1);
+  }
+}
+
+@keyframes reveal {
+  from {
+    clip-path: inset(-8px 100% -8px -8px);
+  }
+  to {
+    clip-path: inset(-8px -8px -8px -8px);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes art-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  32% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  80% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  92% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+}
+
+@keyframes art-node {
+  0%,
+  8% {
+    fill: var(--surface);
+    stroke: var(--ink-2);
+  }
+  20%,
+  80% {
+    fill: var(--c);
+    stroke: var(--surface);
+  }
+  92%,
+  100% {
+    fill: var(--surface);
+    stroke: var(--ink-2);
+  }
+}
+
+.page > * {
+  animation: rise var(--dur-3) var(--ease) backwards;
+}
+
+.page > :nth-child(2) {
+  animation-delay: 60ms;
+}
+.page > :nth-child(3) {
+  animation-delay: 120ms;
+}
+.page > :nth-child(4) {
+  animation-delay: 170ms;
+}
+.page > :nth-child(5) {
+  animation-delay: 220ms;
+}
+.page > :nth-child(n + 6) {
+  animation-delay: 260ms;
+}
+
+:is(.kpis, .seed-grid, .journey, .facts, .stages, .limits, .manifests) > * {
+  animation: rise var(--dur-3) var(--ease) backwards;
+}
+
+:is(.kpis, .seed-grid, .journey, .facts, .stages, .limits, .manifests) > :nth-child(2) {
+  animation-delay: 50ms;
+}
+:is(.kpis, .seed-grid, .journey, .facts, .stages, .limits, .manifests) > :nth-child(3) {
+  animation-delay: 100ms;
+}
+:is(.kpis, .seed-grid, .journey, .facts, .stages, .limits, .manifests) > :nth-child(4) {
+  animation-delay: 150ms;
+}
+:is(.kpis, .seed-grid, .journey, .facts, .stages, .limits, .manifests) > :nth-child(5) {
+  animation-delay: 200ms;
+}
+:is(.kpis, .seed-grid, .journey, .facts, .stages, .limits, .manifests) > :nth-child(n + 6) {
+  animation-delay: 250ms;
+}
+
+.tab-panel {
+  animation: fade var(--dur-2) var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .spinner {
+    animation: none;
+    border-top-color: var(--line-strong);
+  }
+
+  .art-route {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  .art-node.on {
+    fill: var(--c);
+    stroke: var(--surface);
+  }
+}

@@ -101,7 +101,7 @@ Flujo completo demo → validar → guardar → idempotencia → conflicto; esce
 
 ## 7. Funcional de interfaz
 
-`frontend/e2e/ui-flow.mjs` recorre la aplicación en un navegador sin cabeza: demo rápida, bloqueo del preset Docente, corrida con semilla 22, indicador de fitness, insignia «Factible», coincidencia del `J` mostrado con la evidencia (0,26275), tres hojas de ruta, tres rutas y 18 centros en el mapa (con los no atendidos diferenciados), exportación CSV, importación de un padrón ficticio con cuatro columnas personales descartadas, imposibilidad de guardar un escenario incompleto, ausencia de valores personales en pantalla, enlace «Saltar al contenido» y cero errores de consola.
+`frontend/e2e/ui-flow.mjs` recorre la aplicación en un navegador sin cabeza: demo rápida, bloqueo del preset estándar, corrida con semilla 22, indicador de fitness, insignia «Factible», coincidencia del `J` mostrado con la evidencia (0,26275), tres hojas de ruta, tres rutas y 18 centros en el mapa (con los no atendidos diferenciados), exportación CSV, importación de un padrón ficticio con cuatro columnas personales descartadas, imposibilidad de guardar un escenario incompleto, ausencia de valores personales en pantalla, enlace «Saltar al contenido» y cero errores de consola.
 
 Además, durante el desarrollo se tomaron capturas de las siete pantallas en escritorio (claro y oscuro) y en móvil (400 px), comprobando que no hubiera desborde horizontal ni errores de consola. Una selección está en `docs/capturas/`.
 

@@ -19,14 +19,14 @@ from app.ga.evolution import (
 )
 from app.ga.fitness import evaluate
 from app.ga.initialization import initial_chromosomes, subpopulation_sizes
-from app.ga.params import DOCENTE_PRESET, OFFICIAL_SEEDS, GAParams
+from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS, GAParams
 from tests.conftest import make_problem
 
-FAST = replace(DOCENTE_PRESET, population_size=40, max_generations=40)
+FAST = replace(STANDARD_PRESET, population_size=40, max_generations=40)
 
 
-def test_docente_preset_matches_the_plan() -> None:
-    p = DOCENTE_PRESET
+def test_standard_preset_matches_the_plan() -> None:
+    p = STANDARD_PRESET
     assert (p.population_size, p.max_generations, p.tournament_k, p.elite) == (100, 200, 3, 2)
     assert (p.crossover_prob, p.perm_mutation_prob, p.qty_mutation_prob) == (0.90, 0.15, 0.08)
     assert (p.stagnation_generations, p.improvement_tolerance) == (35, 1e-6)
@@ -52,7 +52,7 @@ def test_different_seeds_explore_differently(demo_problem) -> None:
 
 def test_initial_population_composition_and_validity(demo_problem) -> None:
     baseline = compute_baseline(demo_problem)
-    chromosomes = initial_chromosomes(make_rng(11), demo_problem, baseline, DOCENTE_PRESET)
+    chromosomes = initial_chromosomes(make_rng(11), demo_problem, baseline, STANDARD_PRESET)
     assert len(chromosomes) == 100
     ids = list(range(demo_problem.n))
     for chromosome in chromosomes:
@@ -166,7 +166,7 @@ def test_invalid_matrix_is_rejected_by_the_problem() -> None:
 )
 def test_invalid_parameters_are_rejected(changes: dict) -> None:
     with pytest.raises(ValueError):
-        replace(DOCENTE_PRESET, **changes).validate()
+        replace(STANDARD_PRESET, **changes).validate()
 
 
 def test_ga_works_on_single_center_instance() -> None:

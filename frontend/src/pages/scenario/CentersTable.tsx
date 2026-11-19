@@ -22,7 +22,6 @@ function toNumber(raw: string): number | null {
   return Number.isFinite(value) ? value : null;
 }
 
-/** Tabla editable de centros con búsqueda, filtros, ordenación, paginación y estado por fila. */
 export function CentersTable({
   centers,
   rowIssues,

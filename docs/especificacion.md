@@ -6,7 +6,7 @@ Resumen de lo que contiene NutriRuta AG versión 1.0.0 y de cómo responde al pl
 
 Aplicación web en español para **cargar o editar un escenario**, ejecutar un **algoritmo genético** que decide cuántos lotes de alimentos asignar a cada centro y cómo agrupar y ordenar las entregas en vehículos, y **visualizar** las soluciones y su evolución.
 
-- **Usuarios:** estudiante o expositor, evaluador docente y operador de datos de prueba.
+- **Usuarios:** estudiante o expositor, evaluador académico y operador de datos de prueba.
 - **Alcance:** prototipo académico demostrable. No es un sistema oficial de despacho.
 - **Fuera de alcance:** registro de beneficiarios, datos personales, valor nutricional, cadena de frío, tiempos de servicio, tráfico, varios viajes por centro, geocodificación de direcciones, autenticación de usuarios.
 
@@ -65,7 +65,7 @@ El motor del AG está escrito en módulos propios y legibles; NumPy solo aporta 
 | `app/ga/decoder.py` | Empaquetado *first-fit decreasing* y rutas |
 | `app/ga/fitness.py` | `U`, `R`, `H`, `J`, fitness |
 | `app/ga/evolution.py` | Bucle evolutivo, elitismo, parada, historial |
-| `app/ga/params.py` | Parámetros y preset Docente |
+| `app/ga/params.py` | Parámetros y preset estándar |
 | `app/baselines/` | Línea base: prioridad descendente + vecino más cercano |
 | `app/data/demo.py` | Generador determinista del escenario sintético |
 | `app/data/imports.py` | Importación del padrón con lista permitida y filtro de datos personales |
