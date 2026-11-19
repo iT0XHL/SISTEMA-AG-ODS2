@@ -14,7 +14,7 @@ help:
 	@echo "make test-frontend Tipos, lint, formato y pruebas unitarias del frontend"
 	@echo "make test-ui       Prueba funcional de la interfaz en un navegador (requiere stack arriba)"
 	@echo "make lint          ruff (backend)"
-	@echo "make four-runs     Ejecuta 11/22/33/44 y exporta la evidencia a docs/evidencia"
+	@echo "make four-runs     Ejecuta 11/22/33/44 y exporta la evidencia a evidencia/"
 	@echo "make fixtures      Regenera los fixtures sinteticos"
 	@echo "make benchmark     Tiempos y calidad del AG por tamano de instancia"
 	@echo "make reset-db      BORRA la base de datos (volumen db_data) y la recrea vacia"
@@ -52,7 +52,7 @@ lint:
 	$(COMPOSE) --profile test run --rm tests ruff format --check . /srv/scripts
 
 four-runs:
-	$(PYTHON) scripts/export_four_runs.py --api $(APP_URL) --out docs/evidencia
+	$(PYTHON) scripts/export_four_runs.py --api $(APP_URL) --out evidencia
 
 fixtures:
 	$(COMPOSE) --profile test run --rm --user root -v "$(CURDIR)/fixtures:/out" tests python /srv/scripts/create_demo.py --out /out

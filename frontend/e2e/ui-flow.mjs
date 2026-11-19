@@ -14,6 +14,8 @@ import { chromium } from "playwright-core";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const BASE = process.env.UI_BASE_URL ?? "http://localhost:8090";
+const USER = process.env.UI_USER ?? "admin";
+const PASSWORD = process.env.UI_PASSWORD ?? "NutriRuta2026!";
 const PADRON = path.resolve(here, "../../fixtures/invalid/padron_con_pii_ficticio.csv");
 const EJEMPLO_CSV = path.resolve(here, "../public/ejemplos/centros_ejemplo.csv");
 const EJEMPLO_JSON = path.resolve(here, "../public/ejemplos/escenario_ejemplo.json");
@@ -39,6 +41,7 @@ let simulatingTileBlock = false;
 const tileReferers = [];
 page.on("console", (m) => {
   if (m.type() !== "error") return;
+  if (m.text().includes("status of 401")) return;
   if (
     simulatingTileBlock &&
     m.location().url.startsWith("https://tile.openstreetmap.org/") &&
@@ -60,6 +63,24 @@ check(
   "El HTML se revalida para cargar la versión actual",
   homeHeaders["cache-control"]?.includes("no-cache"),
 );
+check(
+  "Sin sesión se muestra el inicio de sesión",
+  await page.getByRole("heading", { name: "Iniciar sesión" }).isVisible(),
+);
+await page.getByLabel("Usuario", { exact: true }).fill(USER);
+await page.getByLabel("Contraseña", { exact: true }).fill("incorrecta-123");
+await page.getByRole("button", { name: /Entrar/ }).click();
+await page.getByText("Usuario o contraseña incorrectos.").waitFor();
+check("Una contraseña incorrecta muestra el error", true);
+await page.getByLabel("Contraseña", { exact: true }).fill(PASSWORD);
+await page.getByRole("button", { name: "Mostrar" }).click();
+check(
+  "El botón Mostrar revela la contraseña",
+  (await page.getByLabel("Contraseña", { exact: true }).getAttribute("type")) === "text",
+);
+await page.getByRole("button", { name: /Entrar/ }).click();
+await page.getByRole("button", { name: "Usar el escenario demo" }).waitFor();
+check("Con credenciales correctas se entra a la aplicación", true);
 await page.getByRole("button", { name: "Usar el escenario demo" }).click();
 await page.waitForURL("**/configuracion");
 check("Demo rápida activa el escenario y lleva a Configuración", true);
@@ -245,6 +266,11 @@ check(
   focused === "Saltar al contenido",
   focused,
 );
+
+await page.getByRole("button", { name: "Cerrar sesión" }).click();
+await page.getByRole("heading", { name: "Iniciar sesión" }).waitFor();
+const sinSesion = await page.evaluate(async () => (await fetch("/api/v1/scenarios")).status);
+check("Al cerrar sesión la API deja de responder datos", sinSesion === 401, String(sinSesion));
 
 check(
   "Sin errores inesperados de consola durante el recorrido",

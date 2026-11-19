@@ -10,3 +10,5 @@
 .github
 *.docx
 frontend/coverage
+docs
+evidencia

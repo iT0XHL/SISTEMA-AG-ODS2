@@ -1,4 +1,5 @@
 import type {
+  AuthUser,
   BaselineResult,
   Center,
   DemandRule,
@@ -20,6 +21,8 @@ import type {
 } from "../types";
 
 const BASE = "/api/v1";
+
+export const UNAUTHORIZED_EVENT = "nutriruta:unauthorized";
 
 export class ApiError extends Error {
   status: number;
@@ -63,6 +66,9 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     body = text ? JSON.parse(text) : null;
   } catch {
     body = null;
+  }
+  if (response.status === 401 && !path.includes("/auth/")) {
+    window.dispatchEvent(new Event(UNAUTHORIZED_EVENT));
   }
   if (!response.ok) {
     const error = (body ?? {}) as Partial<{
@@ -109,6 +115,11 @@ export interface CreatedScenario {
 
 export const api = {
   meta: () => request<Meta>(`${BASE}/meta`),
+
+  me: () => request<{ user: AuthUser }>(`${BASE}/auth/me`),
+  login: (username: string, password: string) =>
+    post<{ user: AuthUser }>(`${BASE}/auth/login`, { username, password }),
+  logout: () => request<void>(`${BASE}/auth/logout`, { method: "POST" }),
 
   demoScenario: (n_centers = 18, fixture_seed = 2026) =>
     post<ScenarioPayload>(`${BASE}/scenarios/demo`, { n_centers, fixture_seed }),

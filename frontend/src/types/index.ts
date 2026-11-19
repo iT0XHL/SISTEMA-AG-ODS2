@@ -440,3 +440,8 @@ export interface MatrixImport {
   count: number;
   note: string;
 }
+
+export interface AuthUser {
+  username: string;
+  display_name: string;
+}

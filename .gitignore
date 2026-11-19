@@ -21,3 +21,7 @@ frontend/coverage/
 Thumbs.db
 .DS_Store
 ~$*.docx
+
+# Documentación local y resultados generados: no se versionan
+docs/
+evidencia/

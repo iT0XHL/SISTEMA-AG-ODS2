@@ -16,7 +16,7 @@ function formatter(min: number, max: number): Intl.NumberFormat {
 
 const DASH = "—";
 
-export function isNumber(value: unknown): value is number {
+function isNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
 
@@ -52,13 +52,6 @@ export function dateTime(iso: string | null | undefined): string {
 
 export function shortHash(hash: string | null | undefined, length = 12): string {
   return hash ? `${hash.slice(0, length)}…` : DASH;
-}
-
-export function parseInput(raw: string): number | null {
-  const text = raw.trim().replace(",", ".");
-  if (text === "") return null;
-  const value = Number(text);
-  return Number.isFinite(value) ? value : Number.NaN;
 }
 
 export const STATUS_LABEL: Record<string, string> = {

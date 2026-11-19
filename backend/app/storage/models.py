@@ -1,7 +1,8 @@
 """Esquema relacional (plan §6.3). Funciona en PostgreSQL y en SQLite.
 
 Tablas: ``scenario``, ``center``, ``vehicle``, ``distance``, ``experiment``, ``run``,
-``generation`` y ``solution``.
+``generation`` y ``solution``, más ``app_user`` y ``auth_session`` para el inicio de sesión
+(cuentas de la aplicación; no guardan datos de beneficiarios).
 
 No existen —ni deben crearse— tablas ni columnas de DNI, personas o beneficiarios:
 el modelo trabaja con centros (instituciones) y lotes.
@@ -199,3 +200,28 @@ class Solution(Base):
     assignments_json: Mapped[list[dict[str, Any]]] = mapped_column(JSON)
     repair_json: Mapped[dict[str, Any]] = mapped_column(JSON)
     baseline_json: Mapped[dict[str, Any]] = mapped_column(JSON)
+
+
+class AppUser(Base):
+    """Cuenta de acceso a la aplicación. La contraseña solo se guarda como hash scrypt."""
+
+    __tablename__ = "app_user"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    username: Mapped[str] = mapped_column(String(60), unique=True, index=True)
+    display_name: Mapped[str] = mapped_column(String(120))
+    password_hash: Mapped[str] = mapped_column(String(255))
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class AuthSession(Base):
+    """Sesión abierta. Se guarda el SHA-256 del token; el token en claro solo vive en la cookie."""
+
+    __tablename__ = "auth_session"
+
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("app_user.id", ondelete="CASCADE"), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))

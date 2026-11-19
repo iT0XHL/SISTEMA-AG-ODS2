@@ -540,10 +540,6 @@ details.advanced > .advanced-body {
   padding: 1.2rem 1.3rem 1.3rem;
 }
 
-.formula-details > .formula {
-  margin-top: 0.5rem;
-}
-
 @media (max-width: 520px) {
   .tok-row {
     grid-template-columns: minmax(0, 1fr);

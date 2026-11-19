@@ -1726,16 +1726,6 @@ details.table-twin[open] > summary {
   text-align: right;
 }
 
-.bars-axis {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 7.25rem;
-  padding-right: 5.55rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--ink-3);
-}
-
 .jbar {
   display: grid;
   grid-template-columns: 6.5rem minmax(0, 1fr) 4.5rem;
@@ -2329,12 +2319,6 @@ ul.plain {
   text-align: right;
 }
 
-.run-banner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
-}
-
 .player {
   display: flex;
   flex-wrap: wrap;
@@ -2395,10 +2379,6 @@ ul.plain {
 }
 
 .nav-toggle {
-  display: none;
-}
-
-.print-only {
   display: none;
 }
 
@@ -2523,11 +2503,6 @@ ul.plain {
     grid-template-columns: 5rem minmax(0, 1fr) 3.8rem;
   }
 
-  .bars-axis {
-    padding-left: 5.75rem;
-    padding-right: 4.55rem;
-  }
-
   .kpi-value {
     font-size: 1.45rem;
   }
@@ -2586,9 +2561,5 @@ ul.plain {
   .table-wrap,
   .manifest {
     break-inside: avoid;
-  }
-
-  .print-only {
-    display: block !important;
   }
 }

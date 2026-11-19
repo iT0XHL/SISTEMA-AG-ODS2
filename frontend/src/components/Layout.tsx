@@ -1,5 +1,6 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../features/auth";
 import { useStore, type Theme } from "../features/store";
 import { Callout, Icon } from "./ui";
 
@@ -39,6 +40,7 @@ function BrandMark() {
 }
 
 export function Layout() {
+  const { user, logout } = useAuth();
   const { meta, metaError, scenario, runId, experimentId, theme, setTheme } = useStore();
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -140,6 +142,15 @@ export function Layout() {
             )}
           </div>
           <div className="nav-foot">
+            {user && (
+              <div className="nav-user">
+                <span>Sesión iniciada como</span>
+                <strong>{user.display_name}</strong>
+                <button type="button" onClick={() => void logout()}>
+                  Cerrar sesión
+                </button>
+              </div>
+            )}
             <div className="theme-switch" role="group" aria-label="Tema de color">
               {THEMES.map((option) => (
                 <button

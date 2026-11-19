@@ -16,7 +16,7 @@ from app.api.dependencies import get_session, require_scenario
 from app.api.errors import ApiError
 from app.api.schemas import FourRunsRequest
 from app.config import Settings, get_settings
-from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
+from app.ga.params import OFFICIAL_SEEDS, STANDARD_PRESET
 from app.services import exports
 from app.services.run_service import experiment_payload
 from app.storage import repository as repo

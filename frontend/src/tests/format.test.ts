@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { demandFromUsers, issuesByCenterRow, nextId, pickScenario } from "../features/draft";
-import { km, num, parseInput, pct, shortHash, signed } from "../utils/format";
+import { km, num, pct, shortHash, signed } from "../utils/format";
 
 describe("formato de interfaz (coma decimal)", () => {
   it("usa coma decimal y decimales fijos", () => {
@@ -21,13 +21,6 @@ describe("formato de interfaz (coma decimal)", () => {
     expect(signed(-17.68, 2)).toBe("−17,68");
     expect(signed(5, 0)).toBe("+5");
     expect(signed(0.00001, 2)).toBe("0,00");
-  });
-
-  it("interpreta lo tecleado con coma o punto", () => {
-    expect(parseInput("12,5")).toBe(12.5);
-    expect(parseInput(" 7 ")).toBe(7);
-    expect(parseInput("")).toBeNull();
-    expect(Number.isNaN(parseInput("abc") as number)).toBe(true);
   });
 
   it("abrevia el hash", () => {

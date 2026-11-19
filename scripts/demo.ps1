@@ -28,7 +28,7 @@ Write-Host "Aplicacion lista (version $($health.code_version))."
 
 if (-not $SkipRuns) {
     $env:PYTHONIOENCODING = "utf-8"
-    python scripts/export_four_runs.py --api $AppUrl --out docs/evidencia
+    python scripts/export_four_runs.py --api $AppUrl --out evidencia
     if ($LASTEXITCODE -ne 0) { throw "No se pudieron ejecutar las cuatro corridas." }
 }
 

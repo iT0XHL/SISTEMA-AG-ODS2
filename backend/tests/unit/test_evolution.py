@@ -19,7 +19,7 @@ from app.ga.evolution import (
 )
 from app.ga.fitness import evaluate
 from app.ga.initialization import initial_chromosomes, subpopulation_sizes
-from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS, GAParams
+from app.ga.params import OFFICIAL_SEEDS, STANDARD_PRESET, GAParams
 from tests.conftest import make_problem
 
 FAST = replace(STANDARD_PRESET, population_size=40, max_generations=40)

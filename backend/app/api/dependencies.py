@@ -4,15 +4,16 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 
-from fastapi import UploadFile
+from fastapi import Request, UploadFile
 from sqlalchemy.orm import Session
 
+from app import auth
 from app.api.errors import ApiError
 from app.config import Settings, get_settings
 from app.domain.validators import Limits
 from app.storage import repository as repo
-from app.storage.db import get_session_factory
-from app.storage.models import Run, Scenario
+from app.storage.db import get_session_factory, session_scope
+from app.storage.models import AppUser, Run, Scenario
 
 
 def get_session() -> Iterator[Session]:
@@ -25,6 +26,15 @@ def get_session() -> Iterator[Session]:
         raise
     finally:
         session.close()
+
+
+def require_user(request: Request) -> AppUser:
+    """Exige una sesión válida: la cookie debe corresponder a una sesión vigente."""
+    with session_scope() as session:
+        user = auth.user_for_token(session, request.cookies.get(auth.SESSION_COOKIE))
+    if user is None:
+        raise ApiError(401, "NOT_AUTHENTICATED", "Inicie sesión para continuar.")
+    return user
 
 
 def limits_from(settings: Settings) -> Limits:

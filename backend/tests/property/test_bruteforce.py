@@ -20,7 +20,7 @@ from app.domain.metrics import chromosome_payload, routes_payload, validate_solu
 from app.ga.chromosome import Chromosome
 from app.ga.evolution import run_ga
 from app.ga.fitness import evaluate
-from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
+from app.ga.params import OFFICIAL_SEEDS, STANDARD_PRESET
 from tests.conftest import make_problem
 
 EPS = 1e-12

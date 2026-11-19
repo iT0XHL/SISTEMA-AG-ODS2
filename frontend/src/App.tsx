@@ -1,11 +1,13 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { PageHead } from "./components/ui";
+import { PageHead, Skeleton } from "./components/ui";
+import { AuthProvider, useAuth } from "./features/auth";
 import { StoreProvider } from "./features/store";
 import { ConfigPage } from "./pages/ConfigPage";
 import { FourRunsPage } from "./pages/FourRunsPage";
 import { GlossaryPage } from "./pages/GlossaryPage";
 import { HomePage } from "./pages/HomePage";
+import { LoginPage } from "./pages/LoginPage";
 import { ResultsPage } from "./pages/ResultsPage";
 import { RunPage } from "./pages/RunPage";
 import { ScenarioPage } from "./pages/ScenarioPage";
@@ -23,7 +25,16 @@ function NotFound() {
   );
 }
 
-export function App() {
+function Gate() {
+  const { status } = useAuth();
+  if (status === "loading") {
+    return (
+      <div className="boot">
+        <Skeleton height={96} label="Comprobando la sesión" />
+      </div>
+    );
+  }
+  if (status === "anon") return <LoginPage />;
   return (
     <StoreProvider>
       <BrowserRouter>
@@ -41,5 +52,13 @@ export function App() {
         </Routes>
       </BrowserRouter>
     </StoreProvider>
+  );
+}
+
+export function App() {
+  return (
+    <AuthProvider>
+      <Gate />
+    </AuthProvider>
   );
 }

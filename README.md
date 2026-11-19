@@ -6,15 +6,15 @@
 
 **Un algoritmo genético que decide cuántos lotes de alimentos recibe cada comedor y en qué orden los visita cada vehículo.**
 
-[![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](docs/despliegue.md)
+[![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](backend)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](frontend)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)](docs/base-de-datos.md)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)](docker-compose.yml)
 [![Licencia: MIT](https://img.shields.io/badge/licencia-MIT-green)](LICENSE)
 
-[Inicio rápido](#inicio-rápido) · [Demostración](#demostración) · [Resultados](#resultados) · [Cómo funciona](#cómo-funciona) · [Documentación](#documentación)
+[Inicio rápido](#inicio-rápido) · [Acceso](#acceso) · [Demostración](#demostración) · [Resultados](#resultados) · [Cómo funciona](#cómo-funciona) · [Producción](#producción)
 
-![Resultados: rutas por vehículo](docs/capturas/desktop-light-06-resultados-rutas.png)
+![Resultados: rutas por vehículo](assets/captura-resultados.png)
 
 </div>
 
@@ -29,6 +29,7 @@ NutriRuta AG es un simulador académico vinculado al **ODS 2 (Hambre cero), meta
 - **Explicación en lenguaje claro:** cada resultado dice a quién se atendió primero, qué ganó y qué cedió frente a la línea base y por qué algunos centros no recibieron todo.
 - **Gráficos que enseñan el método:** recorrido paso a paso de cada vehículo, decodificación del cromosoma y ejemplos de torneo, cruce, mutación y elitismo.
 - **Escenarios fáciles de cargar:** demo lista, archivo CSV, Excel o JSON, o llenado a mano con un asistente que indica qué falta.
+- **Acceso controlado:** inicio de sesión con cuentas en la base de datos, cookies `HttpOnly` y rate limit por cliente.
 - **Privacidad por diseño:** las columnas con datos personales de un padrón (DNI, nombres, sexo, teléfono) se descartan al importar.
 - **Resultados reproducibles:** misma semilla, mismo escenario y mismos parámetros dan siempre la misma corrida.
 
@@ -51,6 +52,19 @@ docker compose up -d --build --wait
 > [!TIP]
 > Los puertos se cambian con `FRONTEND_PORT` y `API_PORT` en un archivo `.env` (copia `.env.example`). Para ejecutar todo de una vez, `make demo` o, en Windows, `powershell -ExecutionPolicy Bypass -File scripts\demo.ps1`.
 
+## Acceso
+
+La aplicación pide iniciar sesión. Las cuentas se guardan en la base de datos (tabla `app_user`, con la contraseña como hash `scrypt`).
+
+| Usuario | Contraseña inicial |
+|---|---|
+| `admin` | `NutriRuta2026!` |
+
+> [!WARNING]
+> Es una credencial de demostración. Cambia `ADMIN_PASSWORD` en `.env` antes del primer arranque o usa `docker compose exec api python -m app.users passwd --username admin`. Para agregar compañeros: `docker compose exec api python -m app.users add --username ana --name "Ana"`.
+
+La API limita las solicitudes por cliente (10 inicios de sesión, 30 operaciones pesadas y 1200 consultas por minuto) y bloquea una cuenta 60 s tras 5 contraseñas incorrectas.
+
 ## Demostración
 
 1. **Inicio:** pulsa «Usar el escenario demo» (18 centros ficticios, 3 vehículos de 50 lotes, inventario de 135 lotes).
@@ -63,7 +77,7 @@ Para probar la carga de datos, descarga desde **Escenario → Nuevo escenario** 
 
 ## Resultados
 
-Cifras reales del escenario demo (versión 1.0.0). La [guía de replicación](docs/replicacion-cuatro-corridas.md) explica cómo obtenerlas paso a paso.
+Cifras reales del escenario demo (versión 1.0.0). Se reproducen con `python scripts/export_four_runs.py --api http://localhost:8090`, que guarda la evidencia en `evidencia/`.
 
 | Semilla | J | Lotes entregados | Cobertura ponderada | Distancia (km) |
 |---:|---:|---|---:|---:|
@@ -97,29 +111,27 @@ backend/    API, algoritmo genético, línea base, importación de datos y prueb
 frontend/   Interfaz web, archivos de ejemplo (public/ejemplos) y prueba en navegador (e2e)
 fixtures/   Escenarios sintéticos y casos inválidos de prueba
 scripts/    Exportación de las cuatro corridas, benchmark y demo para Windows
-docs/       Documentación, evidencia de las corridas y capturas
+assets/     Imagen del README
 ```
 
 ## Pruebas
 
 ```bash
 docker compose --profile test build tests
-docker compose --profile test run --rm tests pytest         # 158 pruebas del backend
+docker compose --profile test run --rm tests pytest         # 195 pruebas del backend
 cd frontend && npm ci && npm run typecheck && npm run lint && npm test
 cd frontend && npm run test:ui                               # recorrido completo en navegador
 ```
 
-## Documentación
+## Producción
 
-| Documento | Contenido |
-|---|---|
-| [Guía de replicación](docs/replicacion-cuatro-corridas.md) ([Word](docs/GUIA_REPLICACION_CUATRO_CORRIDAS.docx)) | Cómo replicar las cuatro corridas y comprobar las cifras |
-| [Guía de uso](docs/guia-de-uso.md) | La aplicación pantalla por pantalla |
-| [Modelo matemático](docs/modelo-matematico.md) | Cromosoma, restricciones, fitness y operadores |
-| [Evidencia de las corridas](docs/evidencia-corridas.md) | Resultados completos y análisis |
-| [API](docs/api.md) · [Base de datos](docs/base-de-datos.md) | Contratos y esquema |
-| [Despliegue](docs/despliegue.md) · [Pruebas](docs/pruebas.md) | Operación y estrategia de validación |
-| [Política de datos](docs/politica-de-datos.md) | Privacidad, fuentes y licencias |
+Con `APP_ENV=production` la API **no arranca** si conserva valores de demostración. Antes de desplegar:
+
+- Copia `.env.example` a `.env` y define `APP_ENV=production`, `ADMIN_PASSWORD` (12 caracteres o más) y `POSTGRES_PASSWORD`.
+- Sirve la aplicación por HTTPS: en producción la cookie de sesión siempre es `Secure`.
+- Mantén nginx (o tu proxy) fijando `X-Real-IP`; el rate limit por cliente depende de esa cabecera.
+- Restringe `CORS_ORIGINS` al dominio público y respalda el volumen `db_data` (`pg_dump`).
+- Ajusta los límites de cada solicitud con las variables `RATE_LIMIT_*` y `MAX_*` de `.env.example`.
 
 ## Límites
 

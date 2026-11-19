@@ -83,26 +83,64 @@ def small_scenario() -> dict:
     return load_fixture("synthetic_small/scenario.json")
 
 
-@pytest.fixture
-def api(tmp_path, monkeypatch):
-    """Cliente de la API sobre una base SQLite temporal y aislada por prueba."""
+ADMIN = {"username": "admin", "password": "NutriRuta2026!"}
+
+
+def _client(tmp_path, monkeypatch, *, login: bool, rate_limit: dict[str, str] | None = None):
+    """Cliente de la API sobre una base SQLite temporal, con o sin sesión iniciada."""
     from fastapi.testclient import TestClient
 
+    from app import auth
     from app.config import get_settings
     from app.storage import db
 
     monkeypatch.setenv("DB_URL", f"sqlite:///{tmp_path / 'test.db'}")
     monkeypatch.setenv("MAX_UPLOAD_MB", "1")
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "false")
+    for name, value in (rate_limit or {}).items():
+        monkeypatch.setenv(name, value)
     get_settings.cache_clear()
     db.reset_engine()
+    auth.throttle.reset()
 
     from app.main import create_app
 
     with TestClient(create_app()) as client:
+        if login:
+            response = client.post("/api/v1/auth/login", json=ADMIN)
+            assert response.status_code == 200, response.text
         yield client
     db.reset_engine()
     get_settings.cache_clear()
     os.environ.pop("DB_URL", None)
+
+
+@pytest.fixture
+def api(tmp_path, monkeypatch):
+    """Cliente de la API con la sesión de la cuenta inicial ya iniciada."""
+    yield from _client(tmp_path, monkeypatch, login=True)
+
+
+@pytest.fixture
+def anon_api(tmp_path, monkeypatch):
+    """Cliente de la API sin sesión."""
+    yield from _client(tmp_path, monkeypatch, login=False)
+
+
+@pytest.fixture
+def limited_api(tmp_path, monkeypatch):
+    """Cliente sin sesión con el rate limit activo y cupos pequeños."""
+    yield from _client(
+        tmp_path,
+        monkeypatch,
+        login=False,
+        rate_limit={
+            "RATE_LIMIT_ENABLED": "true",
+            "RATE_LIMIT_PER_MIN": "6",
+            "RATE_LIMIT_HEAVY_PER_MIN": "2",
+            "RATE_LIMIT_LOGIN_PER_MIN": "3",
+        },
+    )
 
 
 def drain_queue() -> list[str]:

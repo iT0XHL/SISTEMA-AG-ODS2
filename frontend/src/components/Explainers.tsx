@@ -17,7 +17,7 @@ function TokRow({ label, children }: { label?: string; children: ReactNode }) {
   );
 }
 
-export function Explainer({
+function Explainer({
   title,
   children,
   open,

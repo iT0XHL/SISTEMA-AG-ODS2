@@ -32,6 +32,11 @@ def http():
     except httpx.HTTPError:
         client.close()
         pytest.skip(f"El stack no responde en {BASE_URL}")
+    user = os.environ.get("E2E_USER", "admin")
+    password = os.environ.get("E2E_PASSWORD", "NutriRuta2026!")
+    client.post(
+        "/api/v1/auth/login", json={"username": user, "password": password}
+    ).raise_for_status()
     yield client
     client.close()
 

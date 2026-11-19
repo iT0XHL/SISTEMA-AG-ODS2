@@ -27,21 +27,12 @@ export type IconName =
   | "flask"
   | "menu"
   | "replay"
-  | "home"
   | "map"
-  | "chart"
-  | "list"
-  | "sliders"
   | "layers"
-  | "truck"
   | "box"
-  | "clock"
   | "target"
   | "shield"
-  | "book"
-  | "external"
-  | "down"
-  | "up";
+  | "book";
 
 const PATHS: Record<IconName, string> = {
   check: "M4 10.5l4 4 8-9",
@@ -60,21 +51,12 @@ const PATHS: Record<IconName, string> = {
   flask: "M8 3h4M9 3v5l-5 8h12l-5-8V3",
   menu: "M3 6h14M3 10h14M3 14h14",
   replay: "M4 10a6 6 0 106-6H6m0 0l3-3M6 4l3 3",
-  home: "M3 9l7-6 7 6v8H3V9zm5 8v-5h4v5",
   map: "M3 5l5-2 4 2 5-2v12l-5 2-4-2-5 2V5zm5-2v12m4-10v12",
-  chart: "M3 17V3m0 14h14M6 13l3-4 3 2 4-6",
-  list: "M7 5h10M7 10h10M7 15h10M3 5h.01M3 10h.01M3 15h.01",
-  sliders: "M3 6h8m4 0h2M3 14h2m4 0h8M13 4v4M7 12v4",
   layers: "M10 3l7 4-7 4-7-4 7-4zm-7 7l7 4 7-4M3 13l7 4 7-4",
-  truck: "M2 5h10v8H2V5zm10 3h4l2 3v2h-6V8zM5 15.5v.01M14 15.5v.01",
   box: "M3 6l7-3 7 3v8l-7 3-7-3V6zm0 0l7 3m0 0l7-3m-7 3v8",
-  clock: "M10 3a7 7 0 100 14 7 7 0 000-14zm0 3v4l3 2",
   target: "M10 3a7 7 0 100 14 7 7 0 000-14zm0 4a3 3 0 100 6 3 3 0 000-6z",
   shield: "M10 2l6 2v5c0 4-3 7-6 9-3-2-6-5-6-9V4l6-2zm-2.5 8l2 2 3-4",
   book: "M4 3h9a3 3 0 013 3v11H7a3 3 0 01-3-3V3zm0 11a3 3 0 013-3h9",
-  external: "M8 4H4v12h12v-4m-4-8h4v4m0-4L9 11",
-  down: "M5 8l5 5 5-5",
-  up: "M5 12l5-5 5 5",
 };
 
 export function Icon({ name }: { name: IconName }) {
@@ -94,7 +76,7 @@ export function Icon({ name }: { name: IconName }) {
   );
 }
 
-export function useReducedMotion(): boolean {
+function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(
     () =>
       typeof window !== "undefined" &&

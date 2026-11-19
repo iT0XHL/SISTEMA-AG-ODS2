@@ -20,6 +20,15 @@ x-backend: &backend
     MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-5}
     MAX_RUN_SECONDS: ${MAX_RUN_SECONDS:-120}
     CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8090}
+    ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+    ADMIN_PASSWORD: ${ADMIN_PASSWORD:-NutriRuta2026!}
+    ADMIN_NAME: ${ADMIN_NAME:-Administrador}
+    SESSION_HOURS: ${SESSION_HOURS:-8}
+    COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-true}
+    RATE_LIMIT_PER_MIN: ${RATE_LIMIT_PER_MIN:-1200}
+    RATE_LIMIT_HEAVY_PER_MIN: ${RATE_LIMIT_HEAVY_PER_MIN:-30}
+    RATE_LIMIT_LOGIN_PER_MIN: ${RATE_LIMIT_LOGIN_PER_MIN:-10}
   depends_on:
     db:
       condition: service_healthy
@@ -50,7 +59,7 @@ services:
     <<: *backend
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
     ports:
-      - "${API_PORT:-8010}:8000"
+      - "127.0.0.1:${API_PORT:-8010}:8000"
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status == 200 else 1)"]
       interval: 5s

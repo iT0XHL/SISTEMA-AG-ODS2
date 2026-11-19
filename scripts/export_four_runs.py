@@ -2,9 +2,9 @@
 
 Solo usa la biblioteca estándar: funciona con cualquier Python ≥ 3.10 sin instalar nada.
 
-    python scripts/export_four_runs.py --api http://localhost:8090 --out docs/evidencia
+    python scripts/export_four_runs.py --api http://localhost:8090 --out evidencia
 
-Pasos: asegura el escenario demo (sintético, determinista) → línea base → encola las
+Pasos: inicia sesión → asegura el escenario demo (sintético, determinista) → línea base → encola las
 semillas 11/22/33/44 con el preset «Estándar» → espera al worker → descarga CSV y JSON.
 Las cifras salen del programa en ejecución; este script no calcula ni inventa resultados.
 """
@@ -15,15 +15,20 @@ import argparse
 import json
 import sys
 import time
+import os
 import urllib.error
 import urllib.parse
 import urllib.request
+from http.cookiejar import CookieJar
 from pathlib import Path
 
 
 class Api:
     def __init__(self, base: str) -> None:
         self.base = base.rstrip("/")
+        self.opener = urllib.request.build_opener(
+            urllib.request.HTTPCookieProcessor(CookieJar())
+        )
 
     def call(self, method: str, path: str, body: object | None = None) -> tuple[int, bytes]:
         data = json.dumps(body).encode("utf-8") if body is not None else None
@@ -34,7 +39,7 @@ class Api:
             headers={"Content-Type": "application/json"} if data is not None else {},
         )
         try:
-            with urllib.request.urlopen(request, timeout=30) as response:
+            with self.opener.open(request, timeout=30) as response:
                 return response.status, response.read()
         except urllib.error.HTTPError as error:
             return error.code, error.read()
@@ -81,11 +86,19 @@ def markdown_table(experiment: dict) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--api", default="http://localhost:8090", help="URL base de la aplicación")
-    parser.add_argument("--out", default="docs/evidencia", help="carpeta de salida")
+    parser.add_argument("--out", default="evidencia", help="carpeta de salida")
     parser.add_argument(
         "--scenario-id", default=None, help="escenario ya guardado (por defecto, demo)"
     )
     parser.add_argument("--timeout", type=float, default=300.0)
+    parser.add_argument(
+        "--user", default=os.environ.get("NUTRIRUTA_USER", "admin"), help="usuario de la aplicación"
+    )
+    parser.add_argument(
+        "--password",
+        default=os.environ.get("NUTRIRUTA_PASSWORD", "NutriRuta2026!"),
+        help="contraseña (también NUTRIRUTA_PASSWORD)",
+    )
     args = parser.parse_args()
     api = Api(args.api)
     out = Path(args.out)
@@ -93,6 +106,8 @@ def main() -> None:
 
     health = api.json("GET", "/health")
     print(f"Aplicación {health['code_version']} · base de datos {health['database']}")
+
+    api.json("POST", "/api/v1/auth/login", {"username": args.user, "password": args.password})
 
     if args.scenario_id:
         scenario_id = args.scenario_id

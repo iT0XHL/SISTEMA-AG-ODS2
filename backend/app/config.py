@@ -9,6 +9,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from app import __version__
 
+DEFAULT_ADMIN_PASSWORD = "NutriRuta2026!"
+DEFAULT_DB_PASSWORD = "nutriruta_local"
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
@@ -26,6 +29,41 @@ class Settings(BaseSettings):
     cors_origins: str = Field(default="http://localhost:8090", alias="CORS_ORIGINS")
     worker_poll_seconds: float = Field(default=0.5, alias="WORKER_POLL_SECONDS")
     git_commit: str = Field(default="", alias="GIT_COMMIT")
+    admin_username: str = Field(default="admin", alias="ADMIN_USERNAME")
+    admin_password: str = Field(default=DEFAULT_ADMIN_PASSWORD, alias="ADMIN_PASSWORD")
+    admin_name: str = Field(default="Administrador", alias="ADMIN_NAME")
+    session_hours: float = Field(default=8.0, alias="SESSION_HOURS")
+    cookie_secure: bool = Field(default=False, alias="COOKIE_SECURE")
+    login_max_attempts: int = Field(default=5, alias="LOGIN_MAX_ATTEMPTS")
+    login_lock_seconds: float = Field(default=60.0, alias="LOGIN_LOCK_SECONDS")
+    rate_limit_enabled: bool = Field(default=True, alias="RATE_LIMIT_ENABLED")
+    rate_limit_per_min: int = Field(default=1200, alias="RATE_LIMIT_PER_MIN")
+    rate_limit_heavy_per_min: int = Field(default=30, alias="RATE_LIMIT_HEAVY_PER_MIN")
+    rate_limit_login_per_min: int = Field(default=10, alias="RATE_LIMIT_LOGIN_PER_MIN")
+
+    @property
+    def is_production(self) -> bool:
+        return self.app_env.strip().lower() == "production"
+
+    @property
+    def secure_cookies(self) -> bool:
+        """En producción la cookie de sesión siempre es ``Secure``."""
+        return self.cookie_secure or self.is_production
+
+    def production_problems(self) -> list[str]:
+        """Valores de demostración que no pueden usarse con ``APP_ENV=production``."""
+        problems: list[str] = []
+        if self.admin_password == DEFAULT_ADMIN_PASSWORD:
+            problems.append("ADMIN_PASSWORD conserva la contraseña de demostración.")
+        if len(self.admin_password) < 12:
+            problems.append("ADMIN_PASSWORD debe tener al menos 12 caracteres.")
+        if DEFAULT_DB_PASSWORD in self.db_url:
+            problems.append("DB_URL usa la contraseña de base de datos de demostración.")
+        if self.db_url.startswith("sqlite"):
+            problems.append("DB_URL apunta a SQLite; use PostgreSQL.")
+        if not self.rate_limit_enabled:
+            problems.append("RATE_LIMIT_ENABLED debe ser true.")
+        return problems
 
     @property
     def cors_origin_list(self) -> list[str]:

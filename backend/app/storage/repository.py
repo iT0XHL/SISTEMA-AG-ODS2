@@ -249,10 +249,6 @@ def save_solution(session: Session, run_id: str, payload: dict[str, Any]) -> Sol
     return solution
 
 
-def get_solution(session: Session, run_id: str) -> Solution | None:
-    return session.get(Solution, run_id)
-
-
 def recover_interrupted_runs(session: Session) -> int:
     """Al arrancar el worker: las corridas que quedaron ``running`` se marcan fallidas."""
     stale = list(session.scalars(select(Run).where(Run.status == RUN_RUNNING)))

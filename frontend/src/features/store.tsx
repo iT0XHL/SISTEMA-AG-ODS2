@@ -13,7 +13,7 @@ import type { GAParams, Meta, ScenarioDetail } from "../types";
 export type Preset = "standard" | "experimental";
 export type Theme = "system" | "light" | "dark";
 
-export const STANDARD_FALLBACK: GAParams = {
+const STANDARD_FALLBACK: GAParams = {
   population_size: 100,
   max_generations: 200,
   tournament_k: 3,

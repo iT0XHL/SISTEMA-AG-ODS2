@@ -495,6 +495,8 @@ def test_personal_data_never_reaches_database_or_exports(api) -> None:
     inspector = inspect(get_engine())
     tables = inspector.get_table_names()
     assert sorted(tables) == [
+        "app_user",
+        "auth_session",
         "center",
         "distance",
         "experiment",

@@ -15,7 +15,7 @@ from app.api.dependencies import get_session
 from app.config import Settings, get_settings
 from app.data.imports import ALLOWED_FIELDS
 from app.domain.models import DISTANCE_MODE_LABELS
-from app.ga.params import STANDARD_PRESET, OFFICIAL_SEEDS
+from app.ga.params import OFFICIAL_SEEDS, STANDARD_PRESET
 from app.services.exports import DECLARATION
 from app.storage import repository as repo
 from app.storage.models import Run
