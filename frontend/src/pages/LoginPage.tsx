@@ -101,13 +101,15 @@ export function LoginPage() {
             <small>ODS 2 · Hambre cero</small>
           </span>
         </div>
-        <div className="login-pitch">
-          <h2>Reparto y rutas de alimentos con un algoritmo genético</h2>
-          <p>
-            Cargue un escenario, ejecute el algoritmo y compare el resultado con una línea base.
-          </p>
+        <div className="login-hero">
+          <div className="login-pitch">
+            <h2>Reparto y rutas de alimentos con un algoritmo genético</h2>
+            <p>
+              Cargue un escenario, ejecute el algoritmo y compare el resultado con una línea base.
+            </p>
+          </div>
+          <HeroArt />
         </div>
-        <HeroArt />
       </aside>
 
       <main className="login-main" id="contenido">
